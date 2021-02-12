@@ -1,9 +1,6 @@
-package sixmans.service;
+package sixmans.organization;
 
 import java.util.List;
-
-import sixmans.api.request.OrganizationRequest;
-import sixmans.entity.Organization;
 
 public interface OrganizationService {
     Organization getOrganization(String id);

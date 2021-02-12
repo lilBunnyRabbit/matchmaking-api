@@ -1,13 +1,9 @@
-package sixmans.service.impl;
+package sixmans.organization;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import sixmans.api.exceptions.UniversalError;
-import sixmans.api.request.OrganizationRequest;
-import sixmans.entity.Organization;
-import sixmans.repository.OrganizationRepository;
-import sixmans.service.OrganizationService;
+import sixmans.exceptions.UniversalError;
 
 import java.util.List;
 import java.util.Optional;

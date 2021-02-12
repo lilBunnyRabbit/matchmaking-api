@@ -1,4 +1,4 @@
-package sixmans.api.exceptions;
+package sixmans.exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

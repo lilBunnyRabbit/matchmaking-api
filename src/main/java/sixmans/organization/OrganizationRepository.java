@@ -1,8 +1,6 @@
-package sixmans.repository;
+package sixmans.organization;
 
 import org.springframework.data.repository.CrudRepository;
-
-import sixmans.entity.Organization;
 
 import java.util.List;
 import java.util.Optional;

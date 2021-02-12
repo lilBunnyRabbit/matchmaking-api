@@ -1,10 +1,9 @@
-package sixmans.entity;
+package sixmans.organization;
 
 import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import sixmans.api.request.OrganizationRequest;
 
 @Entity
 @Table(name = "organization")

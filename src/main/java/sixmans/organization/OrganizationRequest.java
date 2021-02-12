@@ -1,4 +1,4 @@
-package sixmans.api.request;
+package sixmans.organization;
 
 public class OrganizationRequest {
     private String id;

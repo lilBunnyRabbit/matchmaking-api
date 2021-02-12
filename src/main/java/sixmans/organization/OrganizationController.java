@@ -1,4 +1,4 @@
-package sixmans.api.controller;
+package sixmans.organization;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -6,10 +6,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import sixmans.api.request.OrganizationRequest;
-import sixmans.entity.Organization;
-import sixmans.service.OrganizationService;
 
 import java.util.List;
 
