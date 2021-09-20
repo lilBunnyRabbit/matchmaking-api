@@ -110,3 +110,5 @@ tmp/*.jpg
 tmp/*.png
 tmp/*.gif
 commands.rest
+postgres-data/
+testing/

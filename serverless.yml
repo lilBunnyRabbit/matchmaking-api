@@ -13,10 +13,17 @@ provider:
   versionFunctions: false
 
 functions:
-  discord:
+  discordInteraction:
     handler: handlers/discord/discordHandler.interaction
     events:
       - http:
-          path: discord
-          method: post
-          cors: true
+        path: discord/interaction
+        method: post
+        cors: true
+  discordCommands:
+    handler: handlers/discord/discordHandler.commands
+    events:
+      - http:
+        path: discord/commands
+        method: post
+        cors: true

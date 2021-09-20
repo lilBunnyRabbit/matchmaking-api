@@ -48,3 +48,7 @@ export const interaction: Handler = async (event, context, callback) => {
     }
   }
 };
+
+export const commands: Handler = async (event, context, callback) => {
+  console.log(event.body);
+};
