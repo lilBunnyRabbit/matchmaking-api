@@ -4,7 +4,7 @@ import {
   Callback,
   APIGatewayProxyResult
 } from 'aws-lambda';
-import { bulkOverrideGuildCommands } from '../discord/slash-commands/slashCommandsApi';
+import { bulkOverrideGuildCommands } from '../../utils/discord/slashCommandsApi';
 
 export type Handler = (
   event: APIGatewayEvent,

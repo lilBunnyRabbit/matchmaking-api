@@ -1,5 +1,5 @@
-import { CommandHandler } from "../applicationCommandHandler"
-import { DiscordComponent } from "../objects/discord/Component"
+import { DiscordComponent } from "../../../../objects/discord/Component";
+import { CommandHandler } from "../applicationCommandHandler";
 
 export const queueCommand: CommandHandler = async (interaction) => {
   console.log("QueueCommand");

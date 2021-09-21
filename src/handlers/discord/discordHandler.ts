@@ -4,12 +4,12 @@ import {
   Callback,
   APIGatewayProxyResult
 } from 'aws-lambda';
-import { Interaction } from './types/discord/interaction';
-import { applicationCommandHandler } from './applicationCommandHandler';
-import { DiscordResponse } from './objects/discord/Response';
-import { DiscordInteraction } from './objects/discord/Interaction';
-import { safelyParseJson, validDiscordRequest } from './utils/discord/discordUtils';
-import { messageComponentHandler } from './messageComponentHandler';
+import { Interaction } from '../../types/discord/interaction';
+import { applicationCommandHandler } from './commands/applicationCommandHandler';
+import { DiscordResponse } from '../../objects/discord/Response';
+import { DiscordInteraction } from '../../objects/discord/Interaction';
+import { safelyParseJson, validDiscordRequest } from '../../utils/discord/discordUtils';
+import { messageComponentHandler } from './actions/messageComponentHandler';
 
 export type Handler = (
   event: APIGatewayEvent,

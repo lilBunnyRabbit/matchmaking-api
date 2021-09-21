@@ -1,6 +1,6 @@
 import fetch from "node-fetch";
-import { ApplicationCommand } from "../types/discord/applicationCommand";
-import { SlashCommand, slashCommandsGuild } from "./slashCommands";
+import { ApplicationCommand } from "../../types/discord/applicationCommand";
+import { SlashCommand, slashCommandsGuild } from "../../handlers/discord/slash-commands/slashCommands";
 
 export function addGuildCommand(guildId: string, data: ApplicationCommand.Option) {
   console.log(JSON.stringify(data));

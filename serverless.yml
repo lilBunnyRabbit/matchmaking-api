@@ -14,14 +14,14 @@ provider:
 
 functions:
   discordInteraction:
-    handler: handlers/discord/discordHandler.interaction
+    handler: src/handlers/discord/discordHandler.interaction
     events:
       - http:
           path: discord/interaction
           method: post
           cors: true
   adminCommands:
-    handler: handlers/admin/commandsHandler.commands
+    handler: src/handlers/admin/commandsHandler.commands
     events:
       - http:
           path: admin/commands

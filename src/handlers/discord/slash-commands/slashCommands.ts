@@ -1,4 +1,4 @@
-import { ApplicationCommand } from "../types/discord/applicationCommand";
+import { ApplicationCommand } from "../../../types/discord/applicationCommand";
 
 export namespace SlashCommand {
   export enum Global {}
