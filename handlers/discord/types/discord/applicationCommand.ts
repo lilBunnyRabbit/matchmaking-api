@@ -14,7 +14,7 @@ export namespace ApplicationCommand {
   }
 
   export interface Option {
-    type: OptionType;
+    type?: OptionType;
     name: string;
     description: string;
     required?: boolean;

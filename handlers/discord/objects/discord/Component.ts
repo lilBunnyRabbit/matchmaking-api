@@ -30,19 +30,19 @@ function SelectMenu(customId: string, options: Component.SelectMenu.Option[], da
 export const DiscordComponent = {
   ActionRow,
   Button: {
-    PRIMARY: (id: string, data?: ButtonData) => (
+    PRIMARY: (id: string, data: ButtonData) => (
       Button(id, Component.Button.Style.PRIMARY, data)
     ),
-    SECONDARY: (id: string, data?: ButtonData) => (
+    SECONDARY: (id: string, data: ButtonData) => (
       Button(id, Component.Button.Style.SECONDARY, data)
     ),
-    SUCCESS: (id: string, data?: ButtonData) => (
+    SUCCESS: (id: string, data: ButtonData) => (
       Button(id, Component.Button.Style.SUCCESS, data)
     ),
-    DANGER: (id: string, data?: ButtonData) => (
+    DANGER: (id: string, data: ButtonData) => (
       Button(id, Component.Button.Style.DANGER, data)
     ),
-    LINK: (id: string, data?: ButtonData) => (
+    LINK: (id: string, data: ButtonData) => (
       Button(id, Component.Button.Style.LINK, data)
     )
   },

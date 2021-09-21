@@ -5,11 +5,11 @@ import {
   APIGatewayProxyResult
 } from 'aws-lambda';
 import { Interaction } from './types/discord/interaction';
-import { safelyParseJson, validDiscordRequest } from "./utils/discordUtils";
-import { applicationCommandHandler } from './hadlers/applicationCommandHandler';
-import { messageComponentHandler } from './hadlers/messageComponentHandler';
+import { applicationCommandHandler } from './applicationCommandHandler';
 import { DiscordResponse } from './objects/discord/Response';
 import { DiscordInteraction } from './objects/discord/Interaction';
+import { safelyParseJson, validDiscordRequest } from './utils/discord/discordUtils';
+import { messageComponentHandler } from './messageComponentHandler';
 
 export type Handler = (
   event: APIGatewayEvent,
@@ -47,8 +47,4 @@ export const interaction: Handler = async (event, context, callback) => {
       return DiscordResponse.ERROR;
     }
   }
-};
-
-export const commands: Handler = async (event, context, callback) => {
-  console.log(event.body);
 };

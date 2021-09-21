@@ -17,13 +17,13 @@ functions:
     handler: handlers/discord/discordHandler.interaction
     events:
       - http:
-        path: discord/interaction
-        method: post
-        cors: true
-  discordCommands:
-    handler: handlers/discord/discordHandler.commands
+          path: discord/interaction
+          method: post
+          cors: true
+  adminCommands:
+    handler: handlers/admin/commandsHandler.commands
     events:
       - http:
-        path: discord/commands
-        method: post
-        cors: true
+          path: admin/commands
+          method: post
+          cors: true

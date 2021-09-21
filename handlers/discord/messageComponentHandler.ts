@@ -1,5 +1,5 @@
-import { InteractionHandler } from '../discordHandler';
-import { DiscordResponse } from '../objects/discord/Response';
+import { InteractionHandler } from "./discordHandler";
+import { DiscordResponse } from "./objects/discord/Response";
 
 export const messageComponentHandler: InteractionHandler = async (interaction) => {
   console.log("messageComponentHandler: ", interaction);

@@ -10,7 +10,7 @@ import { BodyInit, HeaderInit } from 'node-fetch';
 import { DiscordResponse } from './Response';
 import { Interaction } from '../../types/discord/interaction';
 import { ApplicationCommand } from '../../types/discord/applicationCommand';
-import { InteractionAPI } from '../../utils/discordApi';
+import { InteractionAPI } from '../../utils/discord/discordApi';
 
 export class DiscordInteraction implements Interaction.Structure {
   // Interaction.Structure
