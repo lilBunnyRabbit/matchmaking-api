@@ -111,4 +111,5 @@ tmp/*.png
 tmp/*.gif
 commands.rest
 postgres-data/
-testing/
+testing/node_modules/
+testing/build/

@@ -1,4 +1,4 @@
-import { CommandHandler } from "./applicationCommandHandler";
+import { CommandHandler } from "../applicationCommandHandler";
 
 export const registerCommand: CommandHandler = async (interaction) => {
   return interaction.response.respond({
