@@ -1,8 +1,8 @@
 package lilbunnyrabbit.matchmaking.service;
 
-import lilbunnyrabbit.matchmaking.api.request.DiscordInteractionRequest;
-import lilbunnyrabbit.matchmaking.api.response.DiscordInteractionResponse;
+import lilbunnyrabbit.matchmaking.api.request.discord.InteractionRequest;
+import lilbunnyrabbit.matchmaking.api.response.discord.InteractionResponse;
 
 public interface DiscordService {
-    DiscordInteractionResponse handleInteraction(DiscordInteractionRequest discordInteractionRequest);
+    InteractionResponse handleInteraction(InteractionRequest discordInteractionRequest);
 }

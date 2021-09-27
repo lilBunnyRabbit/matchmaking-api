@@ -1,8 +1,8 @@
 package lilbunnyrabbit.matchmaking.api.controller;
 
 import lilbunnyrabbit.matchmaking.api.argumentResolver.ValidDiscordBody;
-import lilbunnyrabbit.matchmaking.api.request.DiscordInteractionRequest;
-import lilbunnyrabbit.matchmaking.api.response.DiscordInteractionResponse;
+import lilbunnyrabbit.matchmaking.api.request.discord.InteractionRequest;
+import lilbunnyrabbit.matchmaking.api.response.discord.InteractionResponse;
 import lilbunnyrabbit.matchmaking.service.DiscordService;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,7 +16,7 @@ public class DiscordController {
     }
 
     @PostMapping("/interaction")
-    public DiscordInteractionResponse interaction(@ValidDiscordBody DiscordInteractionRequest discordInteractionRequest) {
+    public InteractionResponse interaction(@ValidDiscordBody InteractionRequest discordInteractionRequest) {
         return discordService.handleInteraction(discordInteractionRequest);
     }
 }

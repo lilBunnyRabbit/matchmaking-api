@@ -23,6 +23,7 @@ import java.security.Signature;
 import java.security.spec.X509EncodedKeySpec;
 
 public class DiscordBodyValidationArgumentResolver implements HandlerMethodArgumentResolver {
+    private final boolean validate = true;
     private final ObjectMapper objectMapper;
     private final DiscordConfiguration discordConfiguration;
 
@@ -46,25 +47,28 @@ public class DiscordBodyValidationArgumentResolver implements HandlerMethodArgum
         HttpServletRequest httpServletRequest = nativeWebRequest.getNativeRequest(HttpServletRequest.class);
         if (httpServletRequest == null) throw new Error("httpServletRequest doesn't exist");
 
-        String signature = httpServletRequest.getHeader("X-Signature-Ed25519");
-        String timestamp = httpServletRequest.getHeader("X-Signature-Timestamp");
         String rawBody = StreamUtils.copyToString(httpServletRequest.getInputStream(), StandardCharsets.UTF_8);
 
-        if (signature == null || timestamp == null) throw new InvalidRequestSignatureException();
+        if (this.validate) {
+            String signature = httpServletRequest.getHeader("X-Signature-Ed25519");
+            String timestamp = httpServletRequest.getHeader("X-Signature-Timestamp");
 
-        /* Verify */ {
-            final var provider = new BouncyCastleProvider();
-            Security.addProvider(provider);
-            final var byteKey = Hex.decode(discordConfiguration.getPublicKey());
-            final var pki = new SubjectPublicKeyInfo(new AlgorithmIdentifier(EdECObjectIdentifiers.id_Ed25519), byteKey);
-            final var pkSpec = new X509EncodedKeySpec(pki.getEncoded());
-            final var kf = KeyFactory.getInstance("ed25519", provider);
-            final var pubKey = kf.generatePublic(pkSpec);
-            final var signedData = Signature.getInstance("ed25519", provider);
-            signedData.initVerify(pubKey);
-            signedData.update(timestamp.getBytes());
-            signedData.update(rawBody.getBytes());
-            if (!signedData.verify(Hex.decode(signature))) throw new InvalidRequestSignatureException();
+            if (signature == null || timestamp == null) throw new InvalidRequestSignatureException();
+
+            /* Verify */ {
+                final var provider = new BouncyCastleProvider();
+                Security.addProvider(provider);
+                final var byteKey = Hex.decode(discordConfiguration.getPublicKey());
+                final var pki = new SubjectPublicKeyInfo(new AlgorithmIdentifier(EdECObjectIdentifiers.id_Ed25519), byteKey);
+                final var pkSpec = new X509EncodedKeySpec(pki.getEncoded());
+                final var kf = KeyFactory.getInstance("ed25519", provider);
+                final var pubKey = kf.generatePublic(pkSpec);
+                final var signedData = Signature.getInstance("ed25519", provider);
+                signedData.initVerify(pubKey);
+                signedData.update(timestamp.getBytes());
+                signedData.update(rawBody.getBytes());
+                if (!signedData.verify(Hex.decode(signature))) throw new InvalidRequestSignatureException();
+            }
         }
 
         return objectMapper.treeToValue(objectMapper.readTree(rawBody), methodParameter.getParameterType());
