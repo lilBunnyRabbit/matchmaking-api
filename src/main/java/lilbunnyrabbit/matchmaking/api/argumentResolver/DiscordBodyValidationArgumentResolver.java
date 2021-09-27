@@ -1,6 +1,13 @@
 package lilbunnyrabbit.matchmaking.api.argumentResolver;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lilbunnyrabbit.matchmaking.api.configuration.DiscordConfiguration;
+import lilbunnyrabbit.matchmaking.api.response.exception.InvalidRequestSignatureException;
+import org.bouncycastle.asn1.edec.EdECObjectIdentifiers;
+import org.bouncycastle.asn1.x509.AlgorithmIdentifier;
+import org.bouncycastle.asn1.x509.SubjectPublicKeyInfo;
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
+import org.bouncycastle.util.encoders.Hex;
 import org.springframework.core.MethodParameter;
 import org.springframework.util.StreamUtils;
 import org.springframework.web.bind.support.WebDataBinderFactory;
@@ -10,12 +17,18 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 
 import javax.servlet.http.HttpServletRequest;
 import java.nio.charset.StandardCharsets;
+import java.security.KeyFactory;
+import java.security.Security;
+import java.security.Signature;
+import java.security.spec.X509EncodedKeySpec;
 
 public class DiscordBodyValidationArgumentResolver implements HandlerMethodArgumentResolver {
     private final ObjectMapper objectMapper;
+    private final DiscordConfiguration discordConfiguration;
 
-    public DiscordBodyValidationArgumentResolver(ObjectMapper objectMapper) {
+    public DiscordBodyValidationArgumentResolver(ObjectMapper objectMapper, DiscordConfiguration discordConfiguration) {
         this.objectMapper = objectMapper;
+        this.discordConfiguration = discordConfiguration;
     }
 
     @Override
@@ -31,18 +44,29 @@ public class DiscordBodyValidationArgumentResolver implements HandlerMethodArgum
             WebDataBinderFactory webDataBinderFactory
     ) throws Exception {
         HttpServletRequest httpServletRequest = nativeWebRequest.getNativeRequest(HttpServletRequest.class);
-        if (httpServletRequest == null) throw new Exception("Bad request");
+        if (httpServletRequest == null) throw new Error("httpServletRequest doesn't exist");
 
         String signature = httpServletRequest.getHeader("X-Signature-Ed25519");
         String timestamp = httpServletRequest.getHeader("X-Signature-Timestamp");
-        String jsonPayload = StreamUtils.copyToString(httpServletRequest.getInputStream(), StandardCharsets.UTF_8);
+        String rawBody = StreamUtils.copyToString(httpServletRequest.getInputStream(), StandardCharsets.UTF_8);
 
-        System.out.println("X-Signature-Ed25519: " + signature);
-        System.out.println("X-Signature-Timestamp: " + timestamp);
-        System.out.println("rawBody: " + jsonPayload);
+        if (signature == null || timestamp == null) throw new InvalidRequestSignatureException();
 
-        // TODO: Verify request
+        /* Verify */ {
+            final var provider = new BouncyCastleProvider();
+            Security.addProvider(provider);
+            final var byteKey = Hex.decode(discordConfiguration.getPublicKey());
+            final var pki = new SubjectPublicKeyInfo(new AlgorithmIdentifier(EdECObjectIdentifiers.id_Ed25519), byteKey);
+            final var pkSpec = new X509EncodedKeySpec(pki.getEncoded());
+            final var kf = KeyFactory.getInstance("ed25519", provider);
+            final var pubKey = kf.generatePublic(pkSpec);
+            final var signedData = Signature.getInstance("ed25519", provider);
+            signedData.initVerify(pubKey);
+            signedData.update(timestamp.getBytes());
+            signedData.update(rawBody.getBytes());
+            if (!signedData.verify(Hex.decode(signature))) throw new InvalidRequestSignatureException();
+        }
 
-        return objectMapper.treeToValue(objectMapper.readTree(jsonPayload), methodParameter.getParameterType());
+        return objectMapper.treeToValue(objectMapper.readTree(rawBody), methodParameter.getParameterType());
     }
 }

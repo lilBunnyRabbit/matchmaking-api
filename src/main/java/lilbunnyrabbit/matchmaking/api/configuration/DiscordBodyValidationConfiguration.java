@@ -14,8 +14,11 @@ public class DiscordBodyValidationConfiguration implements WebMvcConfigurer {
     @Autowired
     private ObjectMapper objectMapper;
 
+    @Autowired
+    private DiscordConfiguration discordConfiguration;
+
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
-        argumentResolvers.add(new DiscordBodyValidationArgumentResolver(objectMapper));
+        argumentResolvers.add(new DiscordBodyValidationArgumentResolver(objectMapper, discordConfiguration));
     }
 }

@@ -38,3 +38,7 @@ out/
 
 ### Postgres ###
 postgres-data/
+
+### Config ###
+src/main/resources/application*.properties
+src/main/resources/discord.properties

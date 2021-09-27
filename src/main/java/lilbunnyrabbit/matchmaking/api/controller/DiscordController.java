@@ -17,7 +17,6 @@ public class DiscordController {
 
     @PostMapping("/interaction")
     public DiscordInteractionResponse interaction(@ValidDiscordBody DiscordInteractionRequest discordInteractionRequest) {
-        System.out.println("DiscordInteractionRequest ID: " + discordInteractionRequest.getId());
         return discordService.handleInteraction(discordInteractionRequest);
     }
 }
