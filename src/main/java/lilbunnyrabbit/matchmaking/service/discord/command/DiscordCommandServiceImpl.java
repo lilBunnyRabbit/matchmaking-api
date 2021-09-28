@@ -1,4 +1,4 @@
-package lilbunnyrabbit.matchmaking.service.discord;
+package lilbunnyrabbit.matchmaking.service.discord.command;
 
 import lilbunnyrabbit.matchmaking.api.request.discord.InteractionRequest;
 import lilbunnyrabbit.matchmaking.api.request.discord.InteractionRequestData;
@@ -15,22 +15,12 @@ import java.util.Arrays;
 import java.util.List;
 
 @Service
-public class DiscordServiceImpl implements DiscordService {
+public class DiscordCommandServiceImpl  implements DiscordCommandService {
 
     @Autowired
     private GuildService guildService;
 
-    @Override
-    public InteractionResponse handleInteraction(InteractionRequest interaction) {
-        return switch (interaction.getType()) {
-            case InteractionRequest.Type.PING -> new InteractionResponse(InteractionResponse.Type.PONG);
-            case InteractionRequest.Type.APPLICATION_COMMAND -> this.commandHandler(interaction);
-            case InteractionRequest.Type.MESSAGE_COMPONENT -> this.actionHandler(interaction);
-            default -> null;
-        };
-    }
-
-    private InteractionResponse commandHandler(InteractionRequest interaction) {
+    public InteractionResponse commandHandler(InteractionRequest interaction) {
         InteractionRequestData data = interaction.getData();
         if (data == null) return null;
 
@@ -79,24 +69,5 @@ public class DiscordServiceImpl implements DiscordService {
         responseData.setEmbeds(List.of(embed));
 
         return new InteractionResponse(InteractionResponse.Type.CHANNEL_MESSAGE_WITH_SOURCE, responseData);
-    }
-
-    private InteractionResponse actionHandler(InteractionRequest interaction) {
-        InteractionRequestData data = interaction.getData();
-        if (data == null) return null;
-
-        String actionId = data.getCustomId();
-        if (actionId == null) return null;
-
-        return switch (actionId) {
-            default -> this.exampleAction(interaction);
-        };
-    }
-
-    private InteractionResponse exampleAction(InteractionRequest interaction) {
-        InteractionResponseData data = new InteractionResponseData();
-        data.setContent("Hello from message");
-
-        return new InteractionResponse(InteractionResponse.Type.CHANNEL_MESSAGE_WITH_SOURCE, data);
     }
 }
