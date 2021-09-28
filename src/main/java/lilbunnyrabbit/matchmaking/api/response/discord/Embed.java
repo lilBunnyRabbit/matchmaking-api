@@ -11,7 +11,7 @@ public class Embed {
     private String description;
     private String url;
     private String timestamp;
-    private String color;
+    private Integer color;
     private Footer footer;
     private Image image;
     private Thumbnail thumbnail;
@@ -62,11 +62,11 @@ public class Embed {
         this.timestamp = timestamp;
     }
 
-    public String getColor() {
+    public Integer getColor() {
         return color;
     }
 
-    public void setColor(String color) {
+    public void setColor(Integer color) {
         this.color = color;
     }
 

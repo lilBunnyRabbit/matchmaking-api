@@ -1,13 +1,20 @@
 package lilbunnyrabbit.matchmaking.api.request.discord;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
 public class InteractionRequestData {
     @NotEmpty private String id;
     @NotEmpty private String name;
-    @NotEmpty private String custom_id;
-    @NotEmpty private Integer component_type;
+
+    @JsonProperty("custom_id")
+    @NotEmpty private String customId;
+
+    @JsonProperty("component_type")
+    @NotEmpty private Integer componentType;
+
     private InteractionRequestDataResolved resolved;
     private List<InteractionRequestDataOption> options;
 
@@ -29,20 +36,20 @@ public class InteractionRequestData {
         this.name = name;
     }
 
-    public String getCustom_id() {
-        return custom_id;
+    public String getCustomId() {
+        return customId;
     }
 
-    public void setCustom_id(String custom_id) {
-        this.custom_id = custom_id;
+    public void setCustomId(String customId) {
+        this.customId = customId;
     }
 
-    public Integer getComponent_type() {
-        return component_type;
+    public Integer getComponentType() {
+        return componentType;
     }
 
-    public void setComponent_type(Integer component_type) {
-        this.component_type = component_type;
+    public void setComponentType(Integer componentType) {
+        this.componentType = componentType;
     }
 
     public InteractionRequestDataResolved getResolved() {

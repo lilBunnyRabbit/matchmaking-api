@@ -1,6 +1,6 @@
-package lilbunnyrabbit.matchmaking.api.controller;
+package lilbunnyrabbit.matchmaking.controller;
 
-import lilbunnyrabbit.matchmaking.api.argumentResolver.ValidDiscordBody;
+import lilbunnyrabbit.matchmaking.annotation.ValidDiscordBody;
 import lilbunnyrabbit.matchmaking.api.request.discord.InteractionRequest;
 import lilbunnyrabbit.matchmaking.api.response.discord.InteractionResponse;
 import lilbunnyrabbit.matchmaking.service.DiscordService;

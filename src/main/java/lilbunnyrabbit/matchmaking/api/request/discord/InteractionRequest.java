@@ -1,15 +1,20 @@
 package lilbunnyrabbit.matchmaking.api.request.discord;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.validation.constraints.NotEmpty;
 
 public class InteractionRequest {
     @NotEmpty private String id;
-    @NotEmpty private String application_id;
+    @JsonProperty("application_id")
+    @NotEmpty private String applicationId;
     @NotEmpty private Integer type;
     @NotEmpty private String token;
     @NotEmpty private Integer version;
-    private String guild_id;
-    private String channel_id;
+    @JsonProperty("guild_id")
+    private String guildId;
+    @JsonProperty("channel_id")
+    private String channelId;
     private InteractionRequestData data;
     private User user;
     private Member member;
@@ -34,11 +39,11 @@ public class InteractionRequest {
     }
 
     public String getApplicationId() {
-        return application_id;
+        return applicationId;
     }
 
-    public void setApplicationId(String application_id) {
-        this.application_id = application_id;
+    public void setApplicationId(String applicationId) {
+        this.applicationId = applicationId;
     }
 
     public Integer getType() {
@@ -66,19 +71,19 @@ public class InteractionRequest {
     }
 
     public String getGuildId() {
-        return guild_id;
+        return guildId;
     }
 
-    public void setGuildId(String guild_id) {
-        this.guild_id = guild_id;
+    public void setGuildId(String guildId) {
+        this.guildId = guildId;
     }
 
     public String getChannelId() {
-        return channel_id;
+        return channelId;
     }
 
-    public void setChannelId(String channel_id) {
-        this.channel_id = channel_id;
+    public void setChannelId(String channelId) {
+        this.channelId = channelId;
     }
 
     public InteractionRequestData getData() {

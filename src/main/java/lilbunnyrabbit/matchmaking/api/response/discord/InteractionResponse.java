@@ -12,6 +12,10 @@ public class InteractionResponse {
     public InteractionResponse(int type) {
         this.type = type;
     }
+    public InteractionResponse(int type, InteractionResponseData data) {
+        this.type = type;
+        this.data = data;
+    }
 
     public static final class Type {
         public static final int PONG = 1;

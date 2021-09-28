@@ -1,6 +1,7 @@
 package lilbunnyrabbit.matchmaking.service.impl;
 
 import lilbunnyrabbit.matchmaking.api.request.discord.InteractionRequest;
+import lilbunnyrabbit.matchmaking.api.request.discord.InteractionRequestData;
 import lilbunnyrabbit.matchmaking.api.response.discord.Component;
 import lilbunnyrabbit.matchmaking.api.response.discord.Embed;
 import lilbunnyrabbit.matchmaking.api.response.discord.InteractionResponse;
@@ -22,46 +23,84 @@ public class DiscordServiceImpl implements DiscordService {
     private GuildRepository guildRepository;
 
     @Override
-    public InteractionResponse handleInteraction(InteractionRequest interactionRequest) {
-        if (interactionRequest.getType() == InteractionRequest.Type.PING) {
-            return new InteractionResponse(InteractionResponse.Type.PONG);
-        }
+    public InteractionResponse handleInteraction(InteractionRequest interaction) {
+        return switch (interaction.getType()) {
+            case InteractionRequest.Type.PING -> new InteractionResponse(InteractionResponse.Type.PONG);
+            case InteractionRequest.Type.APPLICATION_COMMAND -> this.commandHandler(interaction);
+            case InteractionRequest.Type.MESSAGE_COMPONENT -> this.actionHandler(interaction);
+            default -> null;
+        };
+    }
 
-        InteractionResponse response = new InteractionResponse(InteractionResponse.Type.CHANNEL_MESSAGE_WITH_SOURCE);
+    public InteractionResponse commandHandler(InteractionRequest interaction) {
+        InteractionRequestData data = interaction.getData();
+        if (data == null) return null;
+
+        String commandName = data.getName();
+        if (commandName == null) return null;
+
+        return switch (commandName) {
+            default -> this.exampleCommand(interaction);
+        };
+    }
+
+    public InteractionResponse exampleCommand(InteractionRequest interaction) {
         InteractionResponseData responseData = new InteractionResponseData();
 
-        List<Embed> embeds = new ArrayList<>();
-        Embed embed = new Embed();
-        embed.setTitle("Hello");
-        Embed.Footer footer = new Embed.Footer("Hello footer");
-        embed.setFooter(footer);
-        embeds.add(embed);
-        responseData.setEmbeds(embeds);
-
-        Component.ActionRow actionRow = new Component.ActionRow();
-        List<Component> buttons = new ArrayList<>();
-        Component.Button helloButton = new Component.Button(Component.Button.Style.PRIMARY, "hello_button");
-        helloButton.setLabel("Hello");
-        buttons.add(helloButton);
-
-        Component.Button byeButton = new Component.Button(Component.Button.Style.DANGER, "bye_button");
-        byeButton.setLabel("Bye");
-        buttons.add(byeButton);
-        actionRow.setComponents(buttons);
-        responseData.setComponents(List.of(actionRow));
-        response.setData(responseData);
-
-        Optional<Guild> optionalGuild = guildRepository.findById(interactionRequest.getId());
-        Guild guild;
-
-        if (optionalGuild.isPresent()) {
-            guild = optionalGuild.get();
-            responseData.setContent("Guild exists: " + guild.getId());
+        String guildId = interaction.getGuildId();
+        System.out.println("Guild ID: " + guildId);
+        if (guildId == null) {
+            Embed embed = new Embed();
+            embed.setColor(0xcc0000);
+            embed.setDescription("This command is only available in guilds!");
+            responseData.setEmbeds(List.of(embed));
         } else {
-            guild = new Guild(interactionRequest.getId());
-            guildRepository.save(guild);
-            responseData.setContent("Guild created: " + guild.getId());
+            Optional<Guild> optionalGuild = guildRepository.findById(guildId);
+            Guild guild;
+            Embed embed = new Embed();
+
+            if (optionalGuild.isPresent()) {
+                guild = optionalGuild.get();
+                embed.setColor(0xcc5f86);
+                embed.setTitle("Guild exists!");
+            } else {
+                guild = new Guild(interaction.getGuildId());
+                guildRepository.save(guild);
+                embed.setColor(0x00cc00);
+                embed.setTitle("Guild created!");
+
+                Component.Button yayButton = new Component.Button(Component.Button.Style.PRIMARY, "yay");
+                yayButton.setLabel("Yay!");
+
+                Component.Button nayButton = new Component.Button(Component.Button.Style.DANGER, "nay");
+                nayButton.setLabel("Nay!");
+
+                responseData.setComponents(List.of(new Component.ActionRow(Arrays.asList(yayButton, nayButton))));
+            }
+
+            embed.setDescription(guild.getId());
+            responseData.setEmbeds(List.of(embed));
         }
-        return response;
+
+        return new InteractionResponse(InteractionResponse.Type.CHANNEL_MESSAGE_WITH_SOURCE, responseData);
+    }
+
+    public InteractionResponse actionHandler(InteractionRequest interaction) {
+        InteractionRequestData data = interaction.getData();
+        if (data == null) return null;
+
+        String actionName = data.getName();
+        if (actionName == null) return null;
+
+        return switch (actionName) {
+            default -> this.exampleAction(interaction);
+        };
+    }
+
+    public InteractionResponse exampleAction(InteractionRequest interaction) {
+        InteractionResponseData data = new InteractionResponseData();
+        data.setContent("Hello from message");
+
+        return new InteractionResponse(InteractionResponse.Type.CHANNEL_MESSAGE_WITH_SOURCE, data);
     }
 }

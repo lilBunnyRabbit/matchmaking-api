@@ -1,4 +1,4 @@
-package lilbunnyrabbit.matchmaking.api.argumentResolver;
+package lilbunnyrabbit.matchmaking.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

@@ -1,7 +1,7 @@
-package lilbunnyrabbit.matchmaking.api.argumentResolver;
+package lilbunnyrabbit.matchmaking.annotation;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lilbunnyrabbit.matchmaking.api.configuration.DiscordConfiguration;
+import lilbunnyrabbit.matchmaking.configuration.DiscordConfiguration;
 import lilbunnyrabbit.matchmaking.api.response.exception.InvalidRequestSignatureException;
 import org.bouncycastle.asn1.edec.EdECObjectIdentifiers;
 import org.bouncycastle.asn1.x509.AlgorithmIdentifier;
@@ -23,7 +23,7 @@ import java.security.Signature;
 import java.security.spec.X509EncodedKeySpec;
 
 public class DiscordBodyValidationArgumentResolver implements HandlerMethodArgumentResolver {
-    private final boolean validate = true;
+    private final boolean validate = true; // TODO: temp
     private final ObjectMapper objectMapper;
     private final DiscordConfiguration discordConfiguration;
 
@@ -48,7 +48,6 @@ public class DiscordBodyValidationArgumentResolver implements HandlerMethodArgum
         if (httpServletRequest == null) throw new Error("httpServletRequest doesn't exist");
 
         String rawBody = StreamUtils.copyToString(httpServletRequest.getInputStream(), StandardCharsets.UTF_8);
-
         if (this.validate) {
             String signature = httpServletRequest.getHeader("X-Signature-Ed25519");
             String timestamp = httpServletRequest.getHeader("X-Signature-Timestamp");
