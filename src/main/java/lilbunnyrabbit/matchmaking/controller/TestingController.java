@@ -1,0 +1,41 @@
+package lilbunnyrabbit.matchmaking.controller;
+
+import lilbunnyrabbit.matchmaking.entity.Guild;
+import lilbunnyrabbit.matchmaking.entity.Player;
+import lilbunnyrabbit.matchmaking.entity.guildPlayer.GuildPlayer;
+import lilbunnyrabbit.matchmaking.service.guild.GuildService;
+import lilbunnyrabbit.matchmaking.service.guildPlayer.GuildPlayerService;
+import lilbunnyrabbit.matchmaking.service.player.PlayerService;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping("/testing")
+public class TestingController {
+    private final GuildService guildService;
+    private final PlayerService playerService;
+    private final GuildPlayerService guildPlayerService;
+
+    public TestingController(GuildService guildService, PlayerService playerService, GuildPlayerService guildPlayerService) {
+        this.guildService = guildService;
+        this.playerService = playerService;
+        this.guildPlayerService = guildPlayerService;
+    }
+
+    @GetMapping("/guild/{id}")
+    public Guild guildById(@PathVariable("id") String id) {
+        return guildService.getGuild(id);
+    }
+
+    @GetMapping("/player/{id}")
+    public Player playerById(@PathVariable("id") String id) {
+        return playerService.getPlayer(id);
+    }
+
+    @GetMapping("/guild/{guildId}/player/{playerId}")
+    public GuildPlayer playerById(@PathVariable("guildId") String guildId, @PathVariable("playerId") String playerId) {
+        return guildPlayerService.getGuildPlayer(guildId, playerId);
+    }
+}

@@ -8,8 +8,8 @@ import java.util.Date;
 import java.util.Set;
 
 @Entity
-@Table(name = "GUILD")
-public class Guild {
+@Table(name = "PLAYER")
+public class Player {
 
     @Id
     private String id;
@@ -17,11 +17,11 @@ public class Guild {
     @CreatedDate
     private Date created = new Date();
 
-    @OneToMany(mappedBy = "guild", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "player", fetch = FetchType.LAZY)
     Set<GuildPlayer> guildPlayers;
 
-    public Guild() {}
-    public Guild(String id) {
+    public Player() {}
+    public Player(String id) {
         this.id = id;
     }
 
