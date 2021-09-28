@@ -27,6 +27,9 @@ public class InteractionResponseData {
 
 
     public InteractionResponseData() {}
+    public InteractionResponseData(String content) {
+        this.content = content;
+    }
 
     public Boolean getTts() {
         return tts;
@@ -50,6 +53,10 @@ public class InteractionResponseData {
 
     public void setEmbeds(List<Embed> embeds) {
         this.embeds = embeds;
+    }
+
+    public void setEmbed(Embed embed) {
+        this.embeds = List.of(embed);
     }
 
     public AllowedMentions getAllowedMentions() {

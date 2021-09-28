@@ -2,6 +2,9 @@ package lilbunnyrabbit.matchmaking.service.discord.command;
 
 import lilbunnyrabbit.matchmaking.api.request.discord.InteractionRequest;
 import lilbunnyrabbit.matchmaking.api.request.discord.InteractionRequestData;
+import lilbunnyrabbit.matchmaking.api.request.discord.Member;
+import lilbunnyrabbit.matchmaking.api.request.discord.User;
+import lilbunnyrabbit.matchmaking.api.response.discord.Embed;
 import lilbunnyrabbit.matchmaking.api.response.discord.InteractionResponse;
 import lilbunnyrabbit.matchmaking.api.response.discord.InteractionResponseData;
 import lilbunnyrabbit.matchmaking.entity.Guild;
@@ -10,6 +13,7 @@ import lilbunnyrabbit.matchmaking.entity.Player;
 import lilbunnyrabbit.matchmaking.entity.guildPlayer.GuildPlayerId;
 import lilbunnyrabbit.matchmaking.repository.GuildPlayerRepository;
 import lilbunnyrabbit.matchmaking.service.guild.GuildService;
+import lilbunnyrabbit.matchmaking.service.guildPlayer.GuildPlayerService;
 import lilbunnyrabbit.matchmaking.service.player.PlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,7 +30,7 @@ public class DiscordCommandServiceImpl  implements DiscordCommandService {
     private PlayerService playerService;
 
     @Autowired
-    private GuildPlayerRepository guildPlayerRepository;
+    private GuildPlayerService guildPlayerService;
 
     public InteractionResponse commandHandler(InteractionRequest interaction) {
         InteractionRequestData data = interaction.getData();
@@ -36,55 +40,62 @@ public class DiscordCommandServiceImpl  implements DiscordCommandService {
         if (commandName == null) return null;
 
         return switch (commandName) {
-            default -> this.exampleCommand(interaction);
+            case "tmp_init_guild" -> this.guildInitCommand(interaction);
+            case "register" -> this.registerCommand(interaction);
+            default -> null;
         };
     }
 
-    private InteractionResponse exampleCommand(InteractionRequest interaction) {
-        InteractionResponseData responseData = new InteractionResponseData();
 
-        Guild guild = guildService.createGuild("guild1");
-        Player player = playerService.createPlayer("player1");
-        guildPlayerRepository.save(new GuildPlayer(guild, player));
+    private InteractionResponse guildInitCommand(InteractionRequest interaction) {
+        String guildId = interaction.getGuildId();
+        if (guildId == null) {
+            return CommandHelper.NOT_DM_COMMAND;
+        }
 
-        Optional<GuildPlayer> guildPlayerOptional = guildPlayerRepository.findById(new GuildPlayerId(guild, player));
-        guildPlayerOptional.ifPresent(guildPlayer -> System.out.println(guildPlayer.toString()));
+        Guild guild = guildService.createGuild(guildId);
 
-//        String guildId = interaction.getGuildId();
-//
-//        if (guildId == null) {
-//            Embed embed = new Embed();
-//            embed.setColor(0xcc0000);
-//            embed.setDescription("This command is only available in guilds!");
-//            responseData.setEmbeds(List.of(embed));
-//            return new InteractionResponse(InteractionResponse.Type.CHANNEL_MESSAGE_WITH_SOURCE, responseData);
-//        }
-//
-//        Guild guild = guildService.getGuild(guildId);
-//        Embed embed = new Embed();
-//
-//        if (guild == null) {
-//            guild = guildService.createGuild(guildId);
-//            embed.setColor(0x00cc00);
-//            embed.setTitle("Guild created!");
-//
-//            Component.Button yayButton = new Component.Button(Component.Button.Style.PRIMARY, "yay");
-//            yayButton.setLabel("Yay!");
-//
-//            Component.Button nayButton = new Component.Button(Component.Button.Style.DANGER, "nay");
-//            nayButton.setLabel("Nay!");
-//
-//            responseData.setComponents(List.of(new Component.ActionRow(Arrays.asList(yayButton, nayButton))));
-//        } else {
-//            embed.setColor(0xcc5f86);
-//            embed.setTitle("Guild exists!");
-//        }
-//
-//        embed.setDescription(guild.getId());
-//        responseData.setEmbeds(List.of(embed));
+        if (guild == null) {
+            return CommandHelper.Error("Failed to init guild", null);
+        } else {
+            return CommandHelper.Success("Guild init", "ID: " + guildId);
+        }
+    }
 
+    private InteractionResponse registerCommand(InteractionRequest interaction) {
+        String guildId = interaction.getGuildId();
+        if (guildId == null) return CommandHelper.NOT_DM_COMMAND;
 
+        Member member = interaction.getMember();
+        if (member == null) return CommandHelper.Error("Missing data", "Member");
 
-        return new InteractionResponse(InteractionResponse.Type.CHANNEL_MESSAGE_WITH_SOURCE, responseData);
+        User user = member.getUser();
+        if (user == null) return CommandHelper.Error("Missing data", "User");
+
+        String playerId = user.getId();
+        if (playerId == null) return CommandHelper.Error("Missing data", "User Id");
+
+        Guild guild = guildService.getGuild(guildId);
+        if (guild == null) return CommandHelper.Error("Invalid server", "This server is currently not supported!");
+
+        StringBuilder responseMessage = new StringBuilder();
+
+        Player player = playerService.getPlayer(playerId);
+        if (player == null) {
+            player = playerService.createPlayer(playerId);
+            responseMessage.append("- Created Player\n");
+        }
+
+        GuildPlayer guildPlayer = guildPlayerService.getGuildPlayer(guildId, playerId);
+        if (guildPlayer == null) {
+            guildPlayerService.createGuildPlayer(guild, player);
+            responseMessage.append("- Created Guild Player\n");
+        }
+
+        if (responseMessage.isEmpty()) {
+            return CommandHelper.Error("Player already exists", null);
+        } else {
+            return CommandHelper.Success("Player registered", responseMessage.toString());
+        }
     }
 }
