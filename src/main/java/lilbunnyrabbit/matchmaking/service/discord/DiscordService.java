@@ -1,4 +1,4 @@
-package lilbunnyrabbit.matchmaking.service;
+package lilbunnyrabbit.matchmaking.service.discord;
 
 import lilbunnyrabbit.matchmaking.api.request.discord.InteractionRequest;
 import lilbunnyrabbit.matchmaking.api.response.discord.InteractionResponse;

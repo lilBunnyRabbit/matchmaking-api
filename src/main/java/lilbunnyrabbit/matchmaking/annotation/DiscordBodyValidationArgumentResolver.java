@@ -8,6 +8,7 @@ import org.bouncycastle.asn1.x509.AlgorithmIdentifier;
 import org.bouncycastle.asn1.x509.SubjectPublicKeyInfo;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.util.encoders.Hex;
+import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.core.MethodParameter;
 import org.springframework.util.StreamUtils;
 import org.springframework.web.bind.support.WebDataBinderFactory;
@@ -48,6 +49,8 @@ public class DiscordBodyValidationArgumentResolver implements HandlerMethodArgum
         if (httpServletRequest == null) throw new Error("httpServletRequest doesn't exist");
 
         String rawBody = StreamUtils.copyToString(httpServletRequest.getInputStream(), StandardCharsets.UTF_8);
+        System.out.println("body: " + new JSONObject(rawBody).toString(4)); // TODO: temp
+
         if (this.validate) {
             String signature = httpServletRequest.getHeader("X-Signature-Ed25519");
             String timestamp = httpServletRequest.getHeader("X-Signature-Timestamp");
