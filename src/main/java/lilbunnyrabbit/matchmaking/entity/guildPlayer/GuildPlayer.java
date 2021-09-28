@@ -3,6 +3,7 @@ package lilbunnyrabbit.matchmaking.entity.guildPlayer;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lilbunnyrabbit.matchmaking.entity.Guild;
 import lilbunnyrabbit.matchmaking.entity.Player;
+import lilbunnyrabbit.matchmaking.entity.Queue;
 
 import javax.persistence.*;
 
@@ -15,21 +16,36 @@ public class GuildPlayer {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("guildId")
-    @JoinColumn(name = "guild_id")
+    @JoinColumn(name = "guildId")
     @JsonIgnore
     private Guild guild;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("playerId")
-    @JoinColumn(name = "player_id")
+    @JoinColumn(name = "playerId")
     @JsonIgnore
     private Player player;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "queueId")
+    @JsonIgnore
+    private Queue queue;
+
+    private Integer mmr;
+
+    // Todo: private Team team;
+    // Todo: private RankType rankType;
 
     public GuildPlayer() {}
     public GuildPlayer(Guild guild, Player player) {
         this.id = new GuildPlayerId(guild, player);
         this.guild = guild;
         this.player = player;
+    }
+
+    @Override
+    public String toString() {
+        return "<@" + this.id.getPlayerId() + ">";
     }
 
     public GuildPlayerId getId() {
@@ -54,5 +70,21 @@ public class GuildPlayer {
 
     public void setPlayer(Player player) {
         this.player = player;
+    }
+
+    public Queue getQueue() {
+        return queue;
+    }
+
+    public void setQueue(Queue queue) {
+        this.queue = queue;
+    }
+
+    public Integer getMmr() {
+        return mmr;
+    }
+
+    public void setMmr(Integer mmr) {
+        this.mmr = mmr;
     }
 }

@@ -20,6 +20,9 @@ public class Guild {
     @OneToMany(mappedBy = "guild", fetch = FetchType.LAZY)
     Set<GuildPlayer> guildPlayers;
 
+    @OneToMany(mappedBy = "guild", fetch = FetchType.LAZY)
+    Set<Queue> queues;
+
     public Guild() {}
     public Guild(String id) {
         this.id = id;
@@ -47,5 +50,13 @@ public class Guild {
 
     public void setGuildPlayers(Set<GuildPlayer> guildPlayers) {
         this.guildPlayers = guildPlayers;
+    }
+
+    public Set<Queue> getQueues() {
+        return queues;
+    }
+
+    public void setQueues(Set<Queue> queues) {
+        this.queues = queues;
     }
 }

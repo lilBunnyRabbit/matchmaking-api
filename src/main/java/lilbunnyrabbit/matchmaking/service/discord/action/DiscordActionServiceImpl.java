@@ -2,6 +2,8 @@ package lilbunnyrabbit.matchmaking.service.discord.action;
 
 import lilbunnyrabbit.matchmaking.api.request.discord.InteractionRequest;
 import lilbunnyrabbit.matchmaking.api.request.discord.InteractionRequestData;
+import lilbunnyrabbit.matchmaking.api.request.discord.Member;
+import lilbunnyrabbit.matchmaking.api.request.discord.User;
 import lilbunnyrabbit.matchmaking.api.response.discord.InteractionResponse;
 import lilbunnyrabbit.matchmaking.api.response.discord.InteractionResponseData;
 import lilbunnyrabbit.matchmaking.service.guild.GuildService;
@@ -28,7 +30,15 @@ public class DiscordActionServiceImpl implements DiscordActionService {
 
     private InteractionResponse exampleAction(InteractionRequest interaction) {
         InteractionResponseData data = new InteractionResponseData();
+        Member member = interaction.getMember();
+
         data.setContent("Hello from message");
+        if (member != null) {
+            User user = member.getUser();
+            if (user != null) {
+                data.setContent("<@" + user.getId() + "> thank you for pressing that button...");
+            }
+        }
 
         return new InteractionResponse(InteractionResponse.Type.CHANNEL_MESSAGE_WITH_SOURCE, data);
     }

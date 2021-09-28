@@ -9,10 +9,10 @@ import java.io.Serializable;
 
 @Embeddable
 public class GuildPlayerId implements Serializable {
-    @Column(name = "guild_id")
+    @Column(name = "guildId")
     private String guildId;
 
-    @Column(name = "player_id")
+    @Column(name = "playerId")
     private String playerId;
 
     public GuildPlayerId() {}
