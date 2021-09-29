@@ -33,6 +33,11 @@ public class Component {
             this.components = components;
         }
 
+        public ActionRow(Component component) {
+            this.type = Type.ACTION_ROW;
+            this.components = List.of(component);
+        }
+
         public List<Component> getComponents() {
             return components;
         }
@@ -65,10 +70,9 @@ public class Component {
             this.type = Type.BUTTON;
         }
 
-        public Button(Integer style, String customId) {
+        public Button(Integer style) {
             this.type = Type.BUTTON;
             this.style = style;
-            this.customId = customId;
         }
 
         public static final class Style {

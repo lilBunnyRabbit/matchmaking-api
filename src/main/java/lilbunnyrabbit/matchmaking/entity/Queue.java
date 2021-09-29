@@ -28,6 +28,8 @@ public class Queue {
     @OneToMany(mappedBy = "queue", fetch = FetchType.LAZY)
     Set<GuildPlayer> players;
 
+    private String lobbyChannel;
+
     // TODO: private QueueType queueType;
 
     public Queue() {}
@@ -78,5 +80,13 @@ public class Queue {
 
     public void setPlayers(Set<GuildPlayer> players) {
         this.players = players;
+    }
+
+    public String getLobbyChannel() {
+        return lobbyChannel;
+    }
+
+    public void setLobbyChannel(String lobbyChannel) {
+        this.lobbyChannel = lobbyChannel;
     }
 }

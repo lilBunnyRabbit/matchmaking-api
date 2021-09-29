@@ -82,4 +82,8 @@ public class InteractionResponseData {
     public void setComponents(List<Component> components) {
         this.components = components;
     }
+
+    public void setComponent(Component component) {
+        this.components = List.of(component);
+    }
 }

@@ -1,24 +1,34 @@
 package lilbunnyrabbit.matchmaking.service.discord.command;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import lilbunnyrabbit.matchmaking.api.request.discord.InteractionRequest;
 import lilbunnyrabbit.matchmaking.api.request.discord.InteractionRequestData;
 import lilbunnyrabbit.matchmaking.api.request.discord.Member;
 import lilbunnyrabbit.matchmaking.api.request.discord.User;
+import lilbunnyrabbit.matchmaking.api.response.discord.Component;
+import lilbunnyrabbit.matchmaking.api.response.discord.Embed;
 import lilbunnyrabbit.matchmaking.api.response.discord.InteractionResponse;
+import lilbunnyrabbit.matchmaking.api.response.discord.InteractionResponseData;
 import lilbunnyrabbit.matchmaking.entity.Guild;
 import lilbunnyrabbit.matchmaking.entity.Queue;
 import lilbunnyrabbit.matchmaking.entity.guildPlayer.GuildPlayer;
 import lilbunnyrabbit.matchmaking.entity.Player;
 import lilbunnyrabbit.matchmaking.helpers.CommandHelper;
+import lilbunnyrabbit.matchmaking.service.discord.api.DiscordApiService;
+import lilbunnyrabbit.matchmaking.service.discord.api.request.VoiceChannelRequest;
+import lilbunnyrabbit.matchmaking.service.discord.api.response.InviteResponse;
+import lilbunnyrabbit.matchmaking.service.discord.api.response.VoiceChannelResponse;
 import lilbunnyrabbit.matchmaking.service.guild.GuildService;
 import lilbunnyrabbit.matchmaking.service.guildPlayer.GuildPlayerService;
 import lilbunnyrabbit.matchmaking.service.player.PlayerService;
 import lilbunnyrabbit.matchmaking.service.queue.QueueService;
+import org.bouncycastle.asn1.ocsp.ResponseData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -35,6 +45,9 @@ public class DiscordCommandServiceImpl  implements DiscordCommandService {
 
     @Autowired
     private QueueService queueService;
+
+    @Autowired
+    private DiscordApiService discordApiService;
 
     public InteractionResponse commandHandler(InteractionRequest interaction) {
         InteractionRequestData data = interaction.getData();
@@ -131,10 +144,34 @@ public class DiscordCommandServiceImpl  implements DiscordCommandService {
 
         Queue queue = queueService.createQueueWithPlayers(guild, players);
 
-        if (queue == null) {
-            return CommandHelper.Error("Failed to create Queue", null);
-        } else {
-            return CommandHelper.Success("Queue started", Arrays.toString(players.toArray()));
+        VoiceChannelResponse voiceChannelResponse = discordApiService.createVoiceChannel(guildId, new VoiceChannelRequest("VC - " + queue.getId()));
+        if (voiceChannelResponse == null) {
+            // TODO: undo the whole thing
+            return CommandHelper.Error("Failed to create queue VC", null);
         }
+
+        InteractionResponseData responseData = new InteractionResponseData();
+
+        InviteResponse inviteResponse = discordApiService.createChannelInvite(voiceChannelResponse.getId());
+        String channelLink = inviteResponse == null ? null : inviteResponse.createLink();
+
+        if (channelLink != null) {
+            Component.Button vcLinkButton = new Component.Button(Component.Button.Style.LINK);
+            vcLinkButton.setLabel("Lobby");
+            vcLinkButton.setUrl(channelLink);
+
+            responseData.setComponent(new Component.ActionRow(vcLinkButton));
+        }
+
+        Embed embed = new Embed();
+        embed.setTitle("Queue created!");
+        embed.setDescription("ID: " + queue.getId());
+        embed.setColor(0x00cc00);
+        responseData.setEmbed(embed);
+
+        return new InteractionResponse(
+                InteractionResponse.Type.CHANNEL_MESSAGE_WITH_SOURCE,
+                responseData
+        );
     }
 }
