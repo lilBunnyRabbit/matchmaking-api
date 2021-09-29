@@ -33,7 +33,7 @@ public class Component {
             this.components = components;
         }
 
-        public ActionRow(Component component) {
+        public ActionRow(Component ...component) {
             this.type = Type.ACTION_ROW;
             this.components = List.of(component);
         }

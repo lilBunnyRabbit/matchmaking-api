@@ -55,7 +55,7 @@ public class InteractionResponseData {
         this.embeds = embeds;
     }
 
-    public void setEmbed(Embed embed) {
+    public void setEmbed(Embed... embed) {
         this.embeds = List.of(embed);
     }
 
@@ -83,7 +83,7 @@ public class InteractionResponseData {
         this.components = components;
     }
 
-    public void setComponent(Component component) {
+    public void setComponent(Component... component) {
         this.components = List.of(component);
     }
 }

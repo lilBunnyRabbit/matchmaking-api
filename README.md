@@ -11,4 +11,6 @@ spring.datasource.password={DB_PASSWORD}
 `discord.properties`
 ```yaml
 publicKey={APP_PUBLIC_KEY}
+applicationId={APP_APPLICATION_ID}
+botToken={APP_BOT_TOKEN}
 ```

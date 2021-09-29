@@ -13,7 +13,9 @@ import lilbunnyrabbit.matchmaking.entity.Guild;
 import lilbunnyrabbit.matchmaking.entity.Queue;
 import lilbunnyrabbit.matchmaking.entity.guildPlayer.GuildPlayer;
 import lilbunnyrabbit.matchmaking.entity.Player;
+import lilbunnyrabbit.matchmaking.helpers.ButtonHelper;
 import lilbunnyrabbit.matchmaking.helpers.CommandHelper;
+import lilbunnyrabbit.matchmaking.helpers.EmbedHelper;
 import lilbunnyrabbit.matchmaking.service.discord.api.DiscordApiService;
 import lilbunnyrabbit.matchmaking.service.discord.api.request.VoiceChannelRequest;
 import lilbunnyrabbit.matchmaking.service.discord.api.response.InviteResponse;
@@ -156,18 +158,14 @@ public class DiscordCommandServiceImpl  implements DiscordCommandService {
         String channelLink = inviteResponse == null ? null : inviteResponse.createLink();
 
         if (channelLink != null) {
-            Component.Button vcLinkButton = new Component.Button(Component.Button.Style.LINK);
-            vcLinkButton.setLabel("Lobby");
-            vcLinkButton.setUrl(channelLink);
-
-            responseData.setComponent(new Component.ActionRow(vcLinkButton));
+            responseData.setComponent(new Component.ActionRow(
+                    ButtonHelper.JOIN_QUEUE(),
+                    ButtonHelper.LEAVE_QUEUE(),
+                    ButtonHelper.LOBBY(channelLink)
+            ));
         }
 
-        Embed embed = new Embed();
-        embed.setTitle("Queue created!");
-        embed.setDescription("ID: " + queue.getId());
-        embed.setColor(0x00cc00);
-        responseData.setEmbed(embed);
+        responseData.setEmbed(EmbedHelper.QUEUE_STARTED(queue.getId()));
 
         return new InteractionResponse(
                 InteractionResponse.Type.CHANNEL_MESSAGE_WITH_SOURCE,

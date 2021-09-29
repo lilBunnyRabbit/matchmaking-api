@@ -10,21 +10,15 @@ public class CommandHelper {
             new InteractionResponseData("This command is not a DM command")
     );
 
-    public static InteractionResponse Error(String title, String message) {
-        return GenericEmbedInteractionResponse(title, message, 0xcc0000);
+    public static InteractionResponse Success(String title, String description) {
+        return GenericEmbedInteractionResponse(EmbedHelper.SUCCESS(title, description));
     }
 
-    public static InteractionResponse Success(String title, String message) {
-        return GenericEmbedInteractionResponse(title, message, 0x00cc00);
+    public static InteractionResponse Error(String title, String description) {
+        return GenericEmbedInteractionResponse(EmbedHelper.ERROR(title, description));
     }
 
-    private static InteractionResponse GenericEmbedInteractionResponse(String title, String message, int color) {
-        Embed embed = new Embed();
-        embed.setColor(color);
-
-        if (title != null && !title.isBlank()) embed.setTitle(title);
-        if (message != null && !message.isBlank()) embed.setDescription(message);
-
+    private static InteractionResponse GenericEmbedInteractionResponse(Embed embed) {
         InteractionResponseData responseData = new InteractionResponseData();
         responseData.setEmbed(embed);
 
