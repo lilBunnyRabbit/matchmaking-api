@@ -1,6 +1,6 @@
 package lilbunnyrabbit.matchmaking.model.discord;
 
-public class Emoji {
+public class DiscordEmoji {
     public static class Component {
         private String id;
         private String name;

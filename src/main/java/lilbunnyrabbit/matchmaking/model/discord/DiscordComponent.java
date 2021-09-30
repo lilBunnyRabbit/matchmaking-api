@@ -6,15 +6,15 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
-public class Component {
+public class DiscordComponent {
 
     @NotEmpty
     protected Integer type; // Component.Type
 
-    public Component() {
+    public DiscordComponent() {
     }
 
-    public Component(Integer type) {
+    public DiscordComponent(Integer type) {
         this.type = type;
     }
 
@@ -28,35 +28,35 @@ public class Component {
         }
     }
 
-    public static class ActionRow extends Component {
+    public static class ActionRow extends DiscordComponent {
 
         @NotEmpty
-        private List<Component> components;
+        private List<DiscordComponent> components;
 
         public ActionRow() {
             this.type = Type.ACTION_ROW;
         }
 
-        public ActionRow(List<Component> components) {
+        public ActionRow(List<DiscordComponent> components) {
             this.type = Type.ACTION_ROW;
             this.components = components;
         }
 
-        public ActionRow(Component... component) {
+        public ActionRow(DiscordComponent... component) {
             this.type = Type.ACTION_ROW;
             this.components = List.of(component);
         }
 
-        public List<Component> getComponents() {
+        public List<DiscordComponent> getComponents() {
             return components;
         }
 
-        public void setComponents(List<Component> components) {
+        public void setComponents(List<DiscordComponent> components) {
             this.components = components;
         }
     }
 
-    public static class Button extends Component {
+    public static class Button extends DiscordComponent {
 
         @NotEmpty
         private Integer style;
@@ -65,7 +65,7 @@ public class Component {
         private String label;
 
         @JsonInclude(JsonInclude.Include.NON_NULL)
-        private Emoji.Component emoji;
+        private DiscordEmoji.Component emoji;
 
         @JsonInclude(JsonInclude.Include.NON_NULL)
         @JsonProperty("custom_id")
@@ -113,11 +113,11 @@ public class Component {
             this.label = label;
         }
 
-        public Emoji.Component getEmoji() {
+        public DiscordEmoji.Component getEmoji() {
             return emoji;
         }
 
-        public void setEmoji(Emoji.Component emoji) {
+        public void setEmoji(DiscordEmoji.Component emoji) {
             this.emoji = emoji;
         }
 
@@ -146,7 +146,7 @@ public class Component {
         }
     }
 
-    public static class SelectMenu extends Component {
+    public static class SelectMenu extends DiscordComponent {
 
         @NotEmpty
         @JsonProperty("custom_id")
@@ -199,7 +199,7 @@ public class Component {
             private String description;
 
             @JsonInclude(JsonInclude.Include.NON_NULL)
-            private Emoji.Component emoji;
+            private DiscordEmoji.Component emoji;
 
             @JsonInclude(JsonInclude.Include.NON_NULL)
             @JsonProperty("default")
@@ -237,11 +237,11 @@ public class Component {
                 this.description = description;
             }
 
-            public Emoji.Component getEmoji() {
+            public DiscordEmoji.Component getEmoji() {
                 return emoji;
             }
 
-            public void setEmoji(Emoji.Component emoji) {
+            public void setEmoji(DiscordEmoji.Component emoji) {
                 this.emoji = emoji;
             }
 

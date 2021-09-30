@@ -7,34 +7,34 @@ import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class InteractionResponse {
-    public static final InteractionResponse PONG = new InteractionResponse(Type.PONG);
-    public static final InteractionResponse DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE = new InteractionResponse(Type.DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE);
-    public static final InteractionResponse DEFERRED_UPDATE_MESSAGE = new InteractionResponse(Type.DEFERRED_UPDATE_MESSAGE);
+public class DiscordInteractionResponse {
+    public static final DiscordInteractionResponse PONG = new DiscordInteractionResponse(Type.PONG);
+    public static final DiscordInteractionResponse DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE = new DiscordInteractionResponse(Type.DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE);
+    public static final DiscordInteractionResponse DEFERRED_UPDATE_MESSAGE = new DiscordInteractionResponse(Type.DEFERRED_UPDATE_MESSAGE);
 
     @NotEmpty
     private Integer type; // InteractionResponse.Type
 
-    private InteractionResponse.Data data;
+    private DiscordInteractionResponse.Data data;
 
-    public InteractionResponse() {
+    public DiscordInteractionResponse() {
     }
 
-    public InteractionResponse(Integer type) {
+    public DiscordInteractionResponse(Integer type) {
         this.type = type;
     }
 
-    public InteractionResponse(Integer type, Data data) {
+    public DiscordInteractionResponse(Integer type, Data data) {
         this.type = type;
         this.data = data;
     }
 
-    public static InteractionResponse CHANNEL_MESSAGE_WITH_SOURCE(Data data) {
-        return new InteractionResponse(Type.CHANNEL_MESSAGE_WITH_SOURCE, data);
+    public static DiscordInteractionResponse CHANNEL_MESSAGE_WITH_SOURCE(Data data) {
+        return new DiscordInteractionResponse(Type.CHANNEL_MESSAGE_WITH_SOURCE, data);
     }
 
-    public static InteractionResponse UPDATE_MESSAGE(Data data) {
-        return new InteractionResponse(Type.UPDATE_MESSAGE, data);
+    public static DiscordInteractionResponse UPDATE_MESSAGE(Data data) {
+        return new DiscordInteractionResponse(Type.UPDATE_MESSAGE, data);
     }
 
     public Integer getType() {
@@ -72,14 +72,14 @@ public class InteractionResponse {
 
         private String content;
 
-        private List<Embed> embeds;
+        private List<DiscordEmbed> embeds;
 
         @JsonProperty("allowed_mentions")
-        private AllowedMentions allowedMentions;
+        private DiscordAllowedMentions allowedMentions;
 
         private Integer flags;
 
-        private List<Component> components;
+        private List<DiscordComponent> components;
 
         public Data() {
         }
@@ -88,11 +88,11 @@ public class InteractionResponse {
             this.content = content;
         }
 
-        public Data(List<Embed> embeds) {
+        public Data(List<DiscordEmbed> embeds) {
             this.embeds = embeds;
         }
 
-        public Data(Embed... embeds) {
+        public Data(DiscordEmbed... embeds) {
             this.embeds = List.of(embeds);
         }
 
@@ -112,23 +112,23 @@ public class InteractionResponse {
             this.content = content;
         }
 
-        public List<Embed> getEmbeds() {
+        public List<DiscordEmbed> getEmbeds() {
             return embeds;
         }
 
-        public void setEmbeds(List<Embed> embeds) {
+        public void setEmbeds(List<DiscordEmbed> embeds) {
             this.embeds = embeds;
         }
 
-        public void setEmbeds(Embed... embeds) {
+        public void setEmbeds(DiscordEmbed... embeds) {
             this.embeds = List.of(embeds);
         }
 
-        public AllowedMentions getAllowedMentions() {
+        public DiscordAllowedMentions getAllowedMentions() {
             return allowedMentions;
         }
 
-        public void setAllowedMentions(AllowedMentions allowedMentions) {
+        public void setAllowedMentions(DiscordAllowedMentions allowedMentions) {
             this.allowedMentions = allowedMentions;
         }
 
@@ -140,15 +140,15 @@ public class InteractionResponse {
             this.flags = flags;
         }
 
-        public List<Component> getComponents() {
+        public List<DiscordComponent> getComponents() {
             return components;
         }
 
-        public void setComponents(List<Component> components) {
+        public void setComponents(List<DiscordComponent> components) {
             this.components = components;
         }
 
-        public void setComponents(Component... components) {
+        public void setComponents(DiscordComponent... components) {
             this.components = List.of(components);
         }
 

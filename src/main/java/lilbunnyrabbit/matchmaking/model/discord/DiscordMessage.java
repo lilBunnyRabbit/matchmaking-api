@@ -1,6 +1,6 @@
 package lilbunnyrabbit.matchmaking.model.discord;
 
-public class Message {
+public class DiscordMessage {
     private String id;
     // TODO
 

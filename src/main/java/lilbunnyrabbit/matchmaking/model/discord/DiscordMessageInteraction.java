@@ -2,7 +2,7 @@ package lilbunnyrabbit.matchmaking.model.discord;
 
 import javax.validation.constraints.NotEmpty;
 
-public class MessageInteraction {
+public class DiscordMessageInteraction {
 
     @NotEmpty
     private String id;
@@ -14,9 +14,9 @@ public class MessageInteraction {
     private String name;
 
     @NotEmpty
-    private User user;
+    private DiscordUser user;
 
-    public MessageInteraction() {
+    public DiscordMessageInteraction() {
     }
 
     public String getId() {
@@ -43,11 +43,11 @@ public class MessageInteraction {
         this.name = name;
     }
 
-    public User getUser() {
+    public DiscordUser getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(DiscordUser user) {
         this.user = user;
     }
 }

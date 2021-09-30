@@ -3,8 +3,8 @@ package lilbunnyrabbit.matchmaking.service.discord.api;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lilbunnyrabbit.matchmaking.config.DiscordConfiguration;
-import lilbunnyrabbit.matchmaking.model.discord.Channel;
-import lilbunnyrabbit.matchmaking.model.discord.Invite;
+import lilbunnyrabbit.matchmaking.model.discord.DiscordChannel;
+import lilbunnyrabbit.matchmaking.model.discord.DiscordInvite;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
@@ -61,23 +61,23 @@ public class DiscordApiServiceImpl implements DiscordApiService {
         return this.BASE_URL + "/channels/" + channelId;
     }
 
-    public Channel createVoiceChannel(String guildId, Channel channel) {
+    public DiscordChannel createVoiceChannel(String guildId, DiscordChannel channel) {
         String url = this.getGuildPath(guildId) + "/channels";
         HttpHeaders headers = this.getJsonHeaders();
-        HttpEntity<Channel> entity = new HttpEntity<>(channel, headers);
+        HttpEntity<DiscordChannel> entity = new HttpEntity<>(channel, headers);
 
         this.printRequest("POST", url, entity);
 
-        return this.restTemplate.postForObject(url, entity, Channel.class);
+        return this.restTemplate.postForObject(url, entity, DiscordChannel.class);
     }
 
     @Override
-    public Invite createChannelInvite(String channelId) { // Todo: with params
+    public DiscordInvite createChannelInvite(String channelId) { // Todo: with params
         String url = this.getChannelPath(channelId) + "/invites";
         HttpEntity<String> entity = new HttpEntity<>("{}", this.getJsonHeaders());
 
         this.printRequest("POST", url, entity);
 
-        return this.restTemplate.postForObject(url, entity, Invite.class);
+        return this.restTemplate.postForObject(url, entity, DiscordInvite.class);
     }
 }

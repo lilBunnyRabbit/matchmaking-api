@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
-public class ApplicationCommand {
+public class DiscordApplicationCommand {
 
     @NotEmpty
     private String id;
@@ -24,7 +24,7 @@ public class ApplicationCommand {
     @NotEmpty
     private String description;
 
-    private List<ApplicationCommand.Option> options;
+    private List<DiscordApplicationCommand.Option> options;
 
     @JsonProperty("default_permission")
     private Boolean defaultPermission;
@@ -32,7 +32,7 @@ public class ApplicationCommand {
     @NotEmpty
     private String version;
 
-    public ApplicationCommand() {
+    public DiscordApplicationCommand() {
     }
 
     public String getId() {
@@ -130,9 +130,9 @@ public class ApplicationCommand {
 
         private Boolean required;
 
-        private List<ApplicationCommand.Option.Choice> choices;
+        private List<DiscordApplicationCommand.Option.Choice> choices;
 
-        private List<ApplicationCommand.Option> options;
+        private List<DiscordApplicationCommand.Option> options;
 
         @JsonProperty("channel_types")
         private List<Integer> channelTypes; // Channel.Type
@@ -254,7 +254,7 @@ public class ApplicationCommand {
 
             private Integer value; // ApplicationCommand.Option.Type
 
-            private List<ApplicationCommand.InteractionData.Option> options;
+            private List<DiscordApplicationCommand.InteractionData.Option> options;
 
             public Option() {
             }

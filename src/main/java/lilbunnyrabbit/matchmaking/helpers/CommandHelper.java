@@ -1,20 +1,20 @@
 package lilbunnyrabbit.matchmaking.helpers;
 
-import lilbunnyrabbit.matchmaking.model.discord.Embed;
-import lilbunnyrabbit.matchmaking.model.discord.InteractionResponse;
+import lilbunnyrabbit.matchmaking.model.discord.DiscordEmbed;
+import lilbunnyrabbit.matchmaking.model.discord.DiscordInteractionResponse;
 
 public class CommandHelper {
-    public static InteractionResponse NOT_DM_COMMAND = InteractionResponse.CHANNEL_MESSAGE_WITH_SOURCE(new InteractionResponse.Data("This command is not a DM command"));
+    public static DiscordInteractionResponse NOT_DM_COMMAND = DiscordInteractionResponse.CHANNEL_MESSAGE_WITH_SOURCE(new DiscordInteractionResponse.Data("This command is not a DM command"));
 
-    public static InteractionResponse Success(String title, String description) {
+    public static DiscordInteractionResponse Success(String title, String description) {
         return GenericEmbedInteractionResponse(EmbedHelper.SUCCESS(title, description));
     }
 
-    public static InteractionResponse Error(String title, String description) {
+    public static DiscordInteractionResponse Error(String title, String description) {
         return GenericEmbedInteractionResponse(EmbedHelper.ERROR(title, description));
     }
 
-    private static InteractionResponse GenericEmbedInteractionResponse(Embed embed) {
-        return InteractionResponse.CHANNEL_MESSAGE_WITH_SOURCE(new InteractionResponse.Data(embed));
+    private static DiscordInteractionResponse GenericEmbedInteractionResponse(DiscordEmbed embed) {
+        return DiscordInteractionResponse.CHANNEL_MESSAGE_WITH_SOURCE(new DiscordInteractionResponse.Data(embed));
     }
 }

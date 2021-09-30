@@ -2,7 +2,7 @@ package lilbunnyrabbit.matchmaking.model.discord;
 
 import javax.validation.constraints.NotEmpty;
 
-public class Overwrite {
+public class DiscordOverwrite {
 
     @NotEmpty
     private String id;
@@ -16,7 +16,7 @@ public class Overwrite {
     @NotEmpty
     private String deny;
 
-    public Overwrite() {
+    public DiscordOverwrite() {
     }
 
     public String getId() {

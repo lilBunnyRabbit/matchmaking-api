@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
-public class Interaction {
+public class DiscordInteraction {
 
     @NotEmpty
     private String id;
@@ -25,9 +25,9 @@ public class Interaction {
     @JsonProperty("channel_id")
     private String channelId;
 
-    private Member member;
+    private DiscordMember member;
 
-    private User user;
+    private DiscordUser user;
 
     @NotEmpty
     private String token;
@@ -35,9 +35,9 @@ public class Interaction {
     @NotEmpty
     private Integer version;
 
-    private Message message;
+    private DiscordMessage message;
 
-    public Interaction() {
+    public DiscordInteraction() {
     }
 
     public String getId() {
@@ -88,19 +88,19 @@ public class Interaction {
         this.channelId = channelId;
     }
 
-    public Member getMember() {
+    public DiscordMember getMember() {
         return member;
     }
 
-    public void setMember(Member member) {
+    public void setMember(DiscordMember member) {
         this.member = member;
     }
 
-    public User getUser() {
+    public DiscordUser getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(DiscordUser user) {
         this.user = user;
     }
 
@@ -120,11 +120,11 @@ public class Interaction {
         this.version = version;
     }
 
-    public Message getMessage() {
+    public DiscordMessage getMessage() {
         return message;
     }
 
-    public void setMessage(Message message) {
+    public void setMessage(DiscordMessage message) {
         this.message = message;
     }
 
@@ -149,9 +149,9 @@ public class Interaction {
         @NotEmpty
         private Integer type; // ApplicationCommand.Type
 
-        private Interaction.ResolvedData resolved;
+        private DiscordInteraction.ResolvedData resolved;
 
-        private List<ApplicationCommand.InteractionData.Option> options;
+        private List<DiscordApplicationCommand.InteractionData.Option> options;
 
         @JsonProperty("custom_id")
         private String customId;
@@ -159,7 +159,7 @@ public class Interaction {
         @JsonProperty("component_type")
         private Integer componentType;
 
-        private List<Component.SelectMenu.Option> values;
+        private List<DiscordComponent.SelectMenu.Option> values;
 
         @JsonProperty("target_id")
         private String targetId;
@@ -199,11 +199,11 @@ public class Interaction {
             this.resolved = resolved;
         }
 
-        public List<ApplicationCommand.InteractionData.Option> getOptions() {
+        public List<DiscordApplicationCommand.InteractionData.Option> getOptions() {
             return options;
         }
 
-        public void setOptions(List<ApplicationCommand.InteractionData.Option> options) {
+        public void setOptions(List<DiscordApplicationCommand.InteractionData.Option> options) {
             this.options = options;
         }
 
@@ -223,11 +223,11 @@ public class Interaction {
             this.componentType = componentType;
         }
 
-        public List<Component.SelectMenu.Option> getValues() {
+        public List<DiscordComponent.SelectMenu.Option> getValues() {
             return values;
         }
 
-        public void setValues(List<Component.SelectMenu.Option> values) {
+        public void setValues(List<DiscordComponent.SelectMenu.Option> values) {
             this.values = values;
         }
 
@@ -242,56 +242,56 @@ public class Interaction {
 
     public static class ResolvedData {
 
-        private List<User> users; // Todo: User
+        private List<DiscordUser> users; // Todo: User
 
-        private List<Member.Partial> members; // Todo: Partial member
+        private List<DiscordMember.Partial> members; // Todo: Partial member
 
-        private List<Role> roles; // Todo: Role;
+        private List<DiscordRole> roles; // Todo: Role;
 
-        private List<Channel.Partial> channels; // Todo: Partial Channel
+        private List<DiscordChannel.Partial> channels; // Todo: Partial Channel
 
-        private List<Message.Partial> messages; // Todo: Partial Messages
+        private List<DiscordMessage.Partial> messages; // Todo: Partial Messages
 
         public ResolvedData() {
         }
 
-        public List<User> getUsers() {
+        public List<DiscordUser> getUsers() {
             return users;
         }
 
-        public void setUsers(List<User> users) {
+        public void setUsers(List<DiscordUser> users) {
             this.users = users;
         }
 
-        public List<Member.Partial> getMembers() {
+        public List<DiscordMember.Partial> getMembers() {
             return members;
         }
 
-        public void setMembers(List<Member.Partial> members) {
+        public void setMembers(List<DiscordMember.Partial> members) {
             this.members = members;
         }
 
-        public List<Role> getRoles() {
+        public List<DiscordRole> getRoles() {
             return roles;
         }
 
-        public void setRoles(List<Role> roles) {
+        public void setRoles(List<DiscordRole> roles) {
             this.roles = roles;
         }
 
-        public List<Channel.Partial> getChannels() {
+        public List<DiscordChannel.Partial> getChannels() {
             return channels;
         }
 
-        public void setChannels(List<Channel.Partial> channels) {
+        public void setChannels(List<DiscordChannel.Partial> channels) {
             this.channels = channels;
         }
 
-        public List<Message.Partial> getMessages() {
+        public List<DiscordMessage.Partial> getMessages() {
             return messages;
         }
 
-        public void setMessages(List<Message.Partial> messages) {
+        public void setMessages(List<DiscordMessage.Partial> messages) {
             this.messages = messages;
         }
     }

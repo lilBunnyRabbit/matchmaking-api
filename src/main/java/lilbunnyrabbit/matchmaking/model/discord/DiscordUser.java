@@ -1,6 +1,6 @@
 package lilbunnyrabbit.matchmaking.model.discord;
 
-public class User {
+public class DiscordUser {
     private String id;
     private String username;
     private String discriminator;
@@ -17,7 +17,7 @@ public class User {
     private Integer premium_type;
     private Integer public_flags;
 
-    public User() {}
+    public DiscordUser() {}
 
     public String getId() {
         return id;

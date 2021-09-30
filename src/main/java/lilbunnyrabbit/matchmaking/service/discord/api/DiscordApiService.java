@@ -1,10 +1,10 @@
 package lilbunnyrabbit.matchmaking.service.discord.api;
 
-import lilbunnyrabbit.matchmaking.model.discord.Channel;
-import lilbunnyrabbit.matchmaking.model.discord.Invite;
+import lilbunnyrabbit.matchmaking.model.discord.DiscordChannel;
+import lilbunnyrabbit.matchmaking.model.discord.DiscordInvite;
 
 public interface DiscordApiService {
     void printObjectAsJson(Object object);
-    Channel createVoiceChannel(String guildId, Channel channel);
-    Invite createChannelInvite(String channelId);
+    DiscordChannel createVoiceChannel(String guildId, DiscordChannel channel);
+    DiscordInvite createChannelInvite(String channelId);
 }

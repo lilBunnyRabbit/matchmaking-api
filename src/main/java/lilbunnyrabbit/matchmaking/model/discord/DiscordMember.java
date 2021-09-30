@@ -2,8 +2,8 @@ package lilbunnyrabbit.matchmaking.model.discord;
 
 import java.util.List;
 
-public class Member {
-    private User user;
+public class DiscordMember {
+    private DiscordUser user;
     private String nick;
     private List<String> roles;
     private String joined_at;
@@ -72,11 +72,11 @@ public class Member {
         }
     }
 
-    public User getUser() {
+    public DiscordUser getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(DiscordUser user) {
         this.user = user;
     }
 

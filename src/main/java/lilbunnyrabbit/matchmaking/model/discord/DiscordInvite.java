@@ -2,12 +2,12 @@ package lilbunnyrabbit.matchmaking.model.discord;
 
 import java.io.Serializable;
 
-public class Invite implements Serializable {
+public class DiscordInvite implements Serializable {
     private String code;
     // TODO
 
 
-    public Invite() {}
+    public DiscordInvite() {}
 
     public String createLink() {
         if (this.code == null) return null;

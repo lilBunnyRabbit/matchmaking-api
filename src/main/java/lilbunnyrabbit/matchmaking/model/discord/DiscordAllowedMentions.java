@@ -4,15 +4,15 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
-public class AllowedMentions {
+public class DiscordAllowedMentions {
     private List<String> parse;
     private List<String> roles;
     private List<String> users;
     @JsonProperty("replied_user")
     private Boolean repliedUser;
 
-    public AllowedMentions() {}
-    public AllowedMentions(List<String> parse, List<String> roles, List<String> users, Boolean replied_user) {
+    public DiscordAllowedMentions() {}
+    public DiscordAllowedMentions(List<String> parse, List<String> roles, List<String> users, Boolean replied_user) {
         this.parse = parse;
         this.roles = roles;
         this.users = users;

@@ -7,7 +7,7 @@ import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class Channel {
+public class DiscordChannel {
 
     @NotEmpty
     private String id;
@@ -21,7 +21,7 @@ public class Channel {
     private Integer position;
 
     @JsonProperty("permission_overwrites")
-    private List<Overwrite> permissionOverwrites;
+    private List<DiscordOverwrite> permissionOverwrites;
 
     private String name;
 
@@ -40,7 +40,7 @@ public class Channel {
     @JsonProperty("rate_limit_per_user")
     private Integer rateLimitPerUser;
 
-    private List<User> recipients;
+    private List<DiscordUser> recipients;
 
     private String icon;
 
@@ -78,10 +78,10 @@ public class Channel {
 
     private String permissions;
 
-    public Channel() {
+    public DiscordChannel() {
     }
 
-    public Channel(Integer type, String name) {
+    public DiscordChannel(Integer type, String name) {
         this.type = type;
         this.name = name;
     }
@@ -118,11 +118,11 @@ public class Channel {
         this.position = position;
     }
 
-    public List<Overwrite> getPermissionOverwrites() {
+    public List<DiscordOverwrite> getPermissionOverwrites() {
         return permissionOverwrites;
     }
 
-    public void setPermissionOverwrites(List<Overwrite> permissionOverwrites) {
+    public void setPermissionOverwrites(List<DiscordOverwrite> permissionOverwrites) {
         this.permissionOverwrites = permissionOverwrites;
     }
 
@@ -182,11 +182,11 @@ public class Channel {
         this.rateLimitPerUser = rateLimitPerUser;
     }
 
-    public List<User> getRecipients() {
+    public List<DiscordUser> getRecipients() {
         return recipients;
     }
 
-    public void setRecipients(List<User> recipients) {
+    public void setRecipients(List<DiscordUser> recipients) {
         this.recipients = recipients;
     }
 

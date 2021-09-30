@@ -9,7 +9,7 @@ import lilbunnyrabbit.matchmaking.helpers.ButtonHelper;
 import lilbunnyrabbit.matchmaking.helpers.CommandHelper;
 import lilbunnyrabbit.matchmaking.helpers.EmbedHelper;
 import lilbunnyrabbit.matchmaking.service.discord.api.DiscordApiService;
-import lilbunnyrabbit.matchmaking.model.discord.Invite;
+import lilbunnyrabbit.matchmaking.model.discord.DiscordInvite;
 import lilbunnyrabbit.matchmaking.service.guild.GuildService;
 import lilbunnyrabbit.matchmaking.service.guild_player.GuildPlayerService;
 import lilbunnyrabbit.matchmaking.service.player.PlayerService;
@@ -38,8 +38,8 @@ public class DiscordCommandServiceImpl implements DiscordCommandService {
     @Autowired
     private DiscordApiService discordApiService;
 
-    public InteractionResponse commandHandler(Interaction interaction) {
-        Interaction.Data data = interaction.getData();
+    public DiscordInteractionResponse commandHandler(DiscordInteraction interaction) {
+        DiscordInteraction.Data data = interaction.getData();
         if (data == null) return null;
 
         String commandName = data.getName();
@@ -53,7 +53,7 @@ public class DiscordCommandServiceImpl implements DiscordCommandService {
         };
     }
 
-    private InteractionResponse guildInitCommand(Interaction interaction) {
+    private DiscordInteractionResponse guildInitCommand(DiscordInteraction interaction) {
         String guildId = interaction.getGuildId();
         if (guildId == null) return CommandHelper.NOT_DM_COMMAND;
 
@@ -66,14 +66,14 @@ public class DiscordCommandServiceImpl implements DiscordCommandService {
         }
     }
 
-    private InteractionResponse registerCommand(Interaction interaction) {
+    private DiscordInteractionResponse registerCommand(DiscordInteraction interaction) {
         String guildId = interaction.getGuildId();
         if (guildId == null) return CommandHelper.NOT_DM_COMMAND;
 
-        Member member = interaction.getMember();
+        DiscordMember member = interaction.getMember();
         if (member == null) return CommandHelper.Error("Missing data", "Member");
 
-        User user = member.getUser();
+        DiscordUser user = member.getUser();
         if (user == null) return CommandHelper.Error("Missing data", "User");
 
         String playerId = user.getId();
@@ -103,14 +103,14 @@ public class DiscordCommandServiceImpl implements DiscordCommandService {
         }
     }
 
-    private InteractionResponse queueCommand(Interaction interaction) {
+    private DiscordInteractionResponse queueCommand(DiscordInteraction interaction) {
         String guildId = interaction.getGuildId();
         if (guildId == null) return CommandHelper.NOT_DM_COMMAND;
 
-        Member member = interaction.getMember();
+        DiscordMember member = interaction.getMember();
         if (member == null) return CommandHelper.Error("Missing data", "Member");
 
-        User user = member.getUser();
+        DiscordUser user = member.getUser();
         if (user == null) return CommandHelper.Error("Missing data", "User");
 
         String playerId = user.getId();
@@ -131,25 +131,25 @@ public class DiscordCommandServiceImpl implements DiscordCommandService {
 
         Queue queue = queueService.createQueueWithPlayers(guild, players);
 
-        Channel voiceChannel = discordApiService.createVoiceChannel(guildId, new Channel(Channel.Type.GUILD_VOICE, "VC - " + queue.getId()));
+        DiscordChannel voiceChannel = discordApiService.createVoiceChannel(guildId, new DiscordChannel(DiscordChannel.Type.GUILD_VOICE, "VC - " + queue.getId()));
         if (voiceChannel == null) {
             // TODO: undo the whole thing
             return CommandHelper.Error("Failed to create queue VC", null);
         }
 
-        InteractionResponse.Data responseData = new InteractionResponse.Data(EmbedHelper.QUEUE_STARTED(queue.getId()));
+        DiscordInteractionResponse.Data responseData = new DiscordInteractionResponse.Data(EmbedHelper.QUEUE_STARTED(queue.getId()));
 
-        Invite invite = discordApiService.createChannelInvite(voiceChannel.getId());
+        DiscordInvite invite = discordApiService.createChannelInvite(voiceChannel.getId());
         String channelLink = invite == null ? null : invite.createLink();
 
         if (channelLink != null) {
-            responseData.setComponents(new Component.ActionRow(
+            responseData.setComponents(new DiscordComponent.ActionRow(
                     ButtonHelper.JOIN_QUEUE(),
                     ButtonHelper.LEAVE_QUEUE(),
                     ButtonHelper.LOBBY(channelLink)
             ));
         }
 
-        return InteractionResponse.CHANNEL_MESSAGE_WITH_SOURCE(responseData);
+        return DiscordInteractionResponse.CHANNEL_MESSAGE_WITH_SOURCE(responseData);
     }
 }

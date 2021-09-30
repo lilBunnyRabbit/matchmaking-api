@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class Embed {
+public class DiscordEmbed {
     private String title;
     private String type; // TODO: enum
     private String description;
@@ -20,7 +20,7 @@ public class Embed {
     private Author author;
     private List<Field> fields;
 
-    public Embed() {}
+    public DiscordEmbed() {}
 
     public String getTitle() {
         return title;
