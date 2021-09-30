@@ -294,6 +294,24 @@ public class DiscordChannel {
         this.permissions = permissions;
     }
 
+    public static final class Type {
+
+        public static final int GUILD_TEXT = 0;
+        public static final int DM = 1;
+        public static final int GUILD_VOICE = 2;
+        public static final int GROUP_DM = 3;
+        public static final int GUILD_CATEGORY = 4;
+        public static final int GUILD_NEWS = 5;
+        public static final int GUILD_STORE = 6;
+        public static final int GUILD_NEWS_THREAD = 10;
+        public static final int GUILD_PUBLIC_THREAD = 11;
+        public static final int GUILD_PRIVATE_THREAD = 12;
+        public static final int GUILD_STAGE_VOICE = 13;
+
+        private Type() {
+        }
+    }
+
     @JsonInclude(JsonInclude.Include.NON_NULL)
     public static class Partial {
 
@@ -365,21 +383,20 @@ public class DiscordChannel {
         }
     }
 
-    public static final class Type {
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    public static class Mention {
 
-        public static final int GUILD_TEXT = 0;
-        public static final int DM = 1;
-        public static final int GUILD_VOICE = 2;
-        public static final int GROUP_DM = 3;
-        public static final int GUILD_CATEGORY = 4;
-        public static final int GUILD_NEWS = 5;
-        public static final int GUILD_STORE = 6;
-        public static final int GUILD_NEWS_THREAD = 10;
-        public static final int GUILD_PUBLIC_THREAD = 11;
-        public static final int GUILD_PRIVATE_THREAD = 12;
-        public static final int GUILD_STAGE_VOICE = 13;
+        @NotEmpty
+        private String id;
 
-        private Type() {
-        }
+        @NotEmpty
+        @JsonProperty("guild_id")
+        private String guildId;
+
+        @NotEmpty
+        private Integer type; // Channel.Type
+
+        @NotEmpty
+        private String name;
     }
 }

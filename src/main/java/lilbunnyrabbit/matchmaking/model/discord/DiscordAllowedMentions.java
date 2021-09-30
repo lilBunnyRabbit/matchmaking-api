@@ -1,17 +1,30 @@
 package lilbunnyrabbit.matchmaking.model.discord;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class DiscordAllowedMentions {
+
+    @NotEmpty
     private List<String> parse;
+
+    @NotEmpty
     private List<String> roles;
+
+    @NotEmpty
     private List<String> users;
+
+    @NotEmpty
     @JsonProperty("replied_user")
     private Boolean repliedUser;
 
-    public DiscordAllowedMentions() {}
+    public DiscordAllowedMentions() {
+    }
+
     public DiscordAllowedMentions(List<String> parse, List<String> roles, List<String> users, Boolean replied_user) {
         this.parse = parse;
         this.roles = roles;

@@ -1,10 +1,12 @@
 package lilbunnyrabbit.matchmaking.model.discord;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class DiscordApplicationCommand {
 
     @NotEmpty
@@ -117,6 +119,7 @@ public class DiscordApplicationCommand {
         }
     }
 
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public static class Option {
 
         @NotEmpty
@@ -213,6 +216,7 @@ public class DiscordApplicationCommand {
             }
         }
 
+        @JsonInclude(JsonInclude.Include.NON_NULL)
         private static class Choice {
 
             @NotEmpty
@@ -242,8 +246,10 @@ public class DiscordApplicationCommand {
         }
     }
 
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public static class InteractionData {
 
+        @JsonInclude(JsonInclude.Include.NON_NULL)
         public static class Option {
 
             @NotEmpty

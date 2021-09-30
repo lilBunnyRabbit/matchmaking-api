@@ -1,7 +1,10 @@
 package lilbunnyrabbit.matchmaking.model.discord;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import javax.validation.constraints.NotEmpty;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class DiscordOverwrite {
 
     @NotEmpty

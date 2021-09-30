@@ -1,23 +1,52 @@
 package lilbunnyrabbit.matchmaking.model.discord;
 
-public class DiscordUser {
-    private String id;
-    private String username;
-    private String discriminator;
-    private String avatar;
-    private Boolean bot;
-    private Boolean system;
-    private Boolean mfa_enabled;
-    private String banner;
-    private Integer accent_color;
-    private String locale;
-    private Boolean verified;
-    private String email;
-    private Integer flags;
-    private Integer premium_type;
-    private Integer public_flags;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-    public DiscordUser() {}
+import javax.validation.constraints.NotEmpty;
+
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public class DiscordUser {
+
+    @NotEmpty
+    private String id;
+
+    @NotEmpty
+    private String username;
+
+    @NotEmpty
+    private String discriminator;
+
+    private String avatar;
+
+    private Boolean bot;
+
+    private Boolean system;
+
+    @JsonProperty("mfa_enabled")
+    private Boolean mfaEnabled;
+
+    private String banner;
+
+    @JsonProperty("accent_color")
+    private Integer accentColor;
+
+    private String locale;
+
+    private Boolean verified;
+
+    private String email;
+
+    private Integer flags;
+
+    @JsonProperty("premium_type")
+    private Integer premiumType;
+
+    @JsonProperty("public_flags")
+    private Integer publicFlags;
+
+    public DiscordUser() {
+    }
 
     public String getId() {
         return id;
@@ -68,11 +97,11 @@ public class DiscordUser {
     }
 
     public Boolean getMfaEnabled() {
-        return mfa_enabled;
+        return mfaEnabled;
     }
 
-    public void setMfaEnabled(Boolean mfa_enabled) {
-        this.mfa_enabled = mfa_enabled;
+    public void setMfaEnabled(Boolean mfaEnabled) {
+        this.mfaEnabled = mfaEnabled;
     }
 
     public String getBanner() {
@@ -84,11 +113,11 @@ public class DiscordUser {
     }
 
     public Integer getAccentColor() {
-        return accent_color;
+        return accentColor;
     }
 
-    public void setAccentColor(Integer accent_color) {
-        this.accent_color = accent_color;
+    public void setAccentColor(Integer accentColor) {
+        this.accentColor = accentColor;
     }
 
     public String getLocale() {
@@ -124,18 +153,35 @@ public class DiscordUser {
     }
 
     public Integer getPremiumType() {
-        return premium_type;
+        return premiumType;
     }
 
-    public void setPremiumType(Integer premium_type) {
-        this.premium_type = premium_type;
+    public void setPremiumType(Integer premiumType) {
+        this.premiumType = premiumType;
     }
 
     public Integer getPublicFlags() {
-        return public_flags;
+        return publicFlags;
     }
 
-    public void setPublicFlags(Integer public_flags) {
-        this.public_flags = public_flags;
+    public void setPublicFlags(Integer publicFlags) {
+        this.publicFlags = publicFlags;
+    }
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    public static class Mention extends DiscordUser {
+
+        private DiscordMember.Partial member;
+
+        public Mention() {
+        }
+
+        public DiscordMember.Partial getMember() {
+            return member;
+        }
+
+        public void setMember(DiscordMember.Partial member) {
+            this.member = member;
+        }
     }
 }

@@ -1,26 +1,42 @@
 package lilbunnyrabbit.matchmaking.model.discord;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
+import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class DiscordEmbed {
+
     private String title;
-    private String type; // TODO: enum
+
+    private String type; // Type
+
     private String description;
+
     private String url;
+
     private String timestamp;
+
     private Integer color;
+
     private Footer footer;
+
     private Image image;
+
     private Thumbnail thumbnail;
+
     private Video video;
+
     private Provider provider;
+
     private Author author;
+
     private List<Field> fields;
 
-    public DiscordEmbed() {}
+    public DiscordEmbed() {
+    }
 
     public String getTitle() {
         return title;
@@ -126,16 +142,38 @@ public class DiscordEmbed {
         this.fields = fields;
     }
 
+    public void setFields(Field... fields) {
+        this.fields = List.of(fields);
+    }
+
+    public static final class Type {
+
+        public static final String RICH = "rich";
+        public static final String IMAGE = "image";
+        public static final String VIDEO = "video";
+        public static final String GIFV = "gifv";
+        public static final String ARTICLE = "article";
+        public static final String LINK = "link";
+
+        private Type() {
+        }
+    }
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public static class Footer {
+
+        @NotEmpty
         private String text;
 
-        @JsonInclude(JsonInclude.Include.NON_NULL)
-        private String icon_url;
+        @JsonProperty("icon_url")
+        private String iconUrl;
 
-        @JsonInclude(JsonInclude.Include.NON_NULL)
-        private String proxy_icon_url;
+        @JsonProperty("proxy_icon_url")
+        private String proxyIconUrl;
 
-        public Footer() {}
+        public Footer() {
+        }
+
         public Footer(String text) {
             this.text = text;
         }
@@ -148,31 +186,42 @@ public class DiscordEmbed {
             this.text = text;
         }
 
-        public String getIcon_url() {
-            return icon_url;
+        public String getIconUrl() {
+            return iconUrl;
         }
 
-        public void setIcon_url(String icon_url) {
-            this.icon_url = icon_url;
+        public void setIconUrl(String iconUrl) {
+            this.iconUrl = iconUrl;
         }
 
-        public String getProxy_icon_url() {
-            return proxy_icon_url;
+        public String getProxyIconUrl() {
+            return proxyIconUrl;
         }
 
-        public void setProxy_icon_url(String proxy_icon_url) {
-            this.proxy_icon_url = proxy_icon_url;
+        public void setProxyIconUrl(String proxyIconUrl) {
+            this.proxyIconUrl = proxyIconUrl;
         }
     }
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
     public static class Image {
+
+        @NotEmpty
         private String url;
-        private String proxy_url;
+
+        @JsonProperty("proxy_url")
+        private String proxyUrl;
+
         private String height;
+
         private String width;
 
-        public Image() {}
+        public Image() {
+        }
+
+        public Image(String url) {
+            this.url = url;
+        }
 
         public String getUrl() {
             return url;
@@ -182,12 +231,12 @@ public class DiscordEmbed {
             this.url = url;
         }
 
-        public String getProxy_url() {
-            return proxy_url;
+        public String getProxyUrl() {
+            return proxyUrl;
         }
 
-        public void setProxy_url(String proxy_url) {
-            this.proxy_url = proxy_url;
+        public void setProxyUrl(String proxyUrl) {
+            this.proxyUrl = proxyUrl;
         }
 
         public String getHeight() {
@@ -209,12 +258,23 @@ public class DiscordEmbed {
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
     public static class Thumbnail {
+
+        @NotEmpty
         private String url;
-        private String proxy_url;
+
+        @JsonProperty("proxy_url")
+        private String proxyUrl;
+
         private String height;
+
         private String width;
 
-        public Thumbnail() {}
+        public Thumbnail() {
+        }
+
+        public Thumbnail(String url) {
+            this.url = url;
+        }
 
         public String getUrl() {
             return url;
@@ -224,12 +284,12 @@ public class DiscordEmbed {
             this.url = url;
         }
 
-        public String getProxy_url() {
-            return proxy_url;
+        public String getProxyUrl() {
+            return proxyUrl;
         }
 
-        public void setProxy_url(String proxy_url) {
-            this.proxy_url = proxy_url;
+        public void setProxyUrl(String proxyUrl) {
+            this.proxyUrl = proxyUrl;
         }
 
         public String getHeight() {
@@ -251,12 +311,23 @@ public class DiscordEmbed {
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
     public static class Video {
+
+        @NotEmpty
         private String url;
-        private String proxy_url;
+
+        @JsonProperty("proxy_url")
+        private String proxyUrl;
+
         private String height;
+
         private String width;
 
-        public Video() {}
+        public Video() {
+        }
+
+        public Video(String url) {
+            this.url = url;
+        }
 
         public String getUrl() {
             return url;
@@ -266,12 +337,12 @@ public class DiscordEmbed {
             this.url = url;
         }
 
-        public String getProxy_url() {
-            return proxy_url;
+        public String getProxyUrl() {
+            return proxyUrl;
         }
 
-        public void setProxy_url(String proxy_url) {
-            this.proxy_url = proxy_url;
+        public void setProxyUrl(String proxyUrl) {
+            this.proxyUrl = proxyUrl;
         }
 
         public String getHeight() {
@@ -293,10 +364,18 @@ public class DiscordEmbed {
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
     public static class Provider {
+
         private String name;
+
         private String url;
 
-        public Provider() {}
+        public Provider() {
+        }
+
+        public Provider(String name, String url) {
+            this.name = name;
+            this.url = url;
+        }
 
         public String getName() {
             return name;
@@ -317,12 +396,24 @@ public class DiscordEmbed {
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
     public static class Author {
-        private String name;
-        private String url;
-        private String icon_url;
-        private String proxy_icon_url;
 
-        public Author() {}
+        @NotEmpty
+        private String name;
+
+        private String url;
+
+        @JsonProperty("icon_url")
+        private String iconUrl;
+
+        @JsonProperty("proxy_icon_url")
+        private String proxyIconUrl;
+
+        public Author() {
+        }
+
+        public Author(String name) {
+            this.name = name;
+        }
 
         public String getName() {
             return name;
@@ -340,31 +431,37 @@ public class DiscordEmbed {
             this.url = url;
         }
 
-        public String getIcon_url() {
-            return icon_url;
+        public String getIconUrl() {
+            return iconUrl;
         }
 
-        public void setIcon_url(String icon_url) {
-            this.icon_url = icon_url;
+        public void setIconUrl(String iconUrl) {
+            this.iconUrl = iconUrl;
         }
 
-        public String getProxy_icon_url() {
-            return proxy_icon_url;
+        public String getProxyIconUrl() {
+            return proxyIconUrl;
         }
 
-        public void setProxy_icon_url(String proxy_icon_url) {
-            this.proxy_icon_url = proxy_icon_url;
+        public void setProxyIconUrl(String proxyIconUrl) {
+            this.proxyIconUrl = proxyIconUrl;
         }
     }
 
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public static class Field {
+
+        @NotEmpty
         private String name;
+
+        @NotEmpty
         private String value;
 
-        @JsonInclude(JsonInclude.Include.NON_NULL)
         private Boolean inline;
 
-        public Field() {}
+        public Field() {
+        }
+
         public Field(String name, String value) {
             this.name = name;
             this.value = value;

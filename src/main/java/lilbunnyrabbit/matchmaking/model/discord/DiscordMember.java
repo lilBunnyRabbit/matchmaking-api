@@ -1,75 +1,42 @@
 package lilbunnyrabbit.matchmaking.model.discord;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class DiscordMember {
+
     private DiscordUser user;
+
     private String nick;
+
+    @NotEmpty
+    private String avatar;
+
+    @NotEmpty
     private List<String> roles;
-    private String joined_at;
-    private String premium_since;
+
+    @NotEmpty
+    @JsonProperty("joined_at")
+    private String joinedAt;
+
+    @JsonProperty("premium_since")
+    private String premiumSince;
+
+    @NotEmpty
     private Boolean deaf;
+
+    @NotEmpty
     private Boolean mute;
+
     private Boolean pending;
+
     private String permissions;
 
-    public static class Partial {
-        private String nick;
-        private List<String> roles;
-        private String joined_at;
-        private String premium_since;
-        private Boolean pending;
-        private String permissions;
-
-        public Partial() {}
-
-        public String getNick() {
-            return nick;
-        }
-
-        public void setNick(String nick) {
-            this.nick = nick;
-        }
-
-        public List<String> getRoles() {
-            return roles;
-        }
-
-        public void setRoles(List<String> roles) {
-            this.roles = roles;
-        }
-
-        public String getJoined_at() {
-            return joined_at;
-        }
-
-        public void setJoined_at(String joined_at) {
-            this.joined_at = joined_at;
-        }
-
-        public String getPremium_since() {
-            return premium_since;
-        }
-
-        public void setPremium_since(String premium_since) {
-            this.premium_since = premium_since;
-        }
-
-        public Boolean getPending() {
-            return pending;
-        }
-
-        public void setPending(Boolean pending) {
-            this.pending = pending;
-        }
-
-        public String getPermissions() {
-            return permissions;
-        }
-
-        public void setPermissions(String permissions) {
-            this.permissions = permissions;
-        }
+    public DiscordMember() {
     }
 
     public DiscordUser getUser() {
@@ -88,6 +55,14 @@ public class DiscordMember {
         this.nick = nick;
     }
 
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
     public List<String> getRoles() {
         return roles;
     }
@@ -96,20 +71,20 @@ public class DiscordMember {
         this.roles = roles;
     }
 
-    public String getJoined_at() {
-        return joined_at;
+    public String getJoinedAt() {
+        return joinedAt;
     }
 
-    public void setJoined_at(String joined_at) {
-        this.joined_at = joined_at;
+    public void setJoinedAt(String joinedAt) {
+        this.joinedAt = joinedAt;
     }
 
-    public String getPremium_since() {
-        return premium_since;
+    public String getPremiumSince() {
+        return premiumSince;
     }
 
-    public void setPremium_since(String premium_since) {
-        this.premium_since = premium_since;
+    public void setPremiumSince(String premiumSince) {
+        this.premiumSince = premiumSince;
     }
 
     public Boolean getDeaf() {
@@ -142,5 +117,76 @@ public class DiscordMember {
 
     public void setPermissions(String permissions) {
         this.permissions = permissions;
+    }
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    public static class Partial {
+
+        private String nick;
+
+        @NotEmpty
+        private List<String> roles;
+
+        @NotEmpty
+        @JsonProperty("joined_at")
+        private String joinedAt;
+
+        @JsonProperty("premium_since")
+        private String premiumSince;
+
+        private Boolean pending;
+
+        private String permissions;
+
+        public Partial() {
+        }
+
+        public String getNick() {
+            return nick;
+        }
+
+        public void setNick(String nick) {
+            this.nick = nick;
+        }
+
+        public List<String> getRoles() {
+            return roles;
+        }
+
+        public void setRoles(List<String> roles) {
+            this.roles = roles;
+        }
+
+        public String getJoinedAt() {
+            return joinedAt;
+        }
+
+        public void setJoinedAt(String joinedAt) {
+            this.joinedAt = joinedAt;
+        }
+
+        public String getPremiumSince() {
+            return premiumSince;
+        }
+
+        public void setPremiumSince(String premiumSince) {
+            this.premiumSince = premiumSince;
+        }
+
+        public Boolean getPending() {
+            return pending;
+        }
+
+        public void setPending(Boolean pending) {
+            this.pending = pending;
+        }
+
+        public String getPermissions() {
+            return permissions;
+        }
+
+        public void setPermissions(String permissions) {
+            this.permissions = permissions;
+        }
     }
 }

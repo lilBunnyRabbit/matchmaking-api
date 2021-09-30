@@ -65,7 +65,7 @@ public class DiscordComponent {
         private String label;
 
         @JsonInclude(JsonInclude.Include.NON_NULL)
-        private DiscordEmoji.Component emoji;
+        private DiscordEmoji.Partial emoji;
 
         @JsonInclude(JsonInclude.Include.NON_NULL)
         @JsonProperty("custom_id")
@@ -113,11 +113,11 @@ public class DiscordComponent {
             this.label = label;
         }
 
-        public DiscordEmoji.Component getEmoji() {
+        public DiscordEmoji.Partial getEmoji() {
             return emoji;
         }
 
-        public void setEmoji(DiscordEmoji.Component emoji) {
+        public void setEmoji(DiscordEmoji.Partial emoji) {
             this.emoji = emoji;
         }
 
@@ -199,7 +199,7 @@ public class DiscordComponent {
             private String description;
 
             @JsonInclude(JsonInclude.Include.NON_NULL)
-            private DiscordEmoji.Component emoji;
+            private DiscordEmoji.Partial emoji;
 
             @JsonInclude(JsonInclude.Include.NON_NULL)
             @JsonProperty("default")
@@ -237,11 +237,11 @@ public class DiscordComponent {
                 this.description = description;
             }
 
-            public DiscordEmoji.Component getEmoji() {
+            public DiscordEmoji.Partial getEmoji() {
                 return emoji;
             }
 
-            public void setEmoji(DiscordEmoji.Component emoji) {
+            public void setEmoji(DiscordEmoji.Partial emoji) {
                 this.emoji = emoji;
             }
 

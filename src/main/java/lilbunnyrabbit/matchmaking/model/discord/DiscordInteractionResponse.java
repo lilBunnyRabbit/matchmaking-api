@@ -8,6 +8,7 @@ import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class DiscordInteractionResponse {
+
     public static final DiscordInteractionResponse PONG = new DiscordInteractionResponse(Type.PONG);
     public static final DiscordInteractionResponse DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE = new DiscordInteractionResponse(Type.DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE);
     public static final DiscordInteractionResponse DEFERRED_UPDATE_MESSAGE = new DiscordInteractionResponse(Type.DEFERRED_UPDATE_MESSAGE);
