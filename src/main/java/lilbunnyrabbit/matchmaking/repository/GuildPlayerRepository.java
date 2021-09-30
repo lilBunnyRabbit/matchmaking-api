@@ -1,7 +1,7 @@
 package lilbunnyrabbit.matchmaking.repository;
 
-import lilbunnyrabbit.matchmaking.entity.guildPlayer.GuildPlayer;
-import lilbunnyrabbit.matchmaking.entity.guildPlayer.GuildPlayerId;
+import lilbunnyrabbit.matchmaking.entity.guild_player.GuildPlayer;
+import lilbunnyrabbit.matchmaking.entity.guild_player.GuildPlayerId;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;

@@ -1,8 +1,8 @@
 package lilbunnyrabbit.matchmaking.helpers;
 
-import lilbunnyrabbit.matchmaking.api.response.discord.Embed;
-import lilbunnyrabbit.matchmaking.api.response.discord.InteractionResponse;
-import lilbunnyrabbit.matchmaking.api.response.discord.InteractionResponseData;
+import lilbunnyrabbit.matchmaking.model.discord.Embed;
+import lilbunnyrabbit.matchmaking.model.response.InteractionResponse;
+import lilbunnyrabbit.matchmaking.model.response.InteractionResponseData;
 
 public class CommandHelper {
     public static InteractionResponse NOT_DM_COMMAND = new InteractionResponse(

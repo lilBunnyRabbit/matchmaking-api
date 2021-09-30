@@ -1,6 +1,6 @@
 package lilbunnyrabbit.matchmaking.helpers;
 
-import lilbunnyrabbit.matchmaking.api.response.discord.Embed;
+import lilbunnyrabbit.matchmaking.model.discord.Embed;
 
 public class EmbedHelper {
     public static Embed SUCCESS(String title, String description) {

@@ -1,11 +1,11 @@
 package lilbunnyrabbit.matchmaking.service.discord.action;
 
-import lilbunnyrabbit.matchmaking.api.request.discord.InteractionRequest;
-import lilbunnyrabbit.matchmaking.api.request.discord.InteractionRequestData;
-import lilbunnyrabbit.matchmaking.api.request.discord.Member;
-import lilbunnyrabbit.matchmaking.api.request.discord.User;
-import lilbunnyrabbit.matchmaking.api.response.discord.InteractionResponse;
-import lilbunnyrabbit.matchmaking.api.response.discord.InteractionResponseData;
+import lilbunnyrabbit.matchmaking.model.request.InteractionRequest;
+import lilbunnyrabbit.matchmaking.model.request.InteractionRequestData;
+import lilbunnyrabbit.matchmaking.model.discord.Member;
+import lilbunnyrabbit.matchmaking.model.discord.User;
+import lilbunnyrabbit.matchmaking.model.response.InteractionResponse;
+import lilbunnyrabbit.matchmaking.model.response.InteractionResponseData;
 import lilbunnyrabbit.matchmaking.service.guild.GuildService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

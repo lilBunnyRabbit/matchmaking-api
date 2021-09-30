@@ -1,40 +1,35 @@
 package lilbunnyrabbit.matchmaking.service.discord.command;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import lilbunnyrabbit.matchmaking.api.request.discord.InteractionRequest;
-import lilbunnyrabbit.matchmaking.api.request.discord.InteractionRequestData;
-import lilbunnyrabbit.matchmaking.api.request.discord.Member;
-import lilbunnyrabbit.matchmaking.api.request.discord.User;
-import lilbunnyrabbit.matchmaking.api.response.discord.Component;
-import lilbunnyrabbit.matchmaking.api.response.discord.Embed;
-import lilbunnyrabbit.matchmaking.api.response.discord.InteractionResponse;
-import lilbunnyrabbit.matchmaking.api.response.discord.InteractionResponseData;
+import lilbunnyrabbit.matchmaking.model.request.InteractionRequest;
+import lilbunnyrabbit.matchmaking.model.request.InteractionRequestData;
+import lilbunnyrabbit.matchmaking.model.discord.Member;
+import lilbunnyrabbit.matchmaking.model.discord.User;
+import lilbunnyrabbit.matchmaking.model.discord.Component;
+import lilbunnyrabbit.matchmaking.model.response.InteractionResponse;
+import lilbunnyrabbit.matchmaking.model.response.InteractionResponseData;
 import lilbunnyrabbit.matchmaking.entity.Guild;
 import lilbunnyrabbit.matchmaking.entity.Queue;
-import lilbunnyrabbit.matchmaking.entity.guildPlayer.GuildPlayer;
+import lilbunnyrabbit.matchmaking.entity.guild_player.GuildPlayer;
 import lilbunnyrabbit.matchmaking.entity.Player;
 import lilbunnyrabbit.matchmaking.helpers.ButtonHelper;
 import lilbunnyrabbit.matchmaking.helpers.CommandHelper;
 import lilbunnyrabbit.matchmaking.helpers.EmbedHelper;
 import lilbunnyrabbit.matchmaking.service.discord.api.DiscordApiService;
-import lilbunnyrabbit.matchmaking.service.discord.api.request.VoiceChannelRequest;
-import lilbunnyrabbit.matchmaking.service.discord.api.response.InviteResponse;
-import lilbunnyrabbit.matchmaking.service.discord.api.response.VoiceChannelResponse;
+import lilbunnyrabbit.matchmaking.model.request.VoiceChannelRequest;
+import lilbunnyrabbit.matchmaking.model.response.InviteResponse;
+import lilbunnyrabbit.matchmaking.model.response.VoiceChannelResponse;
 import lilbunnyrabbit.matchmaking.service.guild.GuildService;
-import lilbunnyrabbit.matchmaking.service.guildPlayer.GuildPlayerService;
+import lilbunnyrabbit.matchmaking.service.guild_player.GuildPlayerService;
 import lilbunnyrabbit.matchmaking.service.player.PlayerService;
 import lilbunnyrabbit.matchmaking.service.queue.QueueService;
-import org.bouncycastle.asn1.ocsp.ResponseData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Service
-public class DiscordCommandServiceImpl  implements DiscordCommandService {
+public class DiscordCommandServiceImpl implements DiscordCommandService {
 
     @Autowired
     private GuildService guildService;
@@ -66,12 +61,9 @@ public class DiscordCommandServiceImpl  implements DiscordCommandService {
         };
     }
 
-
     private InteractionResponse guildInitCommand(InteractionRequest interaction) {
         String guildId = interaction.getGuildId();
-        if (guildId == null) {
-            return CommandHelper.NOT_DM_COMMAND;
-        }
+        if (guildId == null) return CommandHelper.NOT_DM_COMMAND;
 
         Guild guild = guildService.createGuild(guildId);
 
@@ -136,7 +128,8 @@ public class DiscordCommandServiceImpl  implements DiscordCommandService {
         if (guild == null) return CommandHelper.Error("Invalid server", "This server is currently not supported!");
 
         GuildPlayer guildPlayer = guildPlayerService.getGuildPlayer(guildId, playerId);
-        if (guildPlayer == null) return CommandHelper.Error("Not registered", "You need to register first before you can start or join a queue");
+        if (guildPlayer == null)
+            return CommandHelper.Error("Not registered", "You need to register first before you can start or join a queue");
         if (guildPlayer.getQueue() != null) return CommandHelper.Error("Already in a queue", null);
 
         Set<GuildPlayer> players = new HashSet<>();

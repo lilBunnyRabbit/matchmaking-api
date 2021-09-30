@@ -2,10 +2,10 @@ package lilbunnyrabbit.matchmaking.service.discord.api;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lilbunnyrabbit.matchmaking.configuration.DiscordConfiguration;
-import lilbunnyrabbit.matchmaking.service.discord.api.request.VoiceChannelRequest;
-import lilbunnyrabbit.matchmaking.service.discord.api.response.InviteResponse;
-import lilbunnyrabbit.matchmaking.service.discord.api.response.VoiceChannelResponse;
+import lilbunnyrabbit.matchmaking.config.DiscordConfiguration;
+import lilbunnyrabbit.matchmaking.model.request.VoiceChannelRequest;
+import lilbunnyrabbit.matchmaking.model.response.InviteResponse;
+import lilbunnyrabbit.matchmaking.model.response.VoiceChannelResponse;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;

@@ -2,9 +2,9 @@ package lilbunnyrabbit.matchmaking.service.queue;
 
 import lilbunnyrabbit.matchmaking.entity.Guild;
 import lilbunnyrabbit.matchmaking.entity.Queue;
-import lilbunnyrabbit.matchmaking.entity.guildPlayer.GuildPlayer;
+import lilbunnyrabbit.matchmaking.entity.guild_player.GuildPlayer;
 import lilbunnyrabbit.matchmaking.repository.QueueRepository;
-import lilbunnyrabbit.matchmaking.service.guildPlayer.GuildPlayerService;
+import lilbunnyrabbit.matchmaking.service.guild_player.GuildPlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -1,6 +1,6 @@
 package lilbunnyrabbit.matchmaking.helpers;
 
-import lilbunnyrabbit.matchmaking.api.response.discord.Component;
+import lilbunnyrabbit.matchmaking.model.discord.Component;
 
 public class ButtonHelper {
     public static Component.Button LOBBY(String url) {

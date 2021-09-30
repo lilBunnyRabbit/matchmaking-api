@@ -1,6 +1,6 @@
 package lilbunnyrabbit.matchmaking.entity;
 
-import lilbunnyrabbit.matchmaking.entity.guildPlayer.GuildPlayer;
+import lilbunnyrabbit.matchmaking.entity.guild_player.GuildPlayer;
 import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;

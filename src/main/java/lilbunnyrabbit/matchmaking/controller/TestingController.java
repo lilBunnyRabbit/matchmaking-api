@@ -2,9 +2,9 @@ package lilbunnyrabbit.matchmaking.controller;
 
 import lilbunnyrabbit.matchmaking.entity.Guild;
 import lilbunnyrabbit.matchmaking.entity.Player;
-import lilbunnyrabbit.matchmaking.entity.guildPlayer.GuildPlayer;
+import lilbunnyrabbit.matchmaking.entity.guild_player.GuildPlayer;
 import lilbunnyrabbit.matchmaking.service.guild.GuildService;
-import lilbunnyrabbit.matchmaking.service.guildPlayer.GuildPlayerService;
+import lilbunnyrabbit.matchmaking.service.guild_player.GuildPlayerService;
 import lilbunnyrabbit.matchmaking.service.player.PlayerService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

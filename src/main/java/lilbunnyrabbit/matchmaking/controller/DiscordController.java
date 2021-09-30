@@ -1,8 +1,8 @@
 package lilbunnyrabbit.matchmaking.controller;
 
-import lilbunnyrabbit.matchmaking.annotation.ValidDiscordBody;
-import lilbunnyrabbit.matchmaking.api.request.discord.InteractionRequest;
-import lilbunnyrabbit.matchmaking.api.response.discord.InteractionResponse;
+import lilbunnyrabbit.matchmaking.validation.ValidDiscordBody;
+import lilbunnyrabbit.matchmaking.model.request.InteractionRequest;
+import lilbunnyrabbit.matchmaking.model.response.InteractionResponse;
 import lilbunnyrabbit.matchmaking.service.discord.action.DiscordActionService;
 import lilbunnyrabbit.matchmaking.service.discord.command.DiscordCommandService;
 import org.springframework.web.bind.annotation.*;

@@ -1,8 +1,8 @@
 package lilbunnyrabbit.matchmaking.service.discord.api;
 
-import lilbunnyrabbit.matchmaking.service.discord.api.request.VoiceChannelRequest;
-import lilbunnyrabbit.matchmaking.service.discord.api.response.InviteResponse;
-import lilbunnyrabbit.matchmaking.service.discord.api.response.VoiceChannelResponse;
+import lilbunnyrabbit.matchmaking.model.request.VoiceChannelRequest;
+import lilbunnyrabbit.matchmaking.model.response.InviteResponse;
+import lilbunnyrabbit.matchmaking.model.response.VoiceChannelResponse;
 
 public interface DiscordApiService {
     void printObjectAsJson(Object object);
