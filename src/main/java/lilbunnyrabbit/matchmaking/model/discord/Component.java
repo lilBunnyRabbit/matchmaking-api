@@ -3,25 +3,34 @@ package lilbunnyrabbit.matchmaking.model.discord;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
 public class Component {
-    protected Integer type;
 
-    public Component() {}
+    @NotEmpty
+    protected Integer type; // Component.Type
+
+    public Component() {
+    }
+
     public Component(Integer type) {
         this.type = type;
     }
 
     public static final class Type {
+
         public static final int ACTION_ROW = 1;
         public static final int BUTTON = 2;
         public static final int SELECT_MENU = 3;
 
-        private Type() {}
+        private Type() {
+        }
     }
 
     public static class ActionRow extends Component {
+
+        @NotEmpty
         private List<Component> components;
 
         public ActionRow() {
@@ -33,7 +42,7 @@ public class Component {
             this.components = components;
         }
 
-        public ActionRow(Component ...component) {
+        public ActionRow(Component... component) {
             this.type = Type.ACTION_ROW;
             this.components = List.of(component);
         }
@@ -48,6 +57,8 @@ public class Component {
     }
 
     public static class Button extends Component {
+
+        @NotEmpty
         private Integer style;
 
         @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -82,7 +93,8 @@ public class Component {
             public static final int DANGER = 4;
             public static final int LINK = 5;
 
-            private Style() {}
+            private Style() {
+            }
         }
 
         public Integer getStyle() {
@@ -135,8 +147,12 @@ public class Component {
     }
 
     public static class SelectMenu extends Component {
+
+        @NotEmpty
         @JsonProperty("custom_id")
         private String customId;
+
+        @NotEmpty
         private List<Option> options;
 
         @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -163,8 +179,20 @@ public class Component {
             this.options = options;
         }
 
+        public Integer getType() {
+            return type;
+        }
+
+        public void setType(Integer type) {
+            this.type = type;
+        }
+
         public static class Option {
+
+            @NotEmpty
             private String label;
+
+            @NotEmpty
             private String value;
 
             @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -177,7 +205,9 @@ public class Component {
             @JsonProperty("default")
             private Boolean isDefault;
 
-            public Option() {}
+            public Option() {
+            }
+
             public Option(String label, String value) {
                 this.label = label;
                 this.value = value;
@@ -271,13 +301,5 @@ public class Component {
         public void setDisabled(Boolean disabled) {
             this.disabled = disabled;
         }
-    }
-
-    public Integer getType() {
-        return type;
-    }
-
-    public void setType(Integer type) {
-        this.type = type;
     }
 }

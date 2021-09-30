@@ -1,8 +1,8 @@
 package lilbunnyrabbit.matchmaking.controller;
 
+import lilbunnyrabbit.matchmaking.model.discord.InteractionResponse;
 import lilbunnyrabbit.matchmaking.validation.ValidDiscordBody;
-import lilbunnyrabbit.matchmaking.model.request.InteractionRequest;
-import lilbunnyrabbit.matchmaking.model.response.InteractionResponse;
+import lilbunnyrabbit.matchmaking.model.discord.Interaction;
 import lilbunnyrabbit.matchmaking.service.discord.action.DiscordActionService;
 import lilbunnyrabbit.matchmaking.service.discord.command.DiscordCommandService;
 import org.springframework.web.bind.annotation.*;
@@ -19,11 +19,11 @@ public class DiscordController {
     }
 
     @PostMapping("/interaction")
-    public InteractionResponse interaction(@ValidDiscordBody InteractionRequest discordInteractionRequest) {
-        return switch (discordInteractionRequest.getType()) {
-            case InteractionRequest.Type.PING -> new InteractionResponse(InteractionResponse.Type.PONG);
-            case InteractionRequest.Type.APPLICATION_COMMAND -> discordCommandService.commandHandler(discordInteractionRequest);
-            case InteractionRequest.Type.MESSAGE_COMPONENT -> discordActionService.actionHandler(discordInteractionRequest);
+    public InteractionResponse interaction(@ValidDiscordBody Interaction interaction) {
+        return switch (interaction.getType()) {
+            case Interaction.Type.PING -> InteractionResponse.PONG;
+            case Interaction.Type.APPLICATION_COMMAND -> discordCommandService.commandHandler(interaction);
+            case Interaction.Type.MESSAGE_COMPONENT -> discordActionService.actionHandler(interaction);
             default -> null;
         };
     }

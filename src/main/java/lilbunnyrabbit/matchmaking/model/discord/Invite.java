@@ -1,13 +1,13 @@
-package lilbunnyrabbit.matchmaking.model.response;
+package lilbunnyrabbit.matchmaking.model.discord;
 
 import java.io.Serializable;
 
-public class InviteResponse implements Serializable {
+public class Invite implements Serializable {
     private String code;
     // TODO
 
 
-    public InviteResponse() {}
+    public Invite() {}
 
     public String createLink() {
         if (this.code == null) return null;

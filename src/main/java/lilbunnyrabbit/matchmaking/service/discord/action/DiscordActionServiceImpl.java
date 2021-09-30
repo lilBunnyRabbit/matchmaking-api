@@ -1,11 +1,9 @@
 package lilbunnyrabbit.matchmaking.service.discord.action;
 
-import lilbunnyrabbit.matchmaking.model.request.InteractionRequest;
-import lilbunnyrabbit.matchmaking.model.request.InteractionRequestData;
+import lilbunnyrabbit.matchmaking.model.discord.Interaction;
+import lilbunnyrabbit.matchmaking.model.discord.InteractionResponse;
 import lilbunnyrabbit.matchmaking.model.discord.Member;
 import lilbunnyrabbit.matchmaking.model.discord.User;
-import lilbunnyrabbit.matchmaking.model.response.InteractionResponse;
-import lilbunnyrabbit.matchmaking.model.response.InteractionResponseData;
 import lilbunnyrabbit.matchmaking.service.guild.GuildService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,8 +14,8 @@ public class DiscordActionServiceImpl implements DiscordActionService {
     @Autowired
     private GuildService guildService;
 
-    public InteractionResponse actionHandler(InteractionRequest interaction) {
-        InteractionRequestData data = interaction.getData();
+    public InteractionResponse actionHandler(Interaction interaction) {
+        Interaction.Data data = interaction.getData();
         if (data == null) return null;
 
         String actionId = data.getCustomId();
@@ -28,18 +26,18 @@ public class DiscordActionServiceImpl implements DiscordActionService {
         };
     }
 
-    private InteractionResponse exampleAction(InteractionRequest interaction) {
-        InteractionResponseData data = new InteractionResponseData();
+    private InteractionResponse exampleAction(Interaction interaction) {
+        InteractionResponse.Data responseData = new InteractionResponse.Data();
         Member member = interaction.getMember();
 
-        data.setContent("Hello from message");
+        responseData.setContent("Hello from message");
         if (member != null) {
             User user = member.getUser();
             if (user != null) {
-                data.setContent("<@" + user.getId() + "> thank you for pressing that button...");
+                responseData.setContent("<@" + user.getId() + "> thank you for pressing that button...");
             }
         }
 
-        return new InteractionResponse(InteractionResponse.Type.CHANNEL_MESSAGE_WITH_SOURCE, data);
+        return InteractionResponse.CHANNEL_MESSAGE_WITH_SOURCE(responseData);
     }
 }

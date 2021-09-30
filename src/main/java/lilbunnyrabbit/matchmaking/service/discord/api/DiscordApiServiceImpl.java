@@ -3,9 +3,8 @@ package lilbunnyrabbit.matchmaking.service.discord.api;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lilbunnyrabbit.matchmaking.config.DiscordConfiguration;
-import lilbunnyrabbit.matchmaking.model.request.VoiceChannelRequest;
-import lilbunnyrabbit.matchmaking.model.response.InviteResponse;
-import lilbunnyrabbit.matchmaking.model.response.VoiceChannelResponse;
+import lilbunnyrabbit.matchmaking.model.discord.Channel;
+import lilbunnyrabbit.matchmaking.model.discord.Invite;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
@@ -62,23 +61,23 @@ public class DiscordApiServiceImpl implements DiscordApiService {
         return this.BASE_URL + "/channels/" + channelId;
     }
 
-    public VoiceChannelResponse createVoiceChannel(String guildId, VoiceChannelRequest voiceChannelRequest) {
+    public Channel createVoiceChannel(String guildId, Channel channel) {
         String url = this.getGuildPath(guildId) + "/channels";
         HttpHeaders headers = this.getJsonHeaders();
-        HttpEntity<VoiceChannelRequest> entity = new HttpEntity<>(voiceChannelRequest, headers);
+        HttpEntity<Channel> entity = new HttpEntity<>(channel, headers);
 
         this.printRequest("POST", url, entity);
 
-        return this.restTemplate.postForObject(url, entity, VoiceChannelResponse.class);
+        return this.restTemplate.postForObject(url, entity, Channel.class);
     }
 
     @Override
-    public InviteResponse createChannelInvite(String channelId) { // Todo: with params
+    public Invite createChannelInvite(String channelId) { // Todo: with params
         String url = this.getChannelPath(channelId) + "/invites";
         HttpEntity<String> entity = new HttpEntity<>("{}", this.getJsonHeaders());
 
         this.printRequest("POST", url, entity);
 
-        return this.restTemplate.postForObject(url, entity, InviteResponse.class);
+        return this.restTemplate.postForObject(url, entity, Invite.class);
     }
 }
