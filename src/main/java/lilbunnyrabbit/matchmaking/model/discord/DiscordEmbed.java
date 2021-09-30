@@ -142,10 +142,6 @@ public class DiscordEmbed {
         this.fields = fields;
     }
 
-    public void setFields(Field... fields) {
-        this.fields = List.of(fields);
-    }
-
     public static final class Type {
 
         public static final String RICH = "rich";

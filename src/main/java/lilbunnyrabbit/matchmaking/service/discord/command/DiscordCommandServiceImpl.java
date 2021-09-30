@@ -1,11 +1,11 @@
 package lilbunnyrabbit.matchmaking.service.discord.command;
 
+import lilbunnyrabbit.matchmaking.helpers.ButtonHelper;
 import lilbunnyrabbit.matchmaking.model.discord.*;
 import lilbunnyrabbit.matchmaking.entity.Guild;
 import lilbunnyrabbit.matchmaking.entity.Queue;
 import lilbunnyrabbit.matchmaking.entity.guild_player.GuildPlayer;
 import lilbunnyrabbit.matchmaking.entity.Player;
-import lilbunnyrabbit.matchmaking.helpers.ButtonHelper;
 import lilbunnyrabbit.matchmaking.helpers.CommandHelper;
 import lilbunnyrabbit.matchmaking.helpers.EmbedHelper;
 import lilbunnyrabbit.matchmaking.service.discord.api.DiscordApiService;
@@ -130,7 +130,6 @@ public class DiscordCommandServiceImpl implements DiscordCommandService {
         // TODO: Check if there is an open queue
 
         Queue queue = queueService.createQueueWithPlayers(guild, players);
-
         DiscordChannel voiceChannel = discordApiService.createVoiceChannel(guildId, new DiscordChannel(DiscordChannel.Type.GUILD_VOICE, "VC - " + queue.getId()));
         if (voiceChannel == null) {
             // TODO: undo the whole thing

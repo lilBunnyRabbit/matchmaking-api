@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class DiscordComponent {
 
     @NotEmpty
@@ -15,6 +16,14 @@ public class DiscordComponent {
     }
 
     public DiscordComponent(Integer type) {
+        this.type = type;
+    }
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
         this.type = type;
     }
 
@@ -28,22 +37,23 @@ public class DiscordComponent {
         }
     }
 
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public static class ActionRow extends DiscordComponent {
 
         @NotEmpty
         private List<DiscordComponent> components;
 
         public ActionRow() {
-            this.type = Type.ACTION_ROW;
+            super(Type.ACTION_ROW);
         }
 
         public ActionRow(List<DiscordComponent> components) {
-            this.type = Type.ACTION_ROW;
+            super(Type.ACTION_ROW);
             this.components = components;
         }
 
         public ActionRow(DiscordComponent... component) {
-            this.type = Type.ACTION_ROW;
+            super(Type.ACTION_ROW);
             this.components = List.of(component);
         }
 
@@ -56,6 +66,7 @@ public class DiscordComponent {
         }
     }
 
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public static class Button extends DiscordComponent {
 
         @NotEmpty
@@ -78,11 +89,11 @@ public class DiscordComponent {
         private String disabled;
 
         public Button() {
-            this.type = Type.BUTTON;
+            super(Type.BUTTON);
         }
 
         public Button(Integer style) {
-            this.type = Type.BUTTON;
+            super(Type.BUTTON);
             this.style = style;
         }
 
@@ -146,6 +157,7 @@ public class DiscordComponent {
         }
     }
 
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public static class SelectMenu extends DiscordComponent {
 
         @NotEmpty
@@ -170,21 +182,61 @@ public class DiscordComponent {
         private Boolean disabled;
 
         public SelectMenu() {
-            this.type = Type.SELECT_MENU;
+            super(Type.SELECT_MENU);
         }
 
         public SelectMenu(String customId, List<Option> options) {
-            this.type = Type.SELECT_MENU;
+            super(Type.SELECT_MENU);
             this.customId = customId;
             this.options = options;
         }
 
-        public Integer getType() {
-            return type;
+        public String getCustomId() {
+            return customId;
         }
 
-        public void setType(Integer type) {
-            this.type = type;
+        public void setCustomId(String customId) {
+            this.customId = customId;
+        }
+
+        public List<Option> getOptions() {
+            return options;
+        }
+
+        public void setOptions(List<Option> options) {
+            this.options = options;
+        }
+
+        public String getPlaceholder() {
+            return placeholder;
+        }
+
+        public void setPlaceholder(String placeholder) {
+            this.placeholder = placeholder;
+        }
+
+        public Integer getMinValues() {
+            return minValues;
+        }
+
+        public void setMinValues(Integer minValues) {
+            this.minValues = minValues;
+        }
+
+        public Integer getMaxValues() {
+            return maxValues;
+        }
+
+        public void setMaxValues(Integer maxValues) {
+            this.maxValues = maxValues;
+        }
+
+        public Boolean getDisabled() {
+            return disabled;
+        }
+
+        public void setDisabled(Boolean disabled) {
+            this.disabled = disabled;
         }
 
         public static class Option {
@@ -252,54 +304,6 @@ public class DiscordComponent {
             public void setDefault(Boolean aDefault) {
                 isDefault = aDefault;
             }
-        }
-
-        public String getCustomId() {
-            return customId;
-        }
-
-        public void setCustomId(String customId) {
-            this.customId = customId;
-        }
-
-        public List<Option> getOptions() {
-            return options;
-        }
-
-        public void setOptions(List<Option> options) {
-            this.options = options;
-        }
-
-        public String getPlaceholder() {
-            return placeholder;
-        }
-
-        public void setPlaceholder(String placeholder) {
-            this.placeholder = placeholder;
-        }
-
-        public Integer getMinValues() {
-            return minValues;
-        }
-
-        public void setMinValues(Integer minValues) {
-            this.minValues = minValues;
-        }
-
-        public Integer getMaxValues() {
-            return maxValues;
-        }
-
-        public void setMaxValues(Integer maxValues) {
-            this.maxValues = maxValues;
-        }
-
-        public Boolean getDisabled() {
-            return disabled;
-        }
-
-        public void setDisabled(Boolean disabled) {
-            this.disabled = disabled;
         }
     }
 }
