@@ -5,6 +5,6 @@ import lilbunnyrabbit.matchmaking.model.discord.DiscordInvite;
 
 public interface DiscordApiService {
     void printObjectAsJson(Object object);
-    DiscordChannel createVoiceChannel(String guildId, DiscordChannel channel);
+    DiscordChannel createChannel(String guildId, DiscordChannel channel);
     DiscordInvite createChannelInvite(String channelId);
 }

@@ -61,7 +61,7 @@ public class DiscordApiServiceImpl implements DiscordApiService {
         return this.BASE_URL + "/channels/" + channelId;
     }
 
-    public DiscordChannel createVoiceChannel(String guildId, DiscordChannel channel) {
+    public DiscordChannel createChannel(String guildId, DiscordChannel channel) {
         String url = this.getGuildPath(guildId) + "/channels";
         HttpHeaders headers = this.getJsonHeaders();
         HttpEntity<DiscordChannel> entity = new HttpEntity<>(channel, headers);

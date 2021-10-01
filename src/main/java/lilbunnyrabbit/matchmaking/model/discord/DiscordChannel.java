@@ -86,6 +86,14 @@ public class DiscordChannel {
         this.name = name;
     }
 
+    public static DiscordChannel GUILD_VOICE(String name) {
+        return new DiscordChannel(Type.GUILD_VOICE, name);
+    }
+
+    public static DiscordChannel GUILD_CATEGORY(String name) {
+        return new DiscordChannel(Type.GUILD_CATEGORY, name);
+    }
+
     public String getId() {
         return id;
     }

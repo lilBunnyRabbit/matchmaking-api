@@ -14,10 +14,14 @@ public class Guild {
     @Id
     private String id;
 
+    @Column(name="category_id")
+    private String categoryId;
+
     @CreatedDate
     private Date created = new Date();
 
     @OneToMany(mappedBy = "guild", fetch = FetchType.LAZY)
+    @Column(name="guild_players")
     Set<GuildPlayer> guildPlayers;
 
     @OneToMany(mappedBy = "guild", fetch = FetchType.LAZY)
@@ -34,6 +38,14 @@ public class Guild {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(String categoryId) {
+        this.categoryId = categoryId;
     }
 
     public Date getCreated() {

@@ -1,5 +1,6 @@
 package lilbunnyrabbit.matchmaking.helpers;
 
+import lilbunnyrabbit.matchmaking.entity.Queue;
 import lilbunnyrabbit.matchmaking.model.discord.DiscordEmbed;
 
 public class EmbedHelper {
@@ -19,11 +20,19 @@ public class EmbedHelper {
         return embed;
     }
 
-    public static DiscordEmbed QUEUE_STARTED(long queueId) {
+    public static DiscordEmbed QUEUE_STARTED(Queue queue) {
         DiscordEmbed embed = new DiscordEmbed();
         embed.setColor(0xcccc00);
         embed.setTitle("Queue started!");
-        embed.setDescription("Queue ID: " + queueId);
+        embed.setDescription("Queue ID: " + queue.getId());
+        return embed;
+    }
+
+    public static DiscordEmbed QUEUE(Queue queue) {
+        DiscordEmbed embed = new DiscordEmbed();
+        embed.setColor(0xcccc00);
+        embed.setTitle("Queue");
+        embed.setDescription(queue.getPlayers().size() + " players");
         return embed;
     }
 }

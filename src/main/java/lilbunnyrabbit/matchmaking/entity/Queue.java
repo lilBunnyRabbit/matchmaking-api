@@ -16,7 +16,7 @@ public class Queue {
     private long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "guildId")
+    @JoinColumn(name = "guild_id")
     @JsonIgnore
     private Guild guild;
 
@@ -28,6 +28,7 @@ public class Queue {
     @OneToMany(mappedBy = "queue", fetch = FetchType.LAZY)
     Set<GuildPlayer> players;
 
+    @Column(name="lobby_channel")
     private String lobbyChannel;
 
     // TODO: private QueueType queueType;

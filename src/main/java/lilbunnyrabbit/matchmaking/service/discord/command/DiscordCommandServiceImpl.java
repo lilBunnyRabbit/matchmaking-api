@@ -1,11 +1,11 @@
 package lilbunnyrabbit.matchmaking.service.discord.command;
 
+import lilbunnyrabbit.matchmaking.exception.service.GuildPlayerException;
 import lilbunnyrabbit.matchmaking.helpers.ButtonHelper;
 import lilbunnyrabbit.matchmaking.model.discord.*;
 import lilbunnyrabbit.matchmaking.entity.Guild;
 import lilbunnyrabbit.matchmaking.entity.Queue;
 import lilbunnyrabbit.matchmaking.entity.guild_player.GuildPlayer;
-import lilbunnyrabbit.matchmaking.entity.Player;
 import lilbunnyrabbit.matchmaking.helpers.CommandHelper;
 import lilbunnyrabbit.matchmaking.helpers.EmbedHelper;
 import lilbunnyrabbit.matchmaking.service.discord.api.DiscordApiService;
@@ -57,7 +57,13 @@ public class DiscordCommandServiceImpl implements DiscordCommandService {
         String guildId = interaction.getGuildId();
         if (guildId == null) return CommandHelper.NOT_DM_COMMAND;
 
-        Guild guild = guildService.createGuild(guildId);
+        DiscordChannel category = discordApiService.createChannel(guildId, DiscordChannel.GUILD_CATEGORY("Matchmaking"));
+
+        if (category == null) return  CommandHelper.Error("Failed to create Matchmaking category", null);
+
+        Guild guild = guildService.createGuild(guildId, (guildCallback) -> {
+            guildCallback.setCategoryId(category.getId());
+        });
 
         if (guild == null) {
             return CommandHelper.Error("Failed to init guild", null);
@@ -79,28 +85,19 @@ public class DiscordCommandServiceImpl implements DiscordCommandService {
         String playerId = user.getId();
         if (playerId == null) return CommandHelper.Error("Missing data", "User Id");
 
-        Guild guild = guildService.getGuild(guildId);
-        if (guild == null) return CommandHelper.Error("Invalid server", "This server is currently not supported!");
+        try {
+            guildPlayerService.registerGuildPlayer(guildId, playerId);
+        } catch (GuildPlayerException guildPlayerException) {
+            guildPlayerException.printStackTrace();
 
-        StringBuilder responseMessage = new StringBuilder();
-
-        Player player = playerService.getPlayer(playerId);
-        if (player == null) {
-            player = playerService.createPlayer(playerId);
-            responseMessage.append("- Created Player\n");
+            return switch (guildPlayerException.getIssue()) {
+                case GUILD_NOT_EXISTS -> CommandHelper.Error("Invalid server", "This server is currently not supported!");
+                case GUILD_PLAYER_EXISTS -> CommandHelper.Error("Player already exists", null);
+                default -> CommandHelper.Error("Internal Error!", null);
+            };
         }
 
-        GuildPlayer guildPlayer = guildPlayerService.getGuildPlayer(guildId, playerId);
-        if (guildPlayer == null) {
-            guildPlayerService.createGuildPlayer(guild, player);
-            responseMessage.append("- Created Guild Player\n");
-        }
-
-        if (responseMessage.isEmpty()) {
-            return CommandHelper.Error("Player already exists", null);
-        } else {
-            return CommandHelper.Success("Player registered", responseMessage.toString());
-        }
+        return CommandHelper.Success("Player registered", null);
     }
 
     private DiscordInteractionResponse queueCommand(DiscordInteraction interaction) {
@@ -119,26 +116,24 @@ public class DiscordCommandServiceImpl implements DiscordCommandService {
         Guild guild = guildService.getGuild(guildId);
         if (guild == null) return CommandHelper.Error("Invalid server", "This server is currently not supported!");
 
-        GuildPlayer guildPlayer = guildPlayerService.getGuildPlayer(guildId, playerId);
-        if (guildPlayer == null)
-            return CommandHelper.Error("Not registered", "You need to register first before you can start or join a queue");
-        if (guildPlayer.getQueue() != null) return CommandHelper.Error("Already in a queue", null);
+        Queue queue;
+        try {
+            queue = guildPlayerService.queueGuildPlayer(guildId, playerId);
+        } catch (GuildPlayerException guildPlayerException) {
+            guildPlayerException.printStackTrace();
 
-        Set<GuildPlayer> players = new HashSet<>();
-        players.add(guildPlayer);
-
-        // TODO: Check if there is an open queue
-
-        Queue queue = queueService.createQueueWithPlayers(guild, players);
-        DiscordChannel voiceChannel = discordApiService.createVoiceChannel(guildId, new DiscordChannel(DiscordChannel.Type.GUILD_VOICE, "VC - " + queue.getId()));
-        if (voiceChannel == null) {
-            // TODO: undo the whole thing
-            return CommandHelper.Error("Failed to create queue VC", null);
+            return switch (guildPlayerException.getIssue()) {
+                case GUILD_PLAYER_NOT_EXISTS -> CommandHelper.Error("Not registered", "You need to register first before you can start or join a queue");
+                case IN_QUEUE -> CommandHelper.Error("Already in a queue", null);
+                default -> CommandHelper.Error("Internal Error!", null);
+            };
         }
 
-        DiscordInteractionResponse.Data responseData = new DiscordInteractionResponse.Data(EmbedHelper.QUEUE_STARTED(queue.getId()));
+        DiscordInteractionResponse.Data responseData = new DiscordInteractionResponse.Data(
+                EmbedHelper.QUEUE(queue)
+        );
 
-        DiscordInvite invite = discordApiService.createChannelInvite(voiceChannel.getId());
+        DiscordInvite invite = discordApiService.createChannelInvite(queue.getLobbyChannel());
         String channelLink = invite == null ? null : invite.createLink();
 
         if (channelLink != null) {
