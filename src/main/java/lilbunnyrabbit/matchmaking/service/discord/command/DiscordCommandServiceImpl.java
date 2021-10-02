@@ -63,7 +63,7 @@ public class DiscordCommandServiceImpl implements DiscordCommandService {
             guildException.printStackTrace();
 
             return switch (guildException.getIssue()) {
-                case GUILD_EXISTS -> CommandHelper.Error("Guild exists", null);
+                case GUILD_EXIST -> CommandHelper.Error("Guild exists", null);
                 case FAILED_CREATE_CATEGORY -> CommandHelper.Error("Failed to create Matchmaking category", null);
                 default -> CommandHelper.Error("Failed to init guild", null);
             };

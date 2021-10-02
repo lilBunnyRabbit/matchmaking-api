@@ -8,6 +8,8 @@ import lilbunnyrabbit.matchmaking.repository.GuildPlayerRepository;
 import lilbunnyrabbit.matchmaking.repository.GuildRepository;
 import lilbunnyrabbit.matchmaking.repository.PlayerRepository;
 import lilbunnyrabbit.matchmaking.repository.QueueRepository;
+import lilbunnyrabbit.matchmaking.service.guild.GuildService;
+import lilbunnyrabbit.matchmaking.service.player.PlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -32,6 +34,12 @@ public class Application {
     @Autowired
     QueueRepository queueRepository;
 
+    @Autowired
+    GuildService guildService;
+
+    @Autowired
+    PlayerService playerService;
+
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
     }
@@ -39,29 +47,18 @@ public class Application {
     @Bean
     public CommandLineRunner createUsers() {
         return (args) -> {
-            Guild guild = new Guild("guild1");
-            guildRepository.save(guild);
+            Guild guild = guildService.createGuild("guild1");
 
-            Player player1 = new Player("player1");
-            playerRepository.save(player1);
-
-            Player player2 = new Player("player2");
-            playerRepository.save(player2);
+            Player player1 = playerService.createPlayer("player1");
+            Player player2 = playerService.createPlayer("player2");
 
             // Create guildplayer
-            GuildPlayer guildPlayer1 = new GuildPlayer(guild, player1);
-            guild.addGuildPlayer(guildPlayer1);
-            GuildPlayer guildPlayer2 = new GuildPlayer(guild, player2);
-            guild.addGuildPlayer(guildPlayer2);
-            guildRepository.save(guild);
+            GuildPlayer guildPlayer1 = guildService.createGuildPlayer(guild, player1);
+            GuildPlayer guildPlayer2 = guildService.createGuildPlayer(guild, player2);
 
             // Create queue
-            Queue queue1 = new Queue();
-            queue1.addPlayer(guildPlayer1);
-            guild.addQueue(queue1);
-            Queue queue2 = new Queue();
-            queue2.addPlayer(guildPlayer2);
-            guild.addQueue(queue2);
+            Queue queue1 = guildService.createQueue(guild, Set.of(guildPlayer1));
+            Queue queue2 = guildService.createQueue(guild, Set.of(guildPlayer2));
             guildRepository.save(guild);
 
             // Remove players from queue
