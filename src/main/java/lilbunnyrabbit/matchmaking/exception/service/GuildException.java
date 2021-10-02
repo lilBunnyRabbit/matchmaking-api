@@ -20,6 +20,7 @@ public class GuildException extends Exception {
     public enum Issue {
         INTERNAL,
         GUILD_EXISTS,
-        GUILD_NOT_EXISTS
+        GUILD_NOT_EXISTS,
+        FAILED_CREATE_CATEGORY
     }
 }

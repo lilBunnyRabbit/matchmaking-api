@@ -20,4 +20,6 @@ public interface GuildPlayerService {
     void registerGuildPlayer(String guildId, String playerId) throws GuildPlayerException;
 
     Queue queueGuildPlayer(String guildId, String playerId) throws GuildPlayerException;
+
+    Queue dequeueGuildPlayer(String guildId, String playerId) throws GuildPlayerException;
 }

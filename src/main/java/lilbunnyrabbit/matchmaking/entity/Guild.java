@@ -5,6 +5,7 @@ import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -20,12 +21,12 @@ public class Guild {
     @CreatedDate
     private Date created = new Date();
 
-    @OneToMany(mappedBy = "guild", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "guild", fetch = FetchType.LAZY, orphanRemoval = true, cascade = CascadeType.ALL )
     @Column(name="guild_players")
-    Set<GuildPlayer> guildPlayers;
+    Set<GuildPlayer> guildPlayers = new HashSet<>();
 
-    @OneToMany(mappedBy = "guild", fetch = FetchType.LAZY)
-    Set<Queue> queues;
+    @OneToMany(mappedBy = "guild", fetch = FetchType.LAZY, orphanRemoval = true, cascade = CascadeType.ALL )
+    Set<Queue> queues = new HashSet<>();
 
     public Guild() {}
     public Guild(String id) {
@@ -64,11 +65,21 @@ public class Guild {
         this.guildPlayers = guildPlayers;
     }
 
+    public void addGuildPlayer(GuildPlayer guildPlayer) {
+        this.guildPlayers.add(guildPlayer);
+        guildPlayer.setGuild(this);
+    }
+
     public Set<Queue> getQueues() {
         return queues;
     }
 
     public void setQueues(Set<Queue> queues) {
         this.queues = queues;
+    }
+
+    public void addQueue(Queue queue) {
+        this.queues.add(queue);
+        queue.setGuild(this);
     }
 }

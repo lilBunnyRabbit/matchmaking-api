@@ -5,6 +5,7 @@ import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -17,8 +18,8 @@ public class Player {
     @CreatedDate
     private Date created = new Date();
 
-    @OneToMany(mappedBy = "player", fetch = FetchType.LAZY)
-    Set<GuildPlayer> guildPlayers;
+    @OneToMany(mappedBy = "player", fetch = FetchType.LAZY, orphanRemoval = true, cascade = CascadeType.ALL)
+    Set<GuildPlayer> guildPlayers = new HashSet<>();
 
     public Player() {}
     public Player(String id) {
@@ -47,5 +48,10 @@ public class Player {
 
     public void setGuildPlayers(Set<GuildPlayer> guildPlayers) {
         this.guildPlayers = guildPlayers;
+    }
+
+    public void addGuildPlayer(GuildPlayer guildPlayer) {
+        this.guildPlayers.add(guildPlayer);
+        guildPlayer.setPlayer(this);
     }
 }

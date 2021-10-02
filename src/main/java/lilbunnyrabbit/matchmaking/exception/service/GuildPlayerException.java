@@ -23,6 +23,8 @@ public class GuildPlayerException extends Exception {
         GUILD_PLAYER_NOT_EXISTS,
         GUILD_NOT_EXISTS,
         IN_QUEUE,
-        FAILED_JOIN_QUEUE
+        NOT_IN_QUEUE,
+        FAILED_JOIN_QUEUE,
+        FAILED_LEAVE_QUEUE
     }
 }

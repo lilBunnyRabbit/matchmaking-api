@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lilbunnyrabbit.matchmaking.entity.Guild;
 import lilbunnyrabbit.matchmaking.entity.Player;
 import lilbunnyrabbit.matchmaking.entity.Queue;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 
@@ -26,7 +28,7 @@ public class GuildPlayer {
     @JsonIgnore
     private Player player;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "queueId")
     @JsonIgnore
     private Queue queue;
@@ -38,7 +40,7 @@ public class GuildPlayer {
 
     public GuildPlayer() {}
     public GuildPlayer(Guild guild, Player player) {
-        this.id = new GuildPlayerId(guild, player);
+        this.id = new GuildPlayerId(guild, player); // TODO ?
         this.guild = guild;
         this.player = player;
     }

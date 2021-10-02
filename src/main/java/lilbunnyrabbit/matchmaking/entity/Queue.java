@@ -2,10 +2,13 @@ package lilbunnyrabbit.matchmaking.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lilbunnyrabbit.matchmaking.entity.guild_player.GuildPlayer;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -25,8 +28,8 @@ public class Queue {
 
     private Status status = Status.WAITING;
 
-    @OneToMany(mappedBy = "queue", fetch = FetchType.LAZY)
-    Set<GuildPlayer> players;
+    @OneToMany(mappedBy = "queue", fetch = FetchType.LAZY, orphanRemoval = true, cascade = CascadeType.ALL)
+    Set<GuildPlayer> players = new HashSet<>();
 
     @Column(name="lobby_channel")
     private String lobbyChannel;
@@ -81,6 +84,11 @@ public class Queue {
 
     public void setPlayers(Set<GuildPlayer> players) {
         this.players = players;
+    }
+
+    public void addPlayer(GuildPlayer guildPlayer) {
+        this.players.add(guildPlayer);
+        guildPlayer.setQueue(this);
     }
 
     public String getLobbyChannel() {

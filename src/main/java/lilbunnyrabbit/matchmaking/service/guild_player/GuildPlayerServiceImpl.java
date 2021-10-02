@@ -14,11 +14,13 @@ import lilbunnyrabbit.matchmaking.service.player.PlayerService;
 import lilbunnyrabbit.matchmaking.service.queue.QueueService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 import java.util.function.Consumer;
 
 @Service
+@Transactional
 public class GuildPlayerServiceImpl implements GuildPlayerService {
 
     @Autowired
@@ -124,6 +126,26 @@ public class GuildPlayerServiceImpl implements GuildPlayerService {
         } catch (QueueException queueException) {
             queueException.printStackTrace();
             throw new GuildPlayerException(GuildPlayerException.Issue.FAILED_JOIN_QUEUE);
+        }
+    }
+
+    @Override
+    public Queue dequeueGuildPlayer(String guildId, String playerId) throws GuildPlayerException {
+        GuildPlayer guildPlayer = this.getGuildPlayer(guildId, playerId);
+        if (guildPlayer == null) {
+            throw new GuildPlayerException(GuildPlayerException.Issue.GUILD_PLAYER_NOT_EXISTS);
+        }
+
+        if (guildPlayer.getQueue() == null) {
+            throw new GuildPlayerException(GuildPlayerException.Issue.NOT_IN_QUEUE);
+        }
+
+
+        try {
+            return queueService.removePlayerFromQueue(guildPlayer);
+        } catch (QueueException queueException) {
+            queueException.printStackTrace();
+            throw new GuildPlayerException(GuildPlayerException.Issue.FAILED_LEAVE_QUEUE);
         }
     }
 }

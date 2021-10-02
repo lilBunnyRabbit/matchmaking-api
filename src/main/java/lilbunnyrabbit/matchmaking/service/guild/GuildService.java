@@ -13,4 +13,6 @@ public interface GuildService {
     Guild createGuild(String guildId, Consumer<Guild> callback);
 
     Guild updateGuild(String guildId, Consumer<Guild> callback) throws GuildException;
+
+    Guild guildInit(String guildId) throws GuildException;
 }

@@ -5,11 +5,13 @@ import lilbunnyrabbit.matchmaking.exception.service.PlayerException;
 import lilbunnyrabbit.matchmaking.repository.PlayerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 import java.util.function.Consumer;
 
 @Service
+@Transactional
 public class PlayerServiceImpl implements PlayerService {
 
     @Autowired
