@@ -1,9 +1,6 @@
 package lilbunnyrabbit.matchmaking.service.guild;
 
 import lilbunnyrabbit.matchmaking.entity.Guild;
-import lilbunnyrabbit.matchmaking.entity.Player;
-import lilbunnyrabbit.matchmaking.entity.Queue;
-import lilbunnyrabbit.matchmaking.entity.guild_player.GuildPlayer;
 import lilbunnyrabbit.matchmaking.exception.service.GuildException;
 import lilbunnyrabbit.matchmaking.model.discord.DiscordChannel;
 import lilbunnyrabbit.matchmaking.repository.GuildRepository;
@@ -15,7 +12,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
-import java.util.Set;
 import java.util.function.Consumer;
 
 @Service
@@ -72,27 +68,5 @@ public class GuildServiceImpl implements GuildService {
         });
 
         return guild;
-    }
-
-
-    @Override
-    public GuildPlayer createGuildPlayer(Guild guild, Player player) throws GuildException {
-        if (guild.getGuildPlayers().stream().anyMatch(guildPlayer -> guildPlayer.getPlayer().equals(player))) {
-            throw new GuildException(GuildException.Issue.GUILD_PLAYER_EXIST);
-        }
-
-        GuildPlayer guildPlayer = new GuildPlayer(guild, player);
-        guild.addGuildPlayer(guildPlayer);
-        guildRepository.save(guild);
-        return guildPlayer;
-    }
-
-    @Override
-    public Queue createQueue(Guild guild, Set<GuildPlayer> guildPlayers) {
-        Queue queue = new Queue();
-        if (guildPlayers != null) guildPlayers.forEach(queue::addPlayer);
-        guild.addQueue(queue);
-        guildRepository.save(guild);
-        return queue;
     }
 }

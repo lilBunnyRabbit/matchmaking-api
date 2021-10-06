@@ -53,151 +53,155 @@ public class DiscordCommandServiceImpl implements DiscordCommandService {
     }
 
     private DiscordInteractionResponse guildInitCommand(DiscordInteraction interaction) {
-        String guildId = interaction.getGuildId();
-        if (guildId == null) return CommandHelper.NOT_DM_COMMAND;
-
-        Guild guild;
-        try {
-            guild = guildService.guildInit(guildId);
-        } catch (GuildException guildException) {
-            guildException.printStackTrace();
-
-            return switch (guildException.getIssue()) {
-                case GUILD_EXIST -> CommandHelper.Error("Guild exists", null);
-                case FAILED_CREATE_CATEGORY -> CommandHelper.Error("Failed to create Matchmaking category", null);
-                default -> CommandHelper.Error("Failed to init guild", null);
-            };
-        }
-
-//        return CommandHelper.Success("Guild init", "ID: " + guild.getId());
-        // Temporary
-        return this.registerCommand(interaction);
+        return CommandHelper.Success("guildInitCommand", null);
+//        String guildId = interaction.getGuildId();
+//        if (guildId == null) return CommandHelper.NOT_DM_COMMAND;
+//
+//        Guild guild;
+//        try {
+//            guild = guildService.guildInit(guildId);
+//        } catch (GuildException guildException) {
+//            guildException.printStackTrace();
+//
+//            return switch (guildException.getIssue()) {
+//                case GUILD_EXIST -> CommandHelper.Error("Guild exists", null);
+//                case FAILED_CREATE_CATEGORY -> CommandHelper.Error("Failed to create Matchmaking category", null);
+//                default -> CommandHelper.Error("Failed to init guild", null);
+//            };
+//        }
+//
+////        return CommandHelper.Success("Guild init", "ID: " + guild.getId());
+//        // Temporary
+//        return this.registerCommand(interaction);
     }
 
     private DiscordInteractionResponse registerCommand(DiscordInteraction interaction) {
-        String guildId = interaction.getGuildId();
-        if (guildId == null) return CommandHelper.NOT_DM_COMMAND;
-
-        DiscordMember member = interaction.getMember();
-        if (member == null) return CommandHelper.Error("Missing data", "Member");
-
-        DiscordUser user = member.getUser();
-        if (user == null) return CommandHelper.Error("Missing data", "User");
-
-        String playerId = user.getId();
-        if (playerId == null) return CommandHelper.Error("Missing data", "User Id");
-
-        try {
-            guildPlayerService.registerGuildPlayer(guildId, playerId);
-        } catch (GuildPlayerException guildPlayerException) {
-            guildPlayerException.printStackTrace();
-
-            return switch (guildPlayerException.getIssue()) {
-                case GUILD_NOT_EXISTS -> CommandHelper.Error("Invalid server", "This server is currently not supported!");
-                case GUILD_PLAYER_EXISTS -> CommandHelper.Error("Player already exists", null);
-                default -> CommandHelper.Error("Internal Error!", null);
-            };
-        }
-
-        return CommandHelper.Success("Player registered", null);
+        return CommandHelper.Success("registerCommand", null);
+//        String guildId = interaction.getGuildId();
+//        if (guildId == null) return CommandHelper.NOT_DM_COMMAND;
+//
+//        DiscordMember member = interaction.getMember();
+//        if (member == null) return CommandHelper.Error("Missing data", "Member");
+//
+//        DiscordUser user = member.getUser();
+//        if (user == null) return CommandHelper.Error("Missing data", "User");
+//
+//        String playerId = user.getId();
+//        if (playerId == null) return CommandHelper.Error("Missing data", "User Id");
+//
+//        try {
+//            guildPlayerService.registerGuildPlayer(guildId, playerId);
+//        } catch (GuildPlayerException guildPlayerException) {
+//            guildPlayerException.printStackTrace();
+//
+//            return switch (guildPlayerException.getIssue()) {
+//                case GUILD_NOT_EXISTS -> CommandHelper.Error("Invalid server", "This server is currently not supported!");
+//                case GUILD_PLAYER_EXISTS -> CommandHelper.Error("Player already exists", null);
+//                default -> CommandHelper.Error("Internal Error!", null);
+//            };
+//        }
+//
+//        return CommandHelper.Success("Player registered", null);
     }
 
     private DiscordInteractionResponse queueCommand(DiscordInteraction interaction) {
-        String guildId = interaction.getGuildId();
-        if (guildId == null) return CommandHelper.NOT_DM_COMMAND;
-
-        DiscordMember member = interaction.getMember();
-        if (member == null) return CommandHelper.Error("Missing data", "Member");
-
-        DiscordUser user = member.getUser();
-        if (user == null) return CommandHelper.Error("Missing data", "User");
-
-        String playerId = user.getId();
-        if (playerId == null) return CommandHelper.Error("Missing data", "User Id");
-
-        Guild guild = guildService.getGuild(guildId);
-        if (guild == null) return CommandHelper.Error("Invalid server", "This server is currently not supported!");
-
-        Queue queue;
-        try {
-            queue = guildPlayerService.queueGuildPlayer(guildId, playerId);
-        } catch (GuildPlayerException guildPlayerException) {
-            guildPlayerException.printStackTrace();
-
-            return switch (guildPlayerException.getIssue()) {
-                case GUILD_PLAYER_NOT_EXISTS -> CommandHelper.Error("Not registered", "You need to register first before you can start or join a queue");
-                case IN_QUEUE -> CommandHelper.Error("Already in a queue", null);
-                default -> CommandHelper.Error("Internal Error!", null);
-            };
-        }
-
-        DiscordInteractionResponse.Data responseData = new DiscordInteractionResponse.Data(
-                EmbedHelper.QUEUE(queue)
-        );
-
-        DiscordInvite invite = discordApiService.createChannelInvite(queue.getLobbyChannel());
-        String channelLink = invite == null ? null : invite.createLink();
-
-        if (channelLink != null) {
-            responseData.setComponents(new DiscordComponent.ActionRow(
-                    ButtonHelper.JOIN_QUEUE(),
-                    ButtonHelper.LEAVE_QUEUE(),
-                    ButtonHelper.LOBBY(channelLink)
-            ));
-        }
-
-        return DiscordInteractionResponse.CHANNEL_MESSAGE_WITH_SOURCE(responseData);
+        return CommandHelper.Success("queueCommand", null);
+//        String guildId = interaction.getGuildId();
+//        if (guildId == null) return CommandHelper.NOT_DM_COMMAND;
+//
+//        DiscordMember member = interaction.getMember();
+//        if (member == null) return CommandHelper.Error("Missing data", "Member");
+//
+//        DiscordUser user = member.getUser();
+//        if (user == null) return CommandHelper.Error("Missing data", "User");
+//
+//        String playerId = user.getId();
+//        if (playerId == null) return CommandHelper.Error("Missing data", "User Id");
+//
+//        Guild guild = guildService.getGuild(guildId);
+//        if (guild == null) return CommandHelper.Error("Invalid server", "This server is currently not supported!");
+//
+//        Queue queue;
+//        try {
+//            queue = guildPlayerService.queueGuildPlayer(guildId, playerId);
+//        } catch (GuildPlayerException guildPlayerException) {
+//            guildPlayerException.printStackTrace();
+//
+//            return switch (guildPlayerException.getIssue()) {
+//                case GUILD_PLAYER_NOT_EXISTS -> CommandHelper.Error("Not registered", "You need to register first before you can start or join a queue");
+//                case IN_QUEUE -> CommandHelper.Error("Already in a queue", null);
+//                default -> CommandHelper.Error("Internal Error!", null);
+//            };
+//        }
+//
+//        DiscordInteractionResponse.Data responseData = new DiscordInteractionResponse.Data(
+//                EmbedHelper.QUEUE(queue)
+//        );
+//
+//        DiscordInvite invite = discordApiService.createChannelInvite(queue.getLobbyChannel());
+//        String channelLink = invite == null ? null : invite.createLink();
+//
+//        if (channelLink != null) {
+//            responseData.setComponents(new DiscordComponent.ActionRow(
+//                    ButtonHelper.JOIN_QUEUE(),
+//                    ButtonHelper.LEAVE_QUEUE(),
+//                    ButtonHelper.LOBBY(channelLink)
+//            ));
+//        }
+//
+//        return DiscordInteractionResponse.CHANNEL_MESSAGE_WITH_SOURCE(responseData);
     }
 
     private DiscordInteractionResponse dequeueCommand(DiscordInteraction interaction) {
-        String guildId = interaction.getGuildId();
-        if (guildId == null) return CommandHelper.NOT_DM_COMMAND;
-
-        DiscordMember member = interaction.getMember();
-        if (member == null) return CommandHelper.Error("Missing data", "Member");
-
-        DiscordUser user = member.getUser();
-        if (user == null) return CommandHelper.Error("Missing data", "User");
-
-        String playerId = user.getId();
-        if (playerId == null) return CommandHelper.Error("Missing data", "User Id");
-
-        Guild guild = guildService.getGuild(guildId);
-        if (guild == null) return CommandHelper.Error("Invalid server", "This server is currently not supported!");
-
-        Queue queue;
-        try {
-            queue = guildPlayerService.dequeueGuildPlayer(guildId, playerId);
-        } catch (GuildPlayerException guildPlayerException) {
-            guildPlayerException.printStackTrace();
-
-            return switch (guildPlayerException.getIssue()) {
-                case GUILD_PLAYER_NOT_EXISTS -> CommandHelper.Error("Not registered", "You need to register first before you can start or join a queue");
-                case NOT_IN_QUEUE -> CommandHelper.Error("Not in a queue", null);
-                default -> CommandHelper.Error("Internal Error!", null);
-            };
-        }
-
-        if (queue == null) {
-            return CommandHelper.Success("Queue closed", null);
-        } else {
-            DiscordInteractionResponse.Data responseData = new DiscordInteractionResponse.Data(
-                    EmbedHelper.QUEUE(queue)
-            );
-
-            DiscordInvite invite = discordApiService.createChannelInvite(queue.getLobbyChannel());
-            String channelLink = invite == null ? null : invite.createLink();
-
-            if (channelLink != null) {
-                responseData.setComponents(new DiscordComponent.ActionRow(
-                        ButtonHelper.JOIN_QUEUE(),
-                        ButtonHelper.LEAVE_QUEUE(),
-                        ButtonHelper.LOBBY(channelLink)
-                ));
-            }
-
-            return DiscordInteractionResponse.CHANNEL_MESSAGE_WITH_SOURCE(responseData);
-        }
+        return CommandHelper.Success("dequeueCommand", null);
+//        String guildId = interaction.getGuildId();
+//        if (guildId == null) return CommandHelper.NOT_DM_COMMAND;
+//
+//        DiscordMember member = interaction.getMember();
+//        if (member == null) return CommandHelper.Error("Missing data", "Member");
+//
+//        DiscordUser user = member.getUser();
+//        if (user == null) return CommandHelper.Error("Missing data", "User");
+//
+//        String playerId = user.getId();
+//        if (playerId == null) return CommandHelper.Error("Missing data", "User Id");
+//
+//        Guild guild = guildService.getGuild(guildId);
+//        if (guild == null) return CommandHelper.Error("Invalid server", "This server is currently not supported!");
+//
+//        Queue queue;
+//        try {
+//            queue = guildPlayerService.dequeueGuildPlayer(guildId, playerId);
+//        } catch (GuildPlayerException guildPlayerException) {
+//            guildPlayerException.printStackTrace();
+//
+//            return switch (guildPlayerException.getIssue()) {
+//                case GUILD_PLAYER_NOT_EXISTS -> CommandHelper.Error("Not registered", "You need to register first before you can start or join a queue");
+//                case NOT_IN_QUEUE -> CommandHelper.Error("Not in a queue", null);
+//                default -> CommandHelper.Error("Internal Error!", null);
+//            };
+//        }
+//
+//        if (queue == null) {
+//            return CommandHelper.Success("Queue closed", null);
+//        } else {
+//            DiscordInteractionResponse.Data responseData = new DiscordInteractionResponse.Data(
+//                    EmbedHelper.QUEUE(queue)
+//            );
+//
+//            DiscordInvite invite = discordApiService.createChannelInvite(queue.getLobbyChannel());
+//            String channelLink = invite == null ? null : invite.createLink();
+//
+//            if (channelLink != null) {
+//                responseData.setComponents(new DiscordComponent.ActionRow(
+//                        ButtonHelper.JOIN_QUEUE(),
+//                        ButtonHelper.LEAVE_QUEUE(),
+//                        ButtonHelper.LOBBY(channelLink)
+//                ));
+//            }
+//
+//            return DiscordInteractionResponse.CHANNEL_MESSAGE_WITH_SOURCE(responseData);
+//        }
     }
 
 }

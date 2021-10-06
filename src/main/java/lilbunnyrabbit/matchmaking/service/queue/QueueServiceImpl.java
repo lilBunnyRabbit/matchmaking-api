@@ -25,144 +25,49 @@ import java.util.function.Consumer;
 public class QueueServiceImpl implements QueueService {
 
     @Autowired
-    private QueueRepository queueRepository;
-
-    @Autowired
     private GuildRepository guildRepository;
 
     @Autowired
     private GuildPlayerRepository guildPlayerRepository;
 
-    @Autowired
-    private GuildPlayerService guildPlayerService;
-
-    @Autowired
-    private DiscordApiService discordApiService;
-
     @Override
-    public Queue getQueue(long queueId) {
-        Optional<Queue> optionalQueue = queueRepository.findById(queueId);
-        return optionalQueue.orElse(null);
-    }
-
-    @Override
-    public List<Queue> getQueueByGuild(Guild guild, Queue.Status status) {
-        Optional<List<Queue>> optionalQueueList;
-        if (status == null) {
-            optionalQueueList = queueRepository.findByGuild(guild);
-        } else {
-            optionalQueueList = queueRepository.findByGuildAndStatus(guild, status);
+    public Queue createQueue(Guild guild, Set<GuildPlayer> guildPlayers) {
+        Queue queue = new Queue();
+        if (guildPlayers != null) {
+            guildPlayers.forEach(queue::addPlayer);
         }
 
-        return optionalQueueList.orElse(null);
-    }
-
-    @Override
-    public Queue createQueue(Guild guild) {
-        return this.createQueue(guild, null);
-    }
-
-    @Override
-    public Queue createQueue(Guild guild, Consumer<Queue> callback) {
-        Queue queue = new Queue(guild);
-        if (callback != null) callback.accept(queue);
-        queueRepository.save(queue);
-
-        Set<Queue> queues = guild.getQueues();
-        if (queues == null) queues = new HashSet<>();
-
-        queues.add(queue);
-        guild.setQueues(queues);
+        guild.addQueue(queue);
         guildRepository.save(guild);
-
         return queue;
     }
 
     @Override
     public void deleteQueue(Queue queue) {
-        queue.setGuild(null);
-        queue.setPlayers(null);
-        queueRepository.save(queue);
-
-        queueRepository.deleteById(queue.getId());
-
-        queue.getPlayers().forEach((guildPlayer -> {
-            guildPlayer.setQueue(null);
-            guildPlayerRepository.save(guildPlayer);
-        }));
-
+        queue.getPlayers().forEach(queue::removePlayer);
         Guild guild = queue.getGuild();
         guild.getQueues().remove(queue);
         guildRepository.save(guild);
     }
 
     @Override
-    public Queue updateQueue(long queueId, Consumer<Queue> callback) throws QueueException {
-        Queue queue = this.getQueue(queueId);
-        if (queue == null) {
-            throw new QueueException(QueueException.Issue.QUEUE_NOT_EXISTS);
-        }
-
-        if (callback != null) callback.accept(queue);
-        queueRepository.save(queue);
-        return queue;
-    }
-
-    @Override
-    public Queue addPlayerToQueue(GuildPlayer guildPlayer) throws QueueException {
-        Guild guild = guildPlayer.getGuild();
-        List<Queue> queues = this.getQueueByGuild(guildPlayer.getGuild(), Queue.Status.WAITING);
-        Queue queue = queues.size() == 0 ? null : queues.get(0);
-
-        if (queue == null) {
-            queue = this.createQueue(guild, (queueCallback) -> {
-                Set<GuildPlayer> players = new HashSet<>();
-                players.add(guildPlayer);
-                queueCallback.setPlayers(players);
-            });
-
-            DiscordChannel lobbyChannelRequest = DiscordChannel.GUILD_VOICE(queue.getId() + " - Lobby");
-            lobbyChannelRequest.setParentId(guild.getCategoryId());
-
-            DiscordChannel lobbyChannel = discordApiService.createChannel(guild.getId(), lobbyChannelRequest);
-
-            if (lobbyChannel == null) {
-                throw new QueueException(QueueException.Issue.FAILED_CREATE_LOBBY_VC);
-            }
-
-            queue = this.updateQueue(queue.getId(), (queueCallback) -> {
-                queueCallback.setLobbyChannel(lobbyChannel.getId());
-            });
-        } else {
-            queue = this.updateQueue(queue.getId(), (queueCallback) -> {
-                Set<GuildPlayer> players = new HashSet<>();
-                players.add(guildPlayer);
-                queueCallback.setPlayers(players);
-            });
-        }
-
-        guildPlayer.setQueue(queue);
-        guildPlayerRepository.save(guildPlayer);
-
-        return queue;
-    }
-
-    @Override
     public Queue removePlayerFromQueue(GuildPlayer guildPlayer) throws QueueException {
         Queue queue = guildPlayer.getQueue();
-
-        boolean isRemoved = queue.getPlayers().remove(guildPlayer);
-        if (!isRemoved) {
+        if (queue == null) {
             throw new QueueException(QueueException.Issue.PLAYER_NOT_IN_QUEUE);
         }
+        queue.removePlayer(guildPlayer);
+        guildPlayerRepository.save(guildPlayer);
+        return queue;
+    }
 
-        if (queue.getPlayers().isEmpty()) {
-            this.deleteQueue(queue);
-            return null;
-        } else {
-            queueRepository.save(queue);
+    @Override
+    public Queue addPlayerToQueue(GuildPlayer guildPlayer, Queue queue) throws QueueException {
+        if (guildPlayer.getQueue() != null) {
+            throw new QueueException(QueueException.Issue.PLAYER_IN_QUEUE);
         }
-
+        queue.addPlayer(guildPlayer);
+        guildPlayerRepository.save(guildPlayer);
         return queue;
     }
 }

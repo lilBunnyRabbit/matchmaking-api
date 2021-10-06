@@ -23,6 +23,7 @@ public class QueueException extends Exception {
         QUEUE_NOT_EXISTS,
         FAILED_CREATE_LOBBY_VC,
         FAILED_SAVE_QUEUE_TO_PLAYER,
-        PLAYER_NOT_IN_QUEUE
+        PLAYER_NOT_IN_QUEUE,
+        PLAYER_IN_QUEUE
     }
 }

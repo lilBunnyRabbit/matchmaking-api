@@ -9,13 +9,14 @@ import lilbunnyrabbit.matchmaking.repository.GuildRepository;
 import lilbunnyrabbit.matchmaking.repository.PlayerRepository;
 import lilbunnyrabbit.matchmaking.repository.QueueRepository;
 import lilbunnyrabbit.matchmaking.service.guild.GuildService;
+import lilbunnyrabbit.matchmaking.service.guild_player.GuildPlayerService;
 import lilbunnyrabbit.matchmaking.service.player.PlayerService;
+import lilbunnyrabbit.matchmaking.service.queue.QueueService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 
 import java.util.*;
 
@@ -40,6 +41,12 @@ public class Application {
     @Autowired
     PlayerService playerService;
 
+    @Autowired
+    QueueService queueService;
+
+    @Autowired
+    GuildPlayerService guildPlayerService;
+
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
     }
@@ -53,26 +60,19 @@ public class Application {
             Player player2 = playerService.createPlayer("player2");
 
             // Create guildplayer
-            GuildPlayer guildPlayer1 = guildService.createGuildPlayer(guild, player1);
-            GuildPlayer guildPlayer2 = guildService.createGuildPlayer(guild, player2);
+            GuildPlayer guildPlayer1 = guildPlayerService.createGuildPlayer(guild, player1);
+            GuildPlayer guildPlayer2 = guildPlayerService.createGuildPlayer(guild, player2);
 
             // Create queue
-            Queue queue1 = guildService.createQueue(guild, Set.of(guildPlayer1));
-            Queue queue2 = guildService.createQueue(guild, Set.of(guildPlayer2));
+            Queue queue1 = queueService.createQueue(guild, Set.of(guildPlayer1));
+            Queue queue2 = queueService.createQueue(guild, Set.of(guildPlayer2));
             guildRepository.save(guild);
 
             // Remove players from queue
-            guild.getGuildPlayers()
-                    .stream()
-                    .filter(guildPlayer -> guildPlayer.getId().equals(guildPlayer1.getId()))
-                    .findAny()
-                    .ifPresent(guildPlayer -> guildPlayer.setQueue(null));
-            guildRepository.save(guild);
+            queueService.removePlayerFromQueue(guildPlayer1);
 
             // Remove queue
-            guild.getQueues().remove(guildPlayer2.getQueue());
-            guildPlayer2.getQueue().getPlayers().forEach(guildPlayer -> guildPlayer.setQueue(null));
-            guildRepository.save(guild);
+            queueService.deleteQueue(guildPlayer2.getQueue());
         };
     }
 }

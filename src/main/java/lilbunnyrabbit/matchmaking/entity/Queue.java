@@ -91,6 +91,11 @@ public class Queue {
         guildPlayer.setQueue(this);
     }
 
+    public void removePlayer(GuildPlayer guildPlayer) {
+        this.players.remove(guildPlayer);
+        guildPlayer.setQueue(null);
+    }
+
     public String getLobbyChannel() {
         return lobbyChannel;
     }
