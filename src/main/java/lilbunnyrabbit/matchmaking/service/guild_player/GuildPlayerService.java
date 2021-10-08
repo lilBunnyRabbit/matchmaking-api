@@ -6,6 +6,7 @@ import lilbunnyrabbit.matchmaking.entity.guild_player.GuildPlayer;
 import lilbunnyrabbit.matchmaking.exception.service.GuildPlayerException;
 
 public interface GuildPlayerService {
+
     GuildPlayer getGuildPlayer(String guildId, String playerId);
 
     GuildPlayer createGuildPlayer(Guild guild, Player player) throws GuildPlayerException;

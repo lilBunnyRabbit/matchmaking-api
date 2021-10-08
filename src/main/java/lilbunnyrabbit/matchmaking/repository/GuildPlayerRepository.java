@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Optional;
 
 public interface GuildPlayerRepository extends CrudRepository<GuildPlayer, Long> {
+
     List<GuildPlayer> findAll();
+
     Optional<GuildPlayer> findById(GuildPlayerId id);
 }

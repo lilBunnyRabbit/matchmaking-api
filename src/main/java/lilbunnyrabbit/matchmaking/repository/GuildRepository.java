@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Optional;
 
 public interface GuildRepository extends CrudRepository<Guild, Long> {
+
     List<Guild> findAll();
+
     Optional<Guild> findById(String id);
 }

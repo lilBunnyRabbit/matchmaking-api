@@ -22,7 +22,9 @@ import java.security.*;
 import java.security.spec.X509EncodedKeySpec;
 
 public class DiscordBodyValidationArgumentResolver implements HandlerMethodArgumentResolver {
+
     private final ObjectMapper objectMapper;
+
     private final DiscordConfiguration discordConfiguration;
 
     public DiscordBodyValidationArgumentResolver(ObjectMapper objectMapper, DiscordConfiguration discordConfiguration) {

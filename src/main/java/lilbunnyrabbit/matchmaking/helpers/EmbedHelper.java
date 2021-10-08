@@ -4,6 +4,7 @@ import lilbunnyrabbit.matchmaking.entity.Queue;
 import lilbunnyrabbit.matchmaking.model.discord.DiscordEmbed;
 
 public class EmbedHelper {
+
     public static DiscordEmbed SUCCESS(String title, String description) {
         DiscordEmbed embed = new DiscordEmbed();
         embed.setColor(0x00cc00);

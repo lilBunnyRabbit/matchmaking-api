@@ -18,11 +18,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/testing")
 public class TestingController {
 
-    private GuildService guildService;
+    private final GuildService guildService;
 
-    private PlayerService playerService;
+    private final PlayerService playerService;
 
-    private GuildPlayerService guildPlayerService;
+    private final GuildPlayerService guildPlayerService;
 
     public TestingController(GuildService guildService, PlayerService playerService, GuildPlayerService guildPlayerService) {
         this.guildService = guildService;

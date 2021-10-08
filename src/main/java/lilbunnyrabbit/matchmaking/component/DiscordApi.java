@@ -18,6 +18,7 @@ public class DiscordApi {
     public final String BASE_URL = "https://discord.com/api/v8";
 
     private final RestTemplate restTemplate;
+
     private final DiscordConfiguration discordConfiguration;
 
     public DiscordApi(RestTemplateBuilder restTemplateBuilder, DiscordConfiguration discordConfiguration) {

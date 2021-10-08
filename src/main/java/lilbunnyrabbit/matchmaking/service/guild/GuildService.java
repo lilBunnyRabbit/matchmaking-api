@@ -6,6 +6,7 @@ import lilbunnyrabbit.matchmaking.exception.service.GuildException;
 import java.util.function.Consumer;
 
 public interface GuildService {
+
     Guild getGuild(String guildId);
 
     Guild createGuild(String guildId);

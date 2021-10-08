@@ -4,6 +4,7 @@ import lilbunnyrabbit.matchmaking.component.DiscordActionHandler;
 import lilbunnyrabbit.matchmaking.model.discord.DiscordComponent;
 
 public class ButtonHelper {
+
     public static DiscordComponent.Button LOBBY(String url) {
         DiscordComponent.Button button = new DiscordComponent.Button(DiscordComponent.Button.Style.LINK);
         button.setLabel("Lobby");

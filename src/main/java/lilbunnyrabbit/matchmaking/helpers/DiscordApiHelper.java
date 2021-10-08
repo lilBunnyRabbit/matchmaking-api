@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.HttpEntity;
 
 public class DiscordApiHelper {
+
     public static void printObjectAsJson(Object object) {
         try {
             ObjectMapper mapper = new ObjectMapper();
