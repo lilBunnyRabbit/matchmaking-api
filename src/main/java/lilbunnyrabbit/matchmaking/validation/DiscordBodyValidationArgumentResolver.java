@@ -1,4 +1,4 @@
-package lilbunnyrabbit.matchmaking.security;
+package lilbunnyrabbit.matchmaking.validation;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lilbunnyrabbit.matchmaking.config.DiscordConfiguration;
