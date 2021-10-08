@@ -19,7 +19,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class TestingController {
 
     private GuildService guildService;
+
     private PlayerService playerService;
+
     private GuildPlayerService guildPlayerService;
 
     public TestingController(GuildService guildService, PlayerService playerService, GuildPlayerService guildPlayerService) {

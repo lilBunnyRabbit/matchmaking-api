@@ -4,31 +4,25 @@ import lilbunnyrabbit.matchmaking.entity.Guild;
 import lilbunnyrabbit.matchmaking.entity.Queue;
 import lilbunnyrabbit.matchmaking.entity.guild_player.GuildPlayer;
 import lilbunnyrabbit.matchmaking.exception.service.QueueException;
-import lilbunnyrabbit.matchmaking.model.discord.DiscordChannel;
 import lilbunnyrabbit.matchmaking.repository.GuildPlayerRepository;
 import lilbunnyrabbit.matchmaking.repository.GuildRepository;
-import lilbunnyrabbit.matchmaking.repository.QueueRepository;
-import lilbunnyrabbit.matchmaking.service.discord.api.DiscordApiService;
-import lilbunnyrabbit.matchmaking.service.guild_player.GuildPlayerService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
 import java.util.Set;
-import java.util.function.Consumer;
 
 @Service
 @Transactional
 public class QueueServiceImpl implements QueueService {
 
-    @Autowired
-    private GuildRepository guildRepository;
+    private final GuildRepository guildRepository;
 
-    @Autowired
-    private GuildPlayerRepository guildPlayerRepository;
+    private final GuildPlayerRepository guildPlayerRepository;
+
+    public QueueServiceImpl(GuildRepository guildRepository, GuildPlayerRepository guildPlayerRepository) {
+        this.guildRepository = guildRepository;
+        this.guildPlayerRepository = guildPlayerRepository;
+    }
 
     @Override
     public Queue createQueue(Guild guild, Set<GuildPlayer> guildPlayers) {
@@ -54,7 +48,7 @@ public class QueueServiceImpl implements QueueService {
     public Queue removePlayerFromQueue(GuildPlayer guildPlayer) throws QueueException {
         Queue queue = guildPlayer.getQueue();
         if (queue == null) {
-            throw new QueueException(QueueException.Issue.PLAYER_NOT_IN_QUEUE);
+            throw new QueueException(QueueException.Code.PLAYER_NOT_IN_QUEUE);
         }
         queue.removePlayer(guildPlayer);
         guildPlayerRepository.save(guildPlayer);
@@ -64,7 +58,7 @@ public class QueueServiceImpl implements QueueService {
     @Override
     public Queue addPlayerToQueue(GuildPlayer guildPlayer, Queue queue) throws QueueException {
         if (guildPlayer.getQueue() != null) {
-            throw new QueueException(QueueException.Issue.PLAYER_IN_QUEUE);
+            throw new QueueException(QueueException.Code.PLAYER_IN_QUEUE);
         }
         queue.addPlayer(guildPlayer);
         guildPlayerRepository.save(guildPlayer);

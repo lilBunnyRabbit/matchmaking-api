@@ -2,7 +2,6 @@ package lilbunnyrabbit.matchmaking.service.player;
 
 import lilbunnyrabbit.matchmaking.entity.Player;
 import lilbunnyrabbit.matchmaking.repository.PlayerRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,8 +11,11 @@ import java.util.Optional;
 @Transactional
 public class PlayerServiceImpl implements PlayerService {
 
-    @Autowired
-    private PlayerRepository playerRepository;
+    private final PlayerRepository playerRepository;
+
+    public PlayerServiceImpl(PlayerRepository playerRepository) {
+        this.playerRepository = playerRepository;
+    }
 
     @Override
     public Player getPlayer(String playerId) {

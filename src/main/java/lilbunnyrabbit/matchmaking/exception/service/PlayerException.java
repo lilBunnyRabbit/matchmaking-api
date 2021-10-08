@@ -2,22 +2,22 @@ package lilbunnyrabbit.matchmaking.exception.service;
 
 public class PlayerException extends Exception {
 
-    private Issue issue;
+    private Code code;
 
-    public PlayerException(Issue issue) {
-        super(issue.name());
-        this.issue = issue;
+    public PlayerException(Code code) {
+        super(code.name());
+        this.code = code;
     }
 
-    public Issue getIssue() {
-        return issue;
+    public Code getCode() {
+        return code;
     }
 
-    public void setIssue(Issue issue) {
-        this.issue = issue;
+    public void setCode(Code code) {
+        this.code = code;
     }
 
-    public enum Issue {
+    public enum Code {
         INTERNAL,
         PLAYER_EXISTS,
         PLAYER_NOT_EXISTS

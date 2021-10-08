@@ -58,7 +58,8 @@ public class DiscordBodyValidationArgumentResolver implements HandlerMethodArgum
 
             if (signature == null || timestamp == null) throw new InvalidRequestSignatureException();
 
-            /* Verify */ {
+            /* Verify */
+            {
                 final var provider = new BouncyCastleProvider();
                 Security.addProvider(provider);
                 final var byteKey = Hex.decode(discordConfiguration.getPublicKey());

@@ -2,22 +2,22 @@ package lilbunnyrabbit.matchmaking.exception.service;
 
 public class QueueException extends Exception {
 
-    private Issue issue;
+    private Code code;
 
-    public QueueException(Issue issue) {
-        super(issue.name());
-        this.issue = issue;
+    public QueueException(Code code) {
+        super(code.name());
+        this.code = code;
     }
 
-    public Issue getIssue() {
-        return issue;
+    public Code getCode() {
+        return code;
     }
 
-    public void setIssue(Issue issue) {
-        this.issue = issue;
+    public void setCode(Code code) {
+        this.code = code;
     }
 
-    public enum Issue {
+    public enum Code {
         INTERNAL,
         QUEUE_EXISTS,
         QUEUE_NOT_EXISTS,

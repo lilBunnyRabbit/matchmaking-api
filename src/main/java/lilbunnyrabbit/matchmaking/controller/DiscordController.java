@@ -1,39 +1,33 @@
 package lilbunnyrabbit.matchmaking.controller;
 
+import lilbunnyrabbit.matchmaking.component.DiscordActionHandler;
+import lilbunnyrabbit.matchmaking.component.DiscordCommandHandler;
 import lilbunnyrabbit.matchmaking.model.discord.DiscordInteractionResponse;
-import lilbunnyrabbit.matchmaking.service.discord.api.DiscordApiService;
 import lilbunnyrabbit.matchmaking.validation.ValidDiscordBody;
 import lilbunnyrabbit.matchmaking.model.discord.DiscordInteraction;
-import lilbunnyrabbit.matchmaking.service.discord.action.DiscordActionService;
-import lilbunnyrabbit.matchmaking.service.discord.command.DiscordCommandService;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/discord")
 public class DiscordController {
-    @Autowired
-    DiscordApiService discordApiService;
 
-    private final DiscordCommandService discordCommandService;
-    private final DiscordActionService discordActionService;
+    final DiscordCommandHandler discordCommandHandler;
 
-    public DiscordController(DiscordCommandService discordCommandService, DiscordActionService discordActionService) {
-        this.discordCommandService = discordCommandService;
-        this.discordActionService = discordActionService;
+    final DiscordActionHandler discordActionHandler;
+
+    public DiscordController(DiscordCommandHandler discordCommandHandler, DiscordActionHandler discordActionHandler) {
+        this.discordCommandHandler = discordCommandHandler;
+        this.discordActionHandler = discordActionHandler;
     }
 
     @PostMapping("/interaction")
     public DiscordInteractionResponse interaction(@ValidDiscordBody DiscordInteraction interaction) {
-        DiscordInteractionResponse response = switch (interaction.getType()) {
+        return switch (interaction.getType()) {
             case DiscordInteraction.Type.PING -> DiscordInteractionResponse.PONG;
-            case DiscordInteraction.Type.APPLICATION_COMMAND -> discordCommandService.commandHandler(interaction);
-            case DiscordInteraction.Type.MESSAGE_COMPONENT -> discordActionService.actionHandler(interaction);
+            case DiscordInteraction.Type.APPLICATION_COMMAND -> discordCommandHandler.handle(interaction);
+            case DiscordInteraction.Type.MESSAGE_COMPONENT -> discordActionHandler.handle(interaction);
             default -> null;
         };
-
-        System.out.print("BODY: ");
-        discordApiService.printObjectAsJson(response);
-        return response;
     }
 }

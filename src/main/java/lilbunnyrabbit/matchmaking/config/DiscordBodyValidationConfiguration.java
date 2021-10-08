@@ -11,6 +11,7 @@ import java.util.List;
 
 @Configuration
 public class DiscordBodyValidationConfiguration implements WebMvcConfigurer {
+
     @Autowired
     private ObjectMapper objectMapper;
 

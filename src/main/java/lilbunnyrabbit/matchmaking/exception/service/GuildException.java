@@ -2,22 +2,22 @@ package lilbunnyrabbit.matchmaking.exception.service;
 
 public class GuildException extends Exception {
 
-    private Issue issue;
+    private Code code;
 
-    public GuildException(Issue issue) {
-        super(issue.name());
-        this.issue = issue;
+    public GuildException(Code code) {
+        super(code.name());
+        this.code = code;
     }
 
-    public Issue getIssue() {
-        return issue;
+    public Code getCode() {
+        return code;
     }
 
-    public void setIssue(Issue issue) {
-        this.issue = issue;
+    public void setCode(Code code) {
+        this.code = code;
     }
 
-    public enum Issue {
+    public enum Code {
         INTERNAL,
         GUILD_EXIST,
         GUILD_NOT_EXIST,
