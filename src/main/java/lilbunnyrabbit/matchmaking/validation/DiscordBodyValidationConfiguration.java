@@ -1,6 +1,7 @@
-package lilbunnyrabbit.matchmaking.config;
+package lilbunnyrabbit.matchmaking.validation;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lilbunnyrabbit.matchmaking.config.DiscordConfiguration;
 import lilbunnyrabbit.matchmaking.validation.DiscordBodyValidationArgumentResolver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
