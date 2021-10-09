@@ -1,6 +1,7 @@
 package lilbunnyrabbit.matchmaking;
 
 import lilbunnyrabbit.matchmaking.entity.Guild;
+import lilbunnyrabbit.matchmaking.entity.Match;
 import lilbunnyrabbit.matchmaking.entity.Player;
 import lilbunnyrabbit.matchmaking.entity.Queue;
 import lilbunnyrabbit.matchmaking.entity.guild_player.GuildPlayer;
@@ -10,6 +11,7 @@ import lilbunnyrabbit.matchmaking.repository.PlayerRepository;
 import lilbunnyrabbit.matchmaking.repository.QueueRepository;
 import lilbunnyrabbit.matchmaking.service.guild.GuildService;
 import lilbunnyrabbit.matchmaking.service.guild_player.GuildPlayerService;
+import lilbunnyrabbit.matchmaking.service.match.MatchService;
 import lilbunnyrabbit.matchmaking.service.player.PlayerService;
 import lilbunnyrabbit.matchmaking.service.queue.QueueService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +49,9 @@ public class Application {
     @Autowired
     GuildPlayerService guildPlayerService;
 
+    @Autowired
+    MatchService matchService;
+
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
     }
@@ -62,6 +67,9 @@ public class Application {
             // Create guildplayer
             GuildPlayer guildPlayer1 = guildPlayerService.createGuildPlayer(guild, player1);
             GuildPlayer guildPlayer2 = guildPlayerService.createGuildPlayer(guild, player2);
+
+            Match match = matchService.createMatch();
+            matchService.addPLayers(match, new HashSet<>(Arrays.asList(guildPlayer1, guildPlayer2)));
 
             // Create queue
             Queue queue1 = queueService.createQueue(guild, Set.of(guildPlayer1));
