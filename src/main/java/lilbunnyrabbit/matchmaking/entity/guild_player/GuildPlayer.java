@@ -14,22 +14,22 @@ import javax.persistence.*;
 public class GuildPlayer {
 
     @EmbeddedId
-    GuildPlayerId id;
+    private GuildPlayerId id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("guildId")
-    @JoinColumn(name = "guildId")
+    @JoinColumn(name = "guild_id")
     @JsonIgnore
     private Guild guild;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("playerId")
-    @JoinColumn(name = "playerId")
+    @JoinColumn(name = "player_id")
     @JsonIgnore
     private Player player;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "queueId")
+    @JoinColumn(name = "queue_id")
     @JsonIgnore
     private Queue queue;
 

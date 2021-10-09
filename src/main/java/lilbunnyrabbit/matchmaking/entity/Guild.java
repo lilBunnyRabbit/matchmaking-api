@@ -22,11 +22,10 @@ public class Guild {
     private Date created = new Date();
 
     @OneToMany(mappedBy = "guild", fetch = FetchType.LAZY, orphanRemoval = true, cascade = CascadeType.ALL )
-    @Column(name="guild_players")
-    Set<GuildPlayer> guildPlayers = new HashSet<>();
+    private Set<GuildPlayer> guildPlayers = new HashSet<>();
 
     @OneToMany(mappedBy = "guild", fetch = FetchType.LAZY, orphanRemoval = true, cascade = CascadeType.ALL )
-    Set<Queue> queues = new HashSet<>();
+    private Set<Queue> queues = new HashSet<>();
 
     public Guild() {}
     public Guild(String id) {
