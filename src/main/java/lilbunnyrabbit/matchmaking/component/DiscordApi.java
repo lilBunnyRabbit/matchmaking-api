@@ -2,6 +2,7 @@ package lilbunnyrabbit.matchmaking.component;
 
 import lilbunnyrabbit.matchmaking.config.DiscordConfiguration;
 import lilbunnyrabbit.matchmaking.helpers.DiscordApiHelper;
+import lilbunnyrabbit.matchmaking.model.discord.DiscordApplicationCommand;
 import lilbunnyrabbit.matchmaking.model.discord.DiscordChannel;
 import lilbunnyrabbit.matchmaking.model.discord.DiscordInvite;
 import org.springframework.boot.web.client.RestTemplateBuilder;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Collections;
+import java.util.List;
 
 @Component
 public class DiscordApi {
@@ -27,20 +29,40 @@ public class DiscordApi {
     }
 
     // Url
-    private String GUILD_URL(String guildId) {
+    public String GUILD_URL(String guildId) {
         return this.BASE_URL + "/guilds/" + guildId;
     }
 
-    private String GUILD_CHANNELS_URL(String guildId) {
+    public String GUILD_CHANNELS_URL(String guildId) {
         return this.GUILD_URL(guildId) + "/channels";
     }
 
-    private String CHANNEL_URL(String channelId) {
+    public String CHANNEL_URL(String channelId) {
         return this.BASE_URL + "/channels/" + channelId;
     }
 
-    private String CHANNEL_INVITE_URL(String channelId) {
+    public String CHANNEL_INVITE_URL(String channelId) {
         return this.CHANNEL_URL(channelId) + "/invites";
+    }
+
+    public String APPLICATION_URL() {
+        return BASE_URL + "/applications/" + discordConfiguration.getApplicationId();
+    }
+
+    public String GLOBAL_COMMANDS_URL() {
+        return this.APPLICATION_URL() + "/commands";
+    }
+
+    public String GLOBAL_COMMAND_URL(String commandId) {
+        return this.GLOBAL_COMMANDS_URL() + "/" + commandId;
+    }
+
+    public String GUILD_COMMANDS_URL(String guildId) {
+        return this.APPLICATION_URL() + "/guilds/" + guildId + "/commands";
+    }
+
+    public String GUILD_COMMAND_URL(String guildId, String commandId) {
+        return this.GUILD_COMMANDS_URL(guildId) + "/" + commandId;
     }
 
     // Helpers
@@ -60,7 +82,7 @@ public class DiscordApi {
 
         DiscordApiHelper.printRequest("POST", url, entity);
 
-        return this.restTemplate.postForObject(url, entity, DiscordChannel.class);
+        return restTemplate.postForObject(url, entity, DiscordChannel.class);
     }
 
     public DiscordInvite createChannelInvite(String channelId) { // Todo: with params
@@ -69,6 +91,12 @@ public class DiscordApi {
 
         DiscordApiHelper.printRequest("POST", url, entity);
 
-        return this.restTemplate.postForObject(url, entity, DiscordInvite.class);
+        return restTemplate.postForObject(url, entity, DiscordInvite.class);
+    }
+
+    public DiscordApplicationCommand[] getGlobalCommands() {
+        HttpHeaders headers = this.getJsonHeaders();
+        HttpEntity<DiscordChannel> entity = new HttpEntity<>(null, headers);
+        return restTemplate.getForObject(this.GLOBAL_COMMANDS_URL(), entity, DiscordApplicationCommand[].class);
     }
 }

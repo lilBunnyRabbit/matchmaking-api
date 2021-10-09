@@ -37,6 +37,12 @@ public class DiscordApplicationCommand {
     public DiscordApplicationCommand() {
     }
 
+    public DiscordApplicationCommand(String name, String description, List<Option> options) {
+        this.name = name;
+        this.description = description;
+        this.options = options;
+    }
+
     public String getId() {
         return id;
     }
@@ -143,6 +149,12 @@ public class DiscordApplicationCommand {
         public Option() {
         }
 
+        public Option(Integer type, String name, String description) {
+            this.type = type;
+            this.name = name;
+            this.description = description;
+        }
+
         public Integer getType() {
             return type;
         }
@@ -226,6 +238,11 @@ public class DiscordApplicationCommand {
             private Object value;
 
             public Choice() {
+            }
+
+            public Choice(String name, Object value) {
+                this.name = name;
+                this.value = value;
             }
 
             public String getName() {
