@@ -3,6 +3,7 @@ package lilbunnyrabbit.matchmaking.component;
 import lilbunnyrabbit.matchmaking.entity.Guild;
 import lilbunnyrabbit.matchmaking.exception.service.GuildException;
 import lilbunnyrabbit.matchmaking.helpers.CommandHelper;
+import lilbunnyrabbit.matchmaking.helpers.DiscordGuildCommand;
 import lilbunnyrabbit.matchmaking.model.discord.DiscordInteraction;
 import lilbunnyrabbit.matchmaking.model.discord.DiscordInteractionResponse;
 import lilbunnyrabbit.matchmaking.service.guild.GuildService;
@@ -17,13 +18,6 @@ public class DiscordCommandHandler {
         this.guildService = guildService;
     }
 
-    public static class Command {
-        public static final String GUILD_INIT = "tmp_init_guild";
-        public static final String REGISTER_PLAYER = "register";
-        public static final String QUEUE_PLAYER = "queue";
-        public static final String DEQUEUE_PLAYER = "dequeue";
-    }
-
     public DiscordInteractionResponse handle(DiscordInteraction interaction) {
         DiscordInteraction.Data data = interaction.getData();
         if (data == null) return null;
@@ -32,10 +26,10 @@ public class DiscordCommandHandler {
         if (commandName == null) return null;
 
         return switch (commandName) {
-            case Command.GUILD_INIT -> this.guildInit(interaction);
-            case Command.REGISTER_PLAYER -> this.registerPlayer(interaction);
-            case Command.QUEUE_PLAYER -> this.queuePlayer(interaction);
-            case Command.DEQUEUE_PLAYER -> this.dequeuePlayer(interaction);
+            case DiscordGuildCommand.Type.GUILD_INIT -> this.guildInit(interaction);
+            case DiscordGuildCommand.Type.REGISTER_PLAYER -> this.registerPlayer(interaction);
+            case DiscordGuildCommand.Type.QUEUE_PLAYER -> this.queuePlayer(interaction);
+            case DiscordGuildCommand.Type.DEQUEUE_PLAYER -> this.dequeuePlayer(interaction);
             default -> null;
         };
     }
