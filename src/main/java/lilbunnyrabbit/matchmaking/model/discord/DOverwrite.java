@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import javax.validation.constraints.NotEmpty;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class DiscordOverwrite {
+public class DOverwrite {
 
     @NotEmpty
     private String id;
@@ -19,7 +19,7 @@ public class DiscordOverwrite {
     @NotEmpty
     private String deny;
 
-    public DiscordOverwrite() {
+    public DOverwrite() {
     }
 
     public String getId() {

@@ -4,22 +4,22 @@ import lilbunnyrabbit.matchmaking.entity.Guild;
 import lilbunnyrabbit.matchmaking.exception.service.GuildException;
 import lilbunnyrabbit.matchmaking.helpers.ResponseHelper;
 import lilbunnyrabbit.matchmaking.helpers.GuildCommandHelper;
-import lilbunnyrabbit.matchmaking.model.discord.DiscordInteraction;
-import lilbunnyrabbit.matchmaking.model.discord.DiscordInteractionResponse;
+import lilbunnyrabbit.matchmaking.model.discord.DInteraction;
+import lilbunnyrabbit.matchmaking.model.discord.DInteractionResponse;
 import lilbunnyrabbit.matchmaking.service.guild.GuildService;
 import org.springframework.stereotype.Component;
 
 @Component
-public class DiscordCommandHandler {
+public class DCommandHandler {
 
     private final GuildService guildService;
 
-    public DiscordCommandHandler(GuildService guildService) {
+    public DCommandHandler(GuildService guildService) {
         this.guildService = guildService;
     }
 
-    public DiscordInteractionResponse handle(DiscordInteraction interaction) {
-        DiscordInteraction.Data data = interaction.getData();
+    public DInteractionResponse handle(DInteraction interaction) {
+        DInteraction.Data data = interaction.getData();
         if (data == null) return null;
 
         String commandName = data.getName();
@@ -34,7 +34,7 @@ public class DiscordCommandHandler {
         };
     }
 
-    private DiscordInteractionResponse guildInit(DiscordInteraction interaction) {
+    private DInteractionResponse guildInit(DInteraction interaction) {
         // TODO
 
         /* Temporary */ {
@@ -58,17 +58,17 @@ public class DiscordCommandHandler {
         }
     }
 
-    private DiscordInteractionResponse registerPlayer(DiscordInteraction interaction) {
+    private DInteractionResponse registerPlayer(DInteraction interaction) {
         // TODO
         return ResponseHelper.Success("registerPlayer", null);
     }
 
-    private DiscordInteractionResponse queuePlayer(DiscordInteraction interaction) {
+    private DInteractionResponse queuePlayer(DInteraction interaction) {
         // TODO
         return ResponseHelper.Success("queuePlayer", null);
     }
 
-    private DiscordInteractionResponse dequeuePlayer(DiscordInteraction interaction) {
+    private DInteractionResponse dequeuePlayer(DInteraction interaction) {
         // TODO
         return ResponseHelper.Success("dequeuePlayer", null);
     }

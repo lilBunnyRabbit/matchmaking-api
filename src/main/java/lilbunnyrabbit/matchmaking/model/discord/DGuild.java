@@ -7,7 +7,7 @@ import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class DiscordGuild {
+public class DGuild {
 
     @NotEmpty
     private String id;
@@ -37,7 +37,7 @@ public class DiscordGuild {
     // Todo: Other fields
 
 
-    public DiscordGuild() {
+    public DGuild() {
     }
 
     public String getId() {

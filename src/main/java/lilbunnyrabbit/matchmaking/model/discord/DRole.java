@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.validation.constraints.NotEmpty;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class DiscordRole {
+public class DRole {
 
     @NotEmpty
     private String id;
@@ -37,9 +37,9 @@ public class DiscordRole {
     @NotEmpty
     private Boolean mentionable;
 
-    private DiscordRole.Tag tags;
+    private DRole.Tag tags;
 
-    public DiscordRole() {
+    public DRole() {
     }
 
     public String getId() {
@@ -122,11 +122,11 @@ public class DiscordRole {
         this.mentionable = mentionable;
     }
 
-    public DiscordRole.Tag getTags() {
+    public DRole.Tag getTags() {
         return tags;
     }
 
-    public void setTags(DiscordRole.Tag tags) {
+    public void setTags(DRole.Tag tags) {
         this.tags = tags;
     }
 

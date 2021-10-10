@@ -7,7 +7,7 @@ import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class DiscordEmbed {
+public class DEmbed {
 
     private String title;
 
@@ -35,7 +35,7 @@ public class DiscordEmbed {
 
     private List<Field> fields;
 
-    public DiscordEmbed() {
+    public DEmbed() {
     }
 
     public String getTitle() {

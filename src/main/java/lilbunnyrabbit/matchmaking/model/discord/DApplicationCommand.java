@@ -7,7 +7,7 @@ import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class DiscordApplicationCommand {
+public class DApplicationCommand {
 
     @NotEmpty
     private String id;
@@ -26,7 +26,7 @@ public class DiscordApplicationCommand {
     @NotEmpty
     private String description;
 
-    private List<DiscordApplicationCommand.Option> options;
+    private List<DApplicationCommand.Option> options;
 
     @JsonProperty("default_permission")
     private Boolean defaultPermission;
@@ -34,10 +34,10 @@ public class DiscordApplicationCommand {
     @NotEmpty
     private String version;
 
-    public DiscordApplicationCommand() {
+    public DApplicationCommand() {
     }
 
-    public DiscordApplicationCommand(String name, String description, List<Option> options) {
+    public DApplicationCommand(String name, String description, List<Option> options) {
         this.name = name;
         this.description = description;
         this.options = options;
@@ -139,9 +139,9 @@ public class DiscordApplicationCommand {
 
         private Boolean required;
 
-        private List<DiscordApplicationCommand.Option.Choice> choices;
+        private List<DApplicationCommand.Option.Choice> choices;
 
-        private List<DiscordApplicationCommand.Option> options;
+        private List<DApplicationCommand.Option> options;
 
         @JsonProperty("channel_types")
         private List<Integer> channelTypes; // Channel.Type
@@ -277,7 +277,7 @@ public class DiscordApplicationCommand {
 
             private Integer value; // ApplicationCommand.Option.Type
 
-            private List<DiscordApplicationCommand.InteractionData.Option> options;
+            private List<DApplicationCommand.InteractionData.Option> options;
 
             public Option() {
             }

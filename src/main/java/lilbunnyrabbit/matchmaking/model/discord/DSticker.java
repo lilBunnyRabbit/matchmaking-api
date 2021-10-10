@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.validation.constraints.NotEmpty;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class DiscordSticker {
+public class DSticker {
 
     @NotEmpty
     private String id;
@@ -37,12 +37,12 @@ public class DiscordSticker {
     @JsonProperty("guild_id")
     private String guildId;
 
-    private DiscordUser user;
+    private DUser user;
 
     @JsonProperty("sort_value")
     private Integer sortValue;
 
-    public DiscordSticker() {
+    public DSticker() {
     }
 
     public String getId() {
@@ -125,11 +125,11 @@ public class DiscordSticker {
         this.guildId = guildId;
     }
 
-    public DiscordUser getUser() {
+    public DUser getUser() {
         return user;
     }
 
-    public void setUser(DiscordUser user) {
+    public void setUser(DUser user) {
         this.user = user;
     }
 

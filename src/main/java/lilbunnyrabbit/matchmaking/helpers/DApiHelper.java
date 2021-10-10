@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.HttpEntity;
 
-public class DiscordApiHelper {
+public class DApiHelper {
 
     public static void printObjectAsJson(Object object) {
         try {

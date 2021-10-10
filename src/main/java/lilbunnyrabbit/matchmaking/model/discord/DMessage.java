@@ -7,7 +7,7 @@ import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class DiscordMessage {
+public class DMessage {
 
     @NotEmpty
     private String id;
@@ -19,9 +19,9 @@ public class DiscordMessage {
     @JsonProperty("guild_id")
     private String guildId;
 
-    private DiscordUser author;
+    private DUser author;
 
-    private DiscordMember.Partial member;
+    private DMember.Partial member;
 
     @NotEmpty
     private String content;
@@ -39,21 +39,21 @@ public class DiscordMessage {
     @JsonProperty("mention_everyone")
     private Boolean mentionEveryone;
 
-    private List<DiscordUser.Mention> mentions;
+    private List<DUser.Mention> mentions;
 
     @JsonProperty("mention_roles")
     private List<String> mentionRoles;
 
     @JsonProperty("mention_channels")
-    private List<DiscordChannel.Mention> mentionChannels;
+    private List<DChannel.Mention> mentionChannels;
 
     @NotEmpty
-    private List<DiscordAttachment> attachments;
+    private List<DAttachment> attachments;
 
     @NotEmpty
-    private List<DiscordEmbed> embeds;
+    private List<DEmbed> embeds;
 
-    private List<DiscordReaction> reactions;
+    private List<DReaction> reactions;
 
     private String nonce;
 
@@ -66,33 +66,33 @@ public class DiscordMessage {
     @NotEmpty
     private Integer type; // Message.Type
 
-    private DiscordMessage.Activity activity;
+    private DMessage.Activity activity;
 
-    private DiscordApplication.Partial application;
+    private DApplication.Partial application;
 
     @JsonProperty("application_id")
     private String applicationId;
 
     @JsonProperty("message_reference")
-    private DiscordMessage.Reference messageReference;
+    private DMessage.Reference messageReference;
 
     private Integer flags;
 
     @JsonProperty("referenced_message")
-    private DiscordMessage referencedMessage;
+    private DMessage referencedMessage;
 
-    private DiscordInteraction interaction;
+    private DInteraction interaction;
 
-    private DiscordChannel thread;
+    private DChannel thread;
 
-    private List<DiscordComponent> components;
+    private List<DComponent> components;
 
     @JsonProperty("sticker_items")
-    private List<DiscordSticker.Item> stickerItems;
+    private List<DSticker.Item> stickerItems;
 
-    private List<DiscordSticker> stickers;
+    private List<DSticker> stickers;
 
-    public DiscordMessage() {
+    public DMessage() {
     }
 
     public String getId() {
@@ -119,19 +119,19 @@ public class DiscordMessage {
         this.guildId = guildId;
     }
 
-    public DiscordUser getAuthor() {
+    public DUser getAuthor() {
         return author;
     }
 
-    public void setAuthor(DiscordUser author) {
+    public void setAuthor(DUser author) {
         this.author = author;
     }
 
-    public DiscordMember.Partial getMember() {
+    public DMember.Partial getMember() {
         return member;
     }
 
-    public void setMember(DiscordMember.Partial member) {
+    public void setMember(DMember.Partial member) {
         this.member = member;
     }
 
@@ -175,11 +175,11 @@ public class DiscordMessage {
         this.mentionEveryone = mentionEveryone;
     }
 
-    public List<DiscordUser.Mention> getMentions() {
+    public List<DUser.Mention> getMentions() {
         return mentions;
     }
 
-    public void setMentions(List<DiscordUser.Mention> mentions) {
+    public void setMentions(List<DUser.Mention> mentions) {
         this.mentions = mentions;
     }
 
@@ -191,35 +191,35 @@ public class DiscordMessage {
         this.mentionRoles = mentionRoles;
     }
 
-    public List<DiscordChannel.Mention> getMentionChannels() {
+    public List<DChannel.Mention> getMentionChannels() {
         return mentionChannels;
     }
 
-    public void setMentionChannels(List<DiscordChannel.Mention> mentionChannels) {
+    public void setMentionChannels(List<DChannel.Mention> mentionChannels) {
         this.mentionChannels = mentionChannels;
     }
 
-    public List<DiscordAttachment> getAttachments() {
+    public List<DAttachment> getAttachments() {
         return attachments;
     }
 
-    public void setAttachments(List<DiscordAttachment> attachments) {
+    public void setAttachments(List<DAttachment> attachments) {
         this.attachments = attachments;
     }
 
-    public List<DiscordEmbed> getEmbeds() {
+    public List<DEmbed> getEmbeds() {
         return embeds;
     }
 
-    public void setEmbeds(List<DiscordEmbed> embeds) {
+    public void setEmbeds(List<DEmbed> embeds) {
         this.embeds = embeds;
     }
 
-    public List<DiscordReaction> getReactions() {
+    public List<DReaction> getReactions() {
         return reactions;
     }
 
-    public void setReactions(List<DiscordReaction> reactions) {
+    public void setReactions(List<DReaction> reactions) {
         this.reactions = reactions;
     }
 
@@ -263,11 +263,11 @@ public class DiscordMessage {
         this.activity = activity;
     }
 
-    public DiscordApplication.Partial getApplication() {
+    public DApplication.Partial getApplication() {
         return application;
     }
 
-    public void setApplication(DiscordApplication.Partial application) {
+    public void setApplication(DApplication.Partial application) {
         this.application = application;
     }
 
@@ -295,51 +295,51 @@ public class DiscordMessage {
         this.flags = flags;
     }
 
-    public DiscordMessage getReferencedMessage() {
+    public DMessage getReferencedMessage() {
         return referencedMessage;
     }
 
-    public void setReferencedMessage(DiscordMessage referencedMessage) {
+    public void setReferencedMessage(DMessage referencedMessage) {
         this.referencedMessage = referencedMessage;
     }
 
-    public DiscordInteraction getInteraction() {
+    public DInteraction getInteraction() {
         return interaction;
     }
 
-    public void setInteraction(DiscordInteraction interaction) {
+    public void setInteraction(DInteraction interaction) {
         this.interaction = interaction;
     }
 
-    public DiscordChannel getThread() {
+    public DChannel getThread() {
         return thread;
     }
 
-    public void setThread(DiscordChannel thread) {
+    public void setThread(DChannel thread) {
         this.thread = thread;
     }
 
-    public List<DiscordComponent> getComponents() {
+    public List<DComponent> getComponents() {
         return components;
     }
 
-    public void setComponents(List<DiscordComponent> components) {
+    public void setComponents(List<DComponent> components) {
         this.components = components;
     }
 
-    public List<DiscordSticker.Item> getStickerItems() {
+    public List<DSticker.Item> getStickerItems() {
         return stickerItems;
     }
 
-    public void setStickerItems(List<DiscordSticker.Item> stickerItems) {
+    public void setStickerItems(List<DSticker.Item> stickerItems) {
         this.stickerItems = stickerItems;
     }
 
-    public List<DiscordSticker> getStickers() {
+    public List<DSticker> getStickers() {
         return stickers;
     }
 
-    public void setStickers(List<DiscordSticker> stickers) {
+    public void setStickers(List<DSticker> stickers) {
         this.stickers = stickers;
     }
 

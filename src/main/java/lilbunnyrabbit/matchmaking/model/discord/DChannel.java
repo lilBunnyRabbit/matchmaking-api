@@ -7,7 +7,7 @@ import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class DiscordChannel {
+public class DChannel {
 
     @NotEmpty
     private String id;
@@ -21,7 +21,7 @@ public class DiscordChannel {
     private Integer position;
 
     @JsonProperty("permission_overwrites")
-    private List<DiscordOverwrite> permissionOverwrites;
+    private List<DOverwrite> permissionOverwrites;
 
     private String name;
 
@@ -40,7 +40,7 @@ public class DiscordChannel {
     @JsonProperty("rate_limit_per_user")
     private Integer rateLimitPerUser;
 
-    private List<DiscordUser> recipients;
+    private List<DUser> recipients;
 
     private String icon;
 
@@ -78,20 +78,20 @@ public class DiscordChannel {
 
     private String permissions;
 
-    public DiscordChannel() {
+    public DChannel() {
     }
 
-    public DiscordChannel(Integer type, String name) {
+    public DChannel(Integer type, String name) {
         this.type = type;
         this.name = name;
     }
 
-    public static DiscordChannel GUILD_VOICE(String name) {
-        return new DiscordChannel(Type.GUILD_VOICE, name);
+    public static DChannel GUILD_VOICE(String name) {
+        return new DChannel(Type.GUILD_VOICE, name);
     }
 
-    public static DiscordChannel GUILD_CATEGORY(String name) {
-        return new DiscordChannel(Type.GUILD_CATEGORY, name);
+    public static DChannel GUILD_CATEGORY(String name) {
+        return new DChannel(Type.GUILD_CATEGORY, name);
     }
 
     public String getId() {
@@ -126,11 +126,11 @@ public class DiscordChannel {
         this.position = position;
     }
 
-    public List<DiscordOverwrite> getPermissionOverwrites() {
+    public List<DOverwrite> getPermissionOverwrites() {
         return permissionOverwrites;
     }
 
-    public void setPermissionOverwrites(List<DiscordOverwrite> permissionOverwrites) {
+    public void setPermissionOverwrites(List<DOverwrite> permissionOverwrites) {
         this.permissionOverwrites = permissionOverwrites;
     }
 
@@ -190,11 +190,11 @@ public class DiscordChannel {
         this.rateLimitPerUser = rateLimitPerUser;
     }
 
-    public List<DiscordUser> getRecipients() {
+    public List<DUser> getRecipients() {
         return recipients;
     }
 
-    public void setRecipients(List<DiscordUser> recipients) {
+    public void setRecipients(List<DUser> recipients) {
         this.recipients = recipients;
     }
 

@@ -1,6 +1,6 @@
 package lilbunnyrabbit.matchmaking.helpers;
 
-import lilbunnyrabbit.matchmaking.model.discord.DiscordApplicationCommand;
+import lilbunnyrabbit.matchmaking.model.discord.DApplicationCommand;
 
 import java.util.ArrayList;
 
@@ -14,42 +14,42 @@ public class GuildCommandHelper {
         public static final String DEQUEUE_PLAYER = "dequeue";
     }
 
-    public static DiscordApplicationCommand Test() {
-        final var options = new ArrayList<DiscordApplicationCommand.Option>();
+    public static DApplicationCommand Test() {
+        final var options = new ArrayList<DApplicationCommand.Option>();
 
-        return new DiscordApplicationCommand(
+        return new DApplicationCommand(
                 Type.TEST,
                 "Test",
                 options
         );
     }
 
-    public static DiscordApplicationCommand GuildInit() {
-        return new DiscordApplicationCommand(
+    public static DApplicationCommand GuildInit() {
+        return new DApplicationCommand(
                 Type.GUILD_INIT,
                 "Init Guild",
                 new ArrayList<>()
         );
     }
 
-    public static DiscordApplicationCommand RegisterPlayer() {
-        return new DiscordApplicationCommand(
+    public static DApplicationCommand RegisterPlayer() {
+        return new DApplicationCommand(
                 Type.REGISTER_PLAYER,
                 "Register Player",
                 new ArrayList<>()
         );
     }
 
-    public static DiscordApplicationCommand QueuePlayer() {
-        return new DiscordApplicationCommand(
+    public static DApplicationCommand QueuePlayer() {
+        return new DApplicationCommand(
                 Type.QUEUE_PLAYER,
                 "Queue Player",
                 new ArrayList<>()
         );
     }
 
-    public static DiscordApplicationCommand DequeuePlayer() {
-        return new DiscordApplicationCommand(
+    public static DApplicationCommand DequeuePlayer() {
+        return new DApplicationCommand(
                 Type.DEQUEUE_PLAYER,
                 "Dequeue Player",
                 new ArrayList<>()

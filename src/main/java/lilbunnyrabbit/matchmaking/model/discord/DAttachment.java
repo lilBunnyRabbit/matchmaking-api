@@ -1,5 +1,5 @@
 package lilbunnyrabbit.matchmaking.model.discord;
 
-public class DiscordAttachment {
+public class DAttachment {
     // Todo
 }

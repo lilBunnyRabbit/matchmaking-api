@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import javax.validation.constraints.NotEmpty;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class DiscordReaction {
+public class DReaction {
 
     @NotEmpty
     private Integer count;
@@ -14,9 +14,9 @@ public class DiscordReaction {
     private Boolean me;
 
     @NotEmpty
-    private DiscordEmoji.Partial emoji;
+    private DEmoji.Partial emoji;
 
-    public DiscordReaction() {
+    public DReaction() {
     }
 
     public Integer getCount() {
@@ -35,11 +35,11 @@ public class DiscordReaction {
         this.me = me;
     }
 
-    public DiscordEmoji.Partial getEmoji() {
+    public DEmoji.Partial getEmoji() {
         return emoji;
     }
 
-    public void setEmoji(DiscordEmoji.Partial emoji) {
+    public void setEmoji(DEmoji.Partial emoji) {
         this.emoji = emoji;
     }
 }

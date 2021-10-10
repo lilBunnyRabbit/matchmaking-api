@@ -7,9 +7,9 @@ import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class DiscordMember {
+public class DMember {
 
-    private DiscordUser user;
+    private DUser user;
 
     private String nick;
 
@@ -36,14 +36,14 @@ public class DiscordMember {
 
     private String permissions;
 
-    public DiscordMember() {
+    public DMember() {
     }
 
-    public DiscordUser getUser() {
+    public DUser getUser() {
         return user;
     }
 
-    public void setUser(DiscordUser user) {
+    public void setUser(DUser user) {
         this.user = user;
     }
 

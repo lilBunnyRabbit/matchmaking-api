@@ -1,10 +1,10 @@
 package lilbunnyrabbit.matchmaking.controller;
 
-import lilbunnyrabbit.matchmaking.component.DiscordActionHandler;
-import lilbunnyrabbit.matchmaking.component.DiscordCommandHandler;
-import lilbunnyrabbit.matchmaking.model.discord.DiscordInteractionResponse;
+import lilbunnyrabbit.matchmaking.component.DActionHandler;
+import lilbunnyrabbit.matchmaking.component.DCommandHandler;
+import lilbunnyrabbit.matchmaking.model.discord.DInteractionResponse;
 import lilbunnyrabbit.matchmaking.validation.ValidDiscordBody;
-import lilbunnyrabbit.matchmaking.model.discord.DiscordInteraction;
+import lilbunnyrabbit.matchmaking.model.discord.DInteraction;
 
 import org.springframework.web.bind.annotation.*;
 
@@ -12,21 +12,21 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/discord")
 public class DiscordController {
 
-    final DiscordCommandHandler discordCommandHandler;
+    final DCommandHandler discordCommandHandler;
 
-    final DiscordActionHandler discordActionHandler;
+    final DActionHandler discordActionHandler;
 
-    public DiscordController(DiscordCommandHandler discordCommandHandler, DiscordActionHandler discordActionHandler) {
+    public DiscordController(DCommandHandler discordCommandHandler, DActionHandler discordActionHandler) {
         this.discordCommandHandler = discordCommandHandler;
         this.discordActionHandler = discordActionHandler;
     }
 
     @PostMapping("/interaction")
-    public DiscordInteractionResponse interaction(@ValidDiscordBody DiscordInteraction interaction) {
+    public DInteractionResponse interaction(@ValidDiscordBody DInteraction interaction) {
         return switch (interaction.getType()) {
-            case DiscordInteraction.Type.PING -> DiscordInteractionResponse.PONG;
-            case DiscordInteraction.Type.APPLICATION_COMMAND -> discordCommandHandler.handle(interaction);
-            case DiscordInteraction.Type.MESSAGE_COMPONENT -> discordActionHandler.handle(interaction);
+            case DInteraction.Type.PING -> DInteractionResponse.PONG;
+            case DInteraction.Type.APPLICATION_COMMAND -> discordCommandHandler.handle(interaction);
+            case DInteraction.Type.MESSAGE_COMPONENT -> discordActionHandler.handle(interaction);
             default -> null;
         };
     }

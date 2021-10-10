@@ -1,7 +1,7 @@
 package lilbunnyrabbit.matchmaking.validation;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lilbunnyrabbit.matchmaking.config.DiscordConfiguration;
+import lilbunnyrabbit.matchmaking.config.DConfiguration;
 import lilbunnyrabbit.matchmaking.exception.InvalidRequestSignatureException;
 import org.bouncycastle.asn1.edec.EdECObjectIdentifiers;
 import org.bouncycastle.asn1.x509.AlgorithmIdentifier;
@@ -21,13 +21,13 @@ import java.nio.charset.StandardCharsets;
 import java.security.*;
 import java.security.spec.X509EncodedKeySpec;
 
-public class DiscordBodyValidationArgumentResolver implements HandlerMethodArgumentResolver {
+public class DBodyValidationArgumentResolver implements HandlerMethodArgumentResolver {
 
     private final ObjectMapper objectMapper;
 
-    private final DiscordConfiguration discordConfiguration;
+    private final DConfiguration discordConfiguration;
 
-    public DiscordBodyValidationArgumentResolver(ObjectMapper objectMapper, DiscordConfiguration discordConfiguration) {
+    public DBodyValidationArgumentResolver(ObjectMapper objectMapper, DConfiguration discordConfiguration) {
         this.objectMapper = objectMapper;
         this.discordConfiguration = discordConfiguration;
     }

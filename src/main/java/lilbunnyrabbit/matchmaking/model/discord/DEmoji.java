@@ -7,7 +7,7 @@ import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class DiscordEmoji {
+public class DEmoji {
 
     @NotEmpty
     private String id;
@@ -17,7 +17,7 @@ public class DiscordEmoji {
 
     private List<String> roles;
 
-    private DiscordUser user;
+    private DUser user;
 
     @JsonProperty("require_colons")
     private Boolean requiredColons;
@@ -28,15 +28,15 @@ public class DiscordEmoji {
 
     private Boolean available;
 
-    public DiscordEmoji() {
+    public DEmoji() {
     }
 
-    public DiscordEmoji(String id, String name) {
+    public DEmoji(String id, String name) {
         this.id = id;
         this.name = name;
     }
 
-    public DiscordEmoji(String name) {
+    public DEmoji(String name) {
         this.name = name;
     }
 
@@ -68,11 +68,11 @@ public class DiscordEmoji {
         this.roles = List.of(roles);
     }
 
-    public DiscordUser getUser() {
+    public DUser getUser() {
         return user;
     }
 
-    public void setUser(DiscordUser user) {
+    public void setUser(DUser user) {
         this.user = user;
     }
 

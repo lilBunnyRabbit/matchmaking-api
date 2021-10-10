@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.validation.constraints.NotEmpty;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class DiscordUser {
+public class DUser {
 
     @NotEmpty
     private String id;
@@ -45,7 +45,7 @@ public class DiscordUser {
     @JsonProperty("public_flags")
     private Integer publicFlags;
 
-    public DiscordUser() {
+    public DUser() {
     }
 
     public String getId() {
@@ -169,18 +169,18 @@ public class DiscordUser {
     }
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    public static class Mention extends DiscordUser {
+    public static class Mention extends DUser {
 
-        private DiscordMember.Partial member;
+        private DMember.Partial member;
 
         public Mention() {
         }
 
-        public DiscordMember.Partial getMember() {
+        public DMember.Partial getMember() {
             return member;
         }
 
-        public void setMember(DiscordMember.Partial member) {
+        public void setMember(DMember.Partial member) {
             this.member = member;
         }
     }

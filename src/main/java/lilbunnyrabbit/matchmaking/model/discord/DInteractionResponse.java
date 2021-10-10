@@ -7,35 +7,35 @@ import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class DiscordInteractionResponse {
+public class DInteractionResponse {
 
-    public static final DiscordInteractionResponse PONG = new DiscordInteractionResponse(Type.PONG);
-    public static final DiscordInteractionResponse DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE = new DiscordInteractionResponse(Type.DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE);
-    public static final DiscordInteractionResponse DEFERRED_UPDATE_MESSAGE = new DiscordInteractionResponse(Type.DEFERRED_UPDATE_MESSAGE);
+    public static final DInteractionResponse PONG = new DInteractionResponse(Type.PONG);
+    public static final DInteractionResponse DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE = new DInteractionResponse(Type.DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE);
+    public static final DInteractionResponse DEFERRED_UPDATE_MESSAGE = new DInteractionResponse(Type.DEFERRED_UPDATE_MESSAGE);
 
     @NotEmpty
     private Integer type; // InteractionResponse.Type
 
-    private DiscordInteractionResponse.Data data;
+    private DInteractionResponse.Data data;
 
-    public DiscordInteractionResponse() {
+    public DInteractionResponse() {
     }
 
-    public DiscordInteractionResponse(Integer type) {
+    public DInteractionResponse(Integer type) {
         this.type = type;
     }
 
-    public DiscordInteractionResponse(Integer type, Data data) {
+    public DInteractionResponse(Integer type, Data data) {
         this.type = type;
         this.data = data;
     }
 
-    public static DiscordInteractionResponse CHANNEL_MESSAGE_WITH_SOURCE(Data data) {
-        return new DiscordInteractionResponse(Type.CHANNEL_MESSAGE_WITH_SOURCE, data);
+    public static DInteractionResponse CHANNEL_MESSAGE_WITH_SOURCE(Data data) {
+        return new DInteractionResponse(Type.CHANNEL_MESSAGE_WITH_SOURCE, data);
     }
 
-    public static DiscordInteractionResponse UPDATE_MESSAGE(Data data) {
-        return new DiscordInteractionResponse(Type.UPDATE_MESSAGE, data);
+    public static DInteractionResponse UPDATE_MESSAGE(Data data) {
+        return new DInteractionResponse(Type.UPDATE_MESSAGE, data);
     }
 
     public Integer getType() {
@@ -73,14 +73,14 @@ public class DiscordInteractionResponse {
 
         private String content;
 
-        private List<DiscordEmbed> embeds;
+        private List<DEmbed> embeds;
 
         @JsonProperty("allowed_mentions")
-        private DiscordAllowedMentions allowedMentions;
+        private DAllowedMentions allowedMentions;
 
         private Integer flags;
 
-        private List<DiscordComponent> components;
+        private List<DComponent> components;
 
         public Data() {
         }
@@ -89,11 +89,11 @@ public class DiscordInteractionResponse {
             this.content = content;
         }
 
-        public Data(List<DiscordEmbed> embeds) {
+        public Data(List<DEmbed> embeds) {
             this.embeds = embeds;
         }
 
-        public Data(DiscordEmbed... embeds) {
+        public Data(DEmbed... embeds) {
             this.embeds = List.of(embeds);
         }
 
@@ -113,23 +113,23 @@ public class DiscordInteractionResponse {
             this.content = content;
         }
 
-        public List<DiscordEmbed> getEmbeds() {
+        public List<DEmbed> getEmbeds() {
             return embeds;
         }
 
-        public void setEmbeds(List<DiscordEmbed> embeds) {
+        public void setEmbeds(List<DEmbed> embeds) {
             this.embeds = embeds;
         }
 
-        public void setEmbeds(DiscordEmbed... embeds) {
+        public void setEmbeds(DEmbed... embeds) {
             this.embeds = List.of(embeds);
         }
 
-        public DiscordAllowedMentions getAllowedMentions() {
+        public DAllowedMentions getAllowedMentions() {
             return allowedMentions;
         }
 
-        public void setAllowedMentions(DiscordAllowedMentions allowedMentions) {
+        public void setAllowedMentions(DAllowedMentions allowedMentions) {
             this.allowedMentions = allowedMentions;
         }
 
@@ -141,15 +141,15 @@ public class DiscordInteractionResponse {
             this.flags = flags;
         }
 
-        public List<DiscordComponent> getComponents() {
+        public List<DComponent> getComponents() {
             return components;
         }
 
-        public void setComponents(List<DiscordComponent> components) {
+        public void setComponents(List<DComponent> components) {
             this.components = components;
         }
 
-        public void setComponents(DiscordComponent... components) {
+        public void setComponents(DComponent... components) {
             this.components = List.of(components);
         }
 

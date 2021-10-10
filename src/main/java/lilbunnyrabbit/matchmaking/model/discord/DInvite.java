@@ -8,26 +8,26 @@ import java.io.Serializable;
 import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class DiscordInvite implements Serializable {
+public class DInvite implements Serializable {
 
     @NotEmpty
     private String code;
 
-    private DiscordGuild.Partial guild;
+    private DGuild.Partial guild;
 
     @NotEmpty
-    private DiscordChannel.Partial channel;
+    private DChannel.Partial channel;
 
-    private DiscordUser inviter;
+    private DUser inviter;
 
     @JsonProperty("target_type")
     private Integer targetType; // Type
 
     @JsonProperty("target_user")
-    private DiscordUser targetUser;
+    private DUser targetUser;
 
     @JsonProperty("target_application")
-    private DiscordApplication.Partial targetApplication;
+    private DApplication.Partial targetApplication;
 
     @JsonProperty("approximate_presence_count")
     private Integer approximatePresenceCount;
@@ -41,7 +41,7 @@ public class DiscordInvite implements Serializable {
     @JsonProperty("stage_instance")
     private StageInstance stageInstance;
 
-    public DiscordInvite() {}
+    public DInvite() {}
 
     public String getCode() {
         return code;
@@ -51,27 +51,27 @@ public class DiscordInvite implements Serializable {
         this.code = code;
     }
 
-    public DiscordGuild.Partial getGuild() {
+    public DGuild.Partial getGuild() {
         return guild;
     }
 
-    public void setGuild(DiscordGuild.Partial guild) {
+    public void setGuild(DGuild.Partial guild) {
         this.guild = guild;
     }
 
-    public DiscordChannel.Partial getChannel() {
+    public DChannel.Partial getChannel() {
         return channel;
     }
 
-    public void setChannel(DiscordChannel.Partial channel) {
+    public void setChannel(DChannel.Partial channel) {
         this.channel = channel;
     }
 
-    public DiscordUser getInviter() {
+    public DUser getInviter() {
         return inviter;
     }
 
-    public void setInviter(DiscordUser inviter) {
+    public void setInviter(DUser inviter) {
         this.inviter = inviter;
     }
 
@@ -83,19 +83,19 @@ public class DiscordInvite implements Serializable {
         this.targetType = targetType;
     }
 
-    public DiscordUser getTargetUser() {
+    public DUser getTargetUser() {
         return targetUser;
     }
 
-    public void setTargetUser(DiscordUser targetUser) {
+    public void setTargetUser(DUser targetUser) {
         this.targetUser = targetUser;
     }
 
-    public DiscordApplication.Partial getTargetApplication() {
+    public DApplication.Partial getTargetApplication() {
         return targetApplication;
     }
 
-    public void setTargetApplication(DiscordApplication.Partial targetApplication) {
+    public void setTargetApplication(DApplication.Partial targetApplication) {
         this.targetApplication = targetApplication;
     }
 
@@ -149,7 +149,7 @@ public class DiscordInvite implements Serializable {
     public static class StageInstance {
 
         @NotEmpty
-        private List<DiscordMember.Partial> members;
+        private List<DMember.Partial> members;
 
         @NotEmpty
         @JsonProperty("participant_count")
@@ -165,11 +165,11 @@ public class DiscordInvite implements Serializable {
         public StageInstance() {
         }
 
-        public List<DiscordMember.Partial> getMembers() {
+        public List<DMember.Partial> getMembers() {
             return members;
         }
 
-        public void setMembers(List<DiscordMember.Partial> members) {
+        public void setMembers(List<DMember.Partial> members) {
             this.members = members;
         }
 

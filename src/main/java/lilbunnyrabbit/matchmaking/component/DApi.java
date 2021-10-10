@@ -1,9 +1,9 @@
 package lilbunnyrabbit.matchmaking.component;
 
-import lilbunnyrabbit.matchmaking.config.DiscordConfiguration;
-import lilbunnyrabbit.matchmaking.model.discord.DiscordApplicationCommand;
-import lilbunnyrabbit.matchmaking.model.discord.DiscordChannel;
-import lilbunnyrabbit.matchmaking.model.discord.DiscordInvite;
+import lilbunnyrabbit.matchmaking.config.DConfiguration;
+import lilbunnyrabbit.matchmaking.model.discord.DApplicationCommand;
+import lilbunnyrabbit.matchmaking.model.discord.DChannel;
+import lilbunnyrabbit.matchmaking.model.discord.DInvite;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.*;
 import org.springframework.stereotype.Component;
@@ -12,14 +12,14 @@ import org.springframework.web.client.RestTemplate;
 import java.util.Collections;
 
 @Component
-public class DiscordApi {
+public class DApi {
     public final String BASE_URL = "https://discord.com/api/v8";
 
     private final RestTemplate restTemplate;
 
-    private final DiscordConfiguration discordConfiguration;
+    private final DConfiguration discordConfiguration;
 
-    public DiscordApi(RestTemplateBuilder restTemplateBuilder, DiscordConfiguration discordConfiguration) {
+    public DApi(RestTemplateBuilder restTemplateBuilder, DConfiguration discordConfiguration) {
         this.restTemplate = restTemplateBuilder.build();
         this.discordConfiguration = discordConfiguration;
     }
@@ -71,48 +71,48 @@ public class DiscordApi {
     }
 
     // Requests
-    public DiscordChannel createChannel(String guildId, DiscordChannel channel) {
+    public DChannel createChannel(String guildId, DChannel channel) {
         String url = this.GUILD_CHANNELS_URL(guildId);
         HttpHeaders headers = this.getJsonHeaders();
-        HttpEntity<DiscordChannel> entity = new HttpEntity<>(channel, headers);
-        return restTemplate.postForObject(url, entity, DiscordChannel.class);
+        HttpEntity<DChannel> entity = new HttpEntity<>(channel, headers);
+        return restTemplate.postForObject(url, entity, DChannel.class);
     }
 
-    public DiscordInvite createChannelInvite(String channelId) { // Todo: with params
+    public DInvite createChannelInvite(String channelId) { // Todo: with params
         String url = this.CHANNEL_INVITE_URL(channelId);
         HttpEntity<Void> entity = new HttpEntity<>(this.getJsonHeaders());
-        return restTemplate.postForObject(url, entity, DiscordInvite.class);
+        return restTemplate.postForObject(url, entity, DInvite.class);
     }
 
     // Slash Commands
-    public DiscordApplicationCommand[] getGlobalCommands() {
+    public DApplicationCommand[] getGlobalCommands() {
         String url = this.GLOBAL_COMMANDS_URL();
         HttpHeaders headers = this.getJsonHeaders();
         HttpEntity<Void> entity = new HttpEntity<>(headers);
-        ResponseEntity<DiscordApplicationCommand[]> response = restTemplate.exchange(url, HttpMethod.GET, entity, DiscordApplicationCommand[].class);
+        ResponseEntity<DApplicationCommand[]> response = restTemplate.exchange(url, HttpMethod.GET, entity, DApplicationCommand[].class);
         return response.getBody();
     }
 
-    public DiscordApplicationCommand[] getGuildCommands(String guildId) {
+    public DApplicationCommand[] getGuildCommands(String guildId) {
         String url = this.GUILD_COMMANDS_URL(guildId);
         HttpHeaders headers = this.getJsonHeaders();
         HttpEntity<Void> entity = new HttpEntity<>(headers);
-        ResponseEntity<DiscordApplicationCommand[]> response = restTemplate.exchange(url, HttpMethod.GET, entity, DiscordApplicationCommand[].class);
+        ResponseEntity<DApplicationCommand[]> response = restTemplate.exchange(url, HttpMethod.GET, entity, DApplicationCommand[].class);
         return response.getBody();
     }
 
-    public DiscordApplicationCommand[] overwriteGuildCommands(String guildId, DiscordApplicationCommand[] commands) {
+    public DApplicationCommand[] overwriteGuildCommands(String guildId, DApplicationCommand[] commands) {
         String url = this.GUILD_COMMANDS_URL(guildId);
         HttpHeaders headers = this.getJsonHeaders();
-        HttpEntity<DiscordApplicationCommand[]> entity = new HttpEntity<>(commands, headers);
-        ResponseEntity<DiscordApplicationCommand[]> response = restTemplate.exchange(url, HttpMethod.PUT, entity, DiscordApplicationCommand[].class);
+        HttpEntity<DApplicationCommand[]> entity = new HttpEntity<>(commands, headers);
+        ResponseEntity<DApplicationCommand[]> response = restTemplate.exchange(url, HttpMethod.PUT, entity, DApplicationCommand[].class);
         return response.getBody();
     }
 
-    public DiscordApplicationCommand createGuildCommand(String guildId, DiscordApplicationCommand command) {
+    public DApplicationCommand createGuildCommand(String guildId, DApplicationCommand command) {
         String url = this.GUILD_COMMANDS_URL(guildId);
         HttpHeaders headers = this.getJsonHeaders();
-        HttpEntity<DiscordApplicationCommand> entity = new HttpEntity<>(command, headers);
-        return restTemplate.postForObject(url, entity, DiscordApplicationCommand.class);
+        HttpEntity<DApplicationCommand> entity = new HttpEntity<>(command, headers);
+        return restTemplate.postForObject(url, entity, DApplicationCommand.class);
     }
 }

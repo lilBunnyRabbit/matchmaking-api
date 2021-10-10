@@ -6,7 +6,7 @@ import org.springframework.context.annotation.PropertySource;
 
 @Configuration
 @PropertySource("classpath:discord.properties")
-public class DiscordConfiguration {
+public class DConfiguration {
 
     @Value("${publicKey}")
     private String publicKey;

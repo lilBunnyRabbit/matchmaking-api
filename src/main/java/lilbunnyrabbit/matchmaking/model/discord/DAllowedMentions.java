@@ -7,7 +7,7 @@ import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class DiscordAllowedMentions {
+public class DAllowedMentions {
 
     @NotEmpty
     private List<String> parse;
@@ -22,10 +22,10 @@ public class DiscordAllowedMentions {
     @JsonProperty("replied_user")
     private Boolean repliedUser;
 
-    public DiscordAllowedMentions() {
+    public DAllowedMentions() {
     }
 
-    public DiscordAllowedMentions(List<String> parse, List<String> roles, List<String> users, Boolean replied_user) {
+    public DAllowedMentions(List<String> parse, List<String> roles, List<String> users, Boolean replied_user) {
         this.parse = parse;
         this.roles = roles;
         this.users = users;

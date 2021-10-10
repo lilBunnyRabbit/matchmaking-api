@@ -1,14 +1,14 @@
 package lilbunnyrabbit.matchmaking.component;
 
 import lilbunnyrabbit.matchmaking.helpers.ResponseHelper;
-import lilbunnyrabbit.matchmaking.model.discord.DiscordInteraction;
-import lilbunnyrabbit.matchmaking.model.discord.DiscordInteractionResponse;
+import lilbunnyrabbit.matchmaking.model.discord.DInteraction;
+import lilbunnyrabbit.matchmaking.model.discord.DInteractionResponse;
 import org.springframework.stereotype.Component;
 
 @Component
-public class DiscordActionHandler {
+public class DActionHandler {
 
-    public DiscordActionHandler() {
+    public DActionHandler() {
     }
 
     public static class Action {
@@ -16,8 +16,8 @@ public class DiscordActionHandler {
         public static final String LEAVE_QUEUE_BUTTON = "leave-queue-button";
     }
 
-    public DiscordInteractionResponse handle(DiscordInteraction interaction) {
-        DiscordInteraction.Data data = interaction.getData();
+    public DInteractionResponse handle(DInteraction interaction) {
+        DInteraction.Data data = interaction.getData();
         if (data == null) return null;
 
         String actionId = data.getCustomId();
@@ -30,12 +30,12 @@ public class DiscordActionHandler {
         };
     }
 
-    private DiscordInteractionResponse joinQueueButton(DiscordInteraction interaction) {
+    private DInteractionResponse joinQueueButton(DInteraction interaction) {
         // TODO
         return ResponseHelper.Success("joinQueueButton", null);
     }
 
-    private DiscordInteractionResponse leaveQueueButton(DiscordInteraction interaction) {
+    private DInteractionResponse leaveQueueButton(DInteraction interaction) {
         // TODO
         return ResponseHelper.Success("leaveQueueButton", null);
     }

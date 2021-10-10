@@ -7,15 +7,15 @@ import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class DiscordComponent {
+public class DComponent {
 
     @NotEmpty
     protected Integer type; // Component.Type
 
-    public DiscordComponent() {
+    public DComponent() {
     }
 
-    public DiscordComponent(Integer type) {
+    public DComponent(Integer type) {
         this.type = type;
     }
 
@@ -38,36 +38,36 @@ public class DiscordComponent {
     }
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    public static class ActionRow extends DiscordComponent {
+    public static class ActionRow extends DComponent {
 
         @NotEmpty
-        private List<DiscordComponent> components;
+        private List<DComponent> components;
 
         public ActionRow() {
             super(Type.ACTION_ROW);
         }
 
-        public ActionRow(List<DiscordComponent> components) {
+        public ActionRow(List<DComponent> components) {
             super(Type.ACTION_ROW);
             this.components = components;
         }
 
-        public ActionRow(DiscordComponent... component) {
+        public ActionRow(DComponent... component) {
             super(Type.ACTION_ROW);
             this.components = List.of(component);
         }
 
-        public List<DiscordComponent> getComponents() {
+        public List<DComponent> getComponents() {
             return components;
         }
 
-        public void setComponents(List<DiscordComponent> components) {
+        public void setComponents(List<DComponent> components) {
             this.components = components;
         }
     }
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    public static class Button extends DiscordComponent {
+    public static class Button extends DComponent {
 
         @NotEmpty
         private Integer style;
@@ -76,7 +76,7 @@ public class DiscordComponent {
         private String label;
 
         @JsonInclude(JsonInclude.Include.NON_NULL)
-        private DiscordEmoji.Partial emoji;
+        private DEmoji.Partial emoji;
 
         @JsonInclude(JsonInclude.Include.NON_NULL)
         @JsonProperty("custom_id")
@@ -124,11 +124,11 @@ public class DiscordComponent {
             this.label = label;
         }
 
-        public DiscordEmoji.Partial getEmoji() {
+        public DEmoji.Partial getEmoji() {
             return emoji;
         }
 
-        public void setEmoji(DiscordEmoji.Partial emoji) {
+        public void setEmoji(DEmoji.Partial emoji) {
             this.emoji = emoji;
         }
 
@@ -158,7 +158,7 @@ public class DiscordComponent {
     }
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    public static class SelectMenu extends DiscordComponent {
+    public static class SelectMenu extends DComponent {
 
         @NotEmpty
         @JsonProperty("custom_id")
@@ -251,7 +251,7 @@ public class DiscordComponent {
             private String description;
 
             @JsonInclude(JsonInclude.Include.NON_NULL)
-            private DiscordEmoji.Partial emoji;
+            private DEmoji.Partial emoji;
 
             @JsonInclude(JsonInclude.Include.NON_NULL)
             @JsonProperty("default")
@@ -289,11 +289,11 @@ public class DiscordComponent {
                 this.description = description;
             }
 
-            public DiscordEmoji.Partial getEmoji() {
+            public DEmoji.Partial getEmoji() {
                 return emoji;
             }
 
-            public void setEmoji(DiscordEmoji.Partial emoji) {
+            public void setEmoji(DEmoji.Partial emoji) {
                 this.emoji = emoji;
             }
 

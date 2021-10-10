@@ -1,9 +1,9 @@
 package lilbunnyrabbit.matchmaking.service.guild;
 
-import lilbunnyrabbit.matchmaking.component.DiscordApi;
+import lilbunnyrabbit.matchmaking.component.DApi;
 import lilbunnyrabbit.matchmaking.entity.Guild;
 import lilbunnyrabbit.matchmaking.exception.service.GuildException;
-import lilbunnyrabbit.matchmaking.model.discord.DiscordChannel;
+import lilbunnyrabbit.matchmaking.model.discord.DChannel;
 import lilbunnyrabbit.matchmaking.repository.GuildRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,9 +17,9 @@ public class GuildServiceImpl implements GuildService {
 
     private final GuildRepository guildRepository;
 
-    private final DiscordApi discordApi;
+    private final DApi discordApi;
 
-    public GuildServiceImpl(GuildRepository guildRepository, DiscordApi discordApi) {
+    public GuildServiceImpl(GuildRepository guildRepository, DApi discordApi) {
         this.guildRepository = guildRepository;
         this.discordApi = discordApi;
     }
@@ -52,7 +52,7 @@ public class GuildServiceImpl implements GuildService {
             throw new GuildException(GuildException.Code.GUILD_EXIST);
         }
 
-        DiscordChannel category = discordApi.createChannel(guildId, DiscordChannel.GUILD_CATEGORY("Matchmaking"));
+        DChannel category = discordApi.createChannel(guildId, DChannel.GUILD_CATEGORY("Matchmaking"));
         if (category == null) {
             throw new GuildException(GuildException.Code.FAILED_CREATE_CATEGORY);
         }
