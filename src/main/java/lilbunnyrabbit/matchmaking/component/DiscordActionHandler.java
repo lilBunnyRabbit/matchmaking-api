@@ -1,6 +1,6 @@
 package lilbunnyrabbit.matchmaking.component;
 
-import lilbunnyrabbit.matchmaking.helpers.CommandHelper;
+import lilbunnyrabbit.matchmaking.helpers.ResponseHelper;
 import lilbunnyrabbit.matchmaking.model.discord.DiscordInteraction;
 import lilbunnyrabbit.matchmaking.model.discord.DiscordInteractionResponse;
 import org.springframework.stereotype.Component;
@@ -32,11 +32,11 @@ public class DiscordActionHandler {
 
     private DiscordInteractionResponse joinQueueButton(DiscordInteraction interaction) {
         // TODO
-        return CommandHelper.Success("joinQueueButton", null);
+        return ResponseHelper.Success("joinQueueButton", null);
     }
 
     private DiscordInteractionResponse leaveQueueButton(DiscordInteraction interaction) {
         // TODO
-        return CommandHelper.Success("leaveQueueButton", null);
+        return ResponseHelper.Success("leaveQueueButton", null);
     }
 }

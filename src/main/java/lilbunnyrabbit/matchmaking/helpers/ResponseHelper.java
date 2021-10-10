@@ -3,7 +3,7 @@ package lilbunnyrabbit.matchmaking.helpers;
 import lilbunnyrabbit.matchmaking.model.discord.DiscordEmbed;
 import lilbunnyrabbit.matchmaking.model.discord.DiscordInteractionResponse;
 
-public class CommandHelper {
+public class ResponseHelper {
 
     public static DiscordInteractionResponse NOT_DM_COMMAND = DiscordInteractionResponse.CHANNEL_MESSAGE_WITH_SOURCE(
             new DiscordInteractionResponse.Data("This command is not a DM command")

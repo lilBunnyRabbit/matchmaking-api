@@ -4,7 +4,7 @@ import lilbunnyrabbit.matchmaking.model.discord.DiscordApplicationCommand;
 
 import java.util.ArrayList;
 
-public class DiscordGuildCommand {
+public class GuildCommandHelper {
 
     public static class Type {
         public static final String TEST = "test";
